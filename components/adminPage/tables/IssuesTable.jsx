@@ -35,7 +35,7 @@ export default function BasicTable() {
 			<Toolbar />
 
 			<Grid container spacing={3} justify='center'>
-				<Grid item xs={8}>
+				<Grid item xs={12} sm={12} md={8} justify='center'>
 					<TableContainer component={Paper}>
 						<Table className={classes.table} aria-label='simple table'>
 							<TableHead>
