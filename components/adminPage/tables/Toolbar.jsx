@@ -6,20 +6,22 @@ import {
 	TextField,
 	InputAdornment,
 	SvgIcon,
-	makeStyles,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import ButtonComponent from '../reusable/ButtonComponent';
+import Link from 'next/link';
 
 const Toolbar = ({ className, ...rest }) => {
 	return (
 		<>
 			<Box display='flex' justifyContent='flex-end'>
-				<ButtonComponent
-					title='Add product'
-					color='primary'
-					variant='contained'
-				/>
+				<Link href='/adminpage/issue/addissue'>
+					<ButtonComponent
+						title='საკითხის დამატება'
+						color='primary'
+						variant='contained'
+					/>
+				</Link>
 			</Box>
 
 			<Box mt={3} mb={3}>

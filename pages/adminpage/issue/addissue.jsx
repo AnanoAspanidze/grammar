@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import Grid from '@material-ui/core/Grid';
-import SelectComponent from '../../components/adminPage/reusable/SelectComponent';
-import TextFieldComponent from '../../components/adminPage/reusable/TextFieldComponent';
+import Typography from '@material-ui/core/Typography';
 
-import AppForm from '../../components/client/forms/AppForm';
-import AppBarComponnent from '../../components/adminPage/header/AppBar';
-import SubmitButton from '../../components/adminPage/reusable/SubmitButton';
+import SelectComponent from '../../../components/adminPage/reusable/SelectComponent';
+import TextFieldComponent from '../../../components/adminPage/reusable/TextFieldComponent';
+import AppForm from '../../../components/client/forms/AppForm';
+import AppBarComponnent from '../../../components/adminPage/header/AppBar';
+import SubmitButton from '../../../components/adminPage/reusable/SubmitButton';
 
-function editissue() {
+function Addissue() {
 	const [array, setarray] = useState([
 		{
 			id: 1,
@@ -45,6 +46,10 @@ function editissue() {
 				validationSchema={validationSchema}
 				onSubmit={onSubmit}
 			>
+				<Typography variant='h5' component='h5' align='center' gutterBottom>
+					საკითხის დამატება
+				</Typography>
+
 				<Grid container spacing={5} justify='center'>
 					<Grid item xs={12} sm={12} md={6}>
 						<div className='mb-30 mt-30'>
@@ -70,4 +75,4 @@ function editissue() {
 	);
 }
 
-export default editissue;
+export default Addissue;

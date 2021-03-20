@@ -1,3 +1,3 @@
 module.exports = {
-	'process.env.HOST': 'https://real-offer-dev.herokuapp.com',
+	'process.env.HOST': 'api.example.com',
 };

@@ -10,7 +10,7 @@ import PeopleIcon from '@material-ui/icons/People';
 
 export const mainListItems = (
 	<div>
-		<Link href='/adminpage/issues'>
+		<Link href='/adminpage/issuespage'>
 			<ListItem button>
 				<ListItemIcon>
 					<DashboardIcon />
@@ -18,17 +18,23 @@ export const mainListItems = (
 				<ListItemText primary='საკითხები' />
 			</ListItem>
 		</Link>
-		<ListItem button>
-			<ListItemIcon>
-				<ShoppingCartIcon />
-			</ListItemIcon>
-			<ListItemText primary='სავარჯიშოები' />
-		</ListItem>
-		<ListItem button>
-			<ListItemIcon>
-				<PeopleIcon />
-			</ListItemIcon>
-			<ListItemText primary='მომხმარებლები' />
-		</ListItem>
+
+		<Link href='/adminpage/exercisespage'>
+			<ListItem button>
+				<ListItemIcon>
+					<ShoppingCartIcon />
+				</ListItemIcon>
+				<ListItemText primary='სავარჯიშოები' />
+			</ListItem>
+		</Link>
+
+		<Link href='/adminpage/userspage'>
+			<ListItem button>
+				<ListItemIcon>
+					<PeopleIcon />
+				</ListItemIcon>
+				<ListItemText primary='მომხმარებლები' />
+			</ListItem>
+		</Link>
 	</div>
 );

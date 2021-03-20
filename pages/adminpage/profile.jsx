@@ -1,36 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import Grid from '@material-ui/core/Grid';
-import SelectComponent from '../../components/adminPage/reusable/SelectComponent';
-import TextFieldComponent from '../../components/adminPage/reusable/TextFieldComponent';
+import Typography from '@material-ui/core/Typography';
 
-import AppForm from '../../components/client/forms/AppForm';
+import TextFieldComponent from '../../components/adminPage/reusable/TextFieldComponent';
 import AppBarComponnent from '../../components/adminPage/header/AppBar';
+import AppForm from '../../components/client/forms/AppForm';
 import SubmitButton from '../../components/adminPage/reusable/SubmitButton';
 
-function Addissue() {
-	const [array, setarray] = useState([
-		{
-			id: 1,
-			value: 'მორფოლოგია',
-			label: 'მორფოლოგია',
-		},
-		{
-			id: 2,
-			value: 'სინტაქსი',
-			label: 'სინტაქსი',
-		},
-	]);
-	const [age, setAge] = useState('');
-
+function profile() {
 	const validationSchema = Yup.object().shape({
-		part: Yup.string().required('Fill out the field'),
 		name: Yup.string().required('Fill out the field'),
+		lastName: Yup.string().required('Fill out the field'),
+		password: Yup.string().required('Fill out the field'),
 	});
 
 	const initialValues = {
-		part: '',
 		name: '',
+		lastName: '',
+		password: '',
 	};
 
 	function onSubmit(data, action) {
@@ -45,14 +33,19 @@ function Addissue() {
 				validationSchema={validationSchema}
 				onSubmit={onSubmit}
 			>
+				<Typography variant='h5' component='h5' align='center' gutterBottom>
+					მომხმარებლის შესახებ
+				</Typography>
 				<Grid container spacing={5} justify='center'>
 					<Grid item xs={12} sm={12} md={6}>
-						<div className='mb-30 mt-30'>
-							<SelectComponent name='part' label='ნაწილი' options={array} />
-						</div>
-
 						<div className='mb-30'>
 							<TextFieldComponent placeholder='სახელი' name='name' />
+						</div>
+						<div className='mb-30'>
+							<TextFieldComponent placeholder='გვარი' name='lastName' />
+						</div>
+						<div className='mb-30'>
+							<TextFieldComponent placeholder='პაროლი' name='password' />
 						</div>
 
 						<div className='flex space-center'>
@@ -70,4 +63,4 @@ function Addissue() {
 	);
 }
 
-export default Addissue;
+export default profile;

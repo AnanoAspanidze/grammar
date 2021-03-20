@@ -13,11 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import Button from '@material-ui/core/Button';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { mainListItems } from './listItems';
 
 const drawerWidth = 240;
@@ -25,7 +23,7 @@ const drawerWidth = 240;
 export default function AppBarComponnent({ children }) {
 	const classes = useStyles();
 	const theme = useTheme();
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState(true);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -61,8 +59,23 @@ export default function AppBarComponnent({ children }) {
 							Mini variant drawer
 						</Typography>
 					</Link>
+
+					<div className={classes.marginLeft}>
+						<Link href='/adminpage/profile'>
+							<Button className={classes.colors}>
+								<AccountCircleIcon />
+								<span className={classes.iconMargin}>პროფილის რედაქტირება</span>
+							</Button>
+						</Link>
+
+						<Button className={classes.colors}>
+							<ExitToAppIcon />
+							<span className={classes.iconMargin}>გასვლა</span>
+						</Button>
+					</div>
 				</Toolbar>
 			</AppBar>
+
 			<Drawer
 				variant='permanent'
 				className={clsx(classes.drawer, {
@@ -155,5 +168,14 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		flexGrow: 1,
 		padding: theme.spacing(3),
+	},
+	colors: {
+		color: '#fff',
+	},
+	marginLeft: {
+		marginLeft: 'auto',
+	},
+	iconMargin: {
+		marginLeft: '5px',
 	},
 }));
