@@ -29,7 +29,11 @@ const rows = [
 function Issuespage() {
 	return (
 		<AppBarComponnent>
-			<Toolbar />
+			<Toolbar
+				btnHref='/adminpage/issue/addissue'
+				btnTitle='საკითხის დამატება'
+				searchFieldPlacehoolder='search'
+			/>
 
 			<Grid container spacing={3} justify='center'>
 				<Grid item xs={12} sm={12} lg={8}>

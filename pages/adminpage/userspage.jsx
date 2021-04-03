@@ -21,10 +21,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Link from 'next/link';
 
+import Toolbar from '../../components/adminPage/tables/Toolbar';
 import AppBarComponnent from '../../components/adminPage/header/AppBar';
 import TableComponent from '../../components/adminPage/tables/TableComponent';
 import TableHeadComponent from '../../components/adminPage/tables/TableHeadComponent';
-import ButtonComponent from '../../components/adminPage/reusable/ButtonComponent';
 
 function createData(name, calories, fat, carbs, protein) {
 	return { name, calories, fat, carbs, protein };
@@ -60,11 +60,7 @@ function userspage() {
 			<Grid container spacing={3} justify='center'>
 				<Grid item xs={12} sm={12} lg={12}>
 					<div className='mb-30 mt-30'>
-						<ButtonComponent
-							title='გადმოწერე exel ის ფაილად'
-							color='primary'
-							variant='contained'
-						/>
+						<Toolbar searchFieldPlacehoolder='search' downloadExelFile={true} />
 					</div>
 
 					<TableComponent>

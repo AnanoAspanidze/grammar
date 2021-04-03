@@ -50,7 +50,7 @@ function profile() {
 
 						<div className='flex space-center'>
 							<SubmitButton
-								title='Add Issue'
+								title='პროფილის რედაქტირება'
 								size='large'
 								color='primary'
 								variant='contained'

@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Toolbar from '../../components/adminPage/tables/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
 import TableBody from '@material-ui/core/TableBody';
@@ -42,17 +43,13 @@ function Exercises() {
 
 	return (
 		<AppBarComponnent>
+			<Toolbar
+				btnHref='/adminpage/exercise/addexecise'
+				btnTitle='სავარჯიშოს დამატება'
+				searchFieldPlacehoolder='search'
+			/>
 			<Grid container spacing={3} justify='center'>
 				<Grid item lg={12}>
-					<Link href='/adminpage/exercise/addexecise'>
-						<div className='mb-30 mt-30'>
-							<ButtonComponent
-								title='სავარჯიშოს დამატება'
-								color='primary'
-								variant='contained'
-							/>
-						</div>
-					</Link>
 					<TableComponent>
 						<TableHeadComponent>
 							<TableCell>სავარჯიშოს ნაწილი</TableCell>
@@ -67,7 +64,7 @@ function Exercises() {
 							{rows.map((row, index) => (
 								<TableRow key={row.name}>
 									<TableCell component='th' scope='row'>
-										<Link href='/adminpage/user/334'>
+										<Link href='/adminpage/exercise/334'>
 											<a className={classes.underline}>{row.name}</a>
 										</Link>
 									</TableCell>

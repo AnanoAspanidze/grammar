@@ -11,17 +11,35 @@ import SearchIcon from '@material-ui/icons/Search';
 import ButtonComponent from '../reusable/ButtonComponent';
 import Link from 'next/link';
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({
+	className,
+	btnHref,
+	btnTitle,
+	searchFieldPlacehoolder,
+	downloadExelFile,
+	...rest
+}) => {
 	return (
 		<>
 			<Box display='flex' justifyContent='flex-end'>
-				<Link href='/adminpage/issue/addissue'>
+				{downloadExelFile && (
 					<ButtonComponent
-						title='საკითხის დამატება'
+						style={{ marginRight: '20px' }}
+						title='გადმოწერე exel ის ფაილად'
 						color='primary'
 						variant='contained'
 					/>
-				</Link>
+				)}
+
+				{btnHref && btnTitle && (
+					<Link href={btnHref}>
+						<ButtonComponent
+							title={btnTitle}
+							color='primary'
+							variant='contained'
+						/>
+					</Link>
+				)}
 			</Box>
 
 			<Box mt={3} mb={3}>
@@ -30,7 +48,7 @@ const Toolbar = ({ className, ...rest }) => {
 						<Box maxWidth={500}>
 							<TextField
 								fullWidth
-								placeholder='Search product'
+								placeholder={searchFieldPlacehoolder}
 								variant='outlined'
 								InputProps={{
 									startAdornment: (

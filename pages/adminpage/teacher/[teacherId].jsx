@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Doughnut } from 'react-chartjs-2';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -20,6 +21,23 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import AppBarComponnent from '../../../components/adminPage/header/AppBar';
 import TableComponent from '../../../components/adminPage/tables/TableComponent';
 import TableHeadComponent from '../../../components/adminPage/tables/TableHeadComponent';
+
+const data = {
+	labels: ['Red', 'Blue', 'Yellow'],
+	datasets: [
+		{
+			label: '# of Votes',
+			data: [12, 19, 3],
+			backgroundColor: [
+				'rgba(255, 99, 132, 0.2)',
+				'rgba(18, 135, 41, 0.2)',
+				'rgba(84, 84, 84, 0.2)',
+			],
+			borderColor: ['#c71639', '#22a915', '#373737'],
+			borderWidth: 1,
+		},
+	],
+};
 
 function createData(name, calories, fat, carbs, protein) {
 	return { name, calories, fat, carbs, protein };
@@ -85,46 +103,52 @@ function TeacherPage() {
 						</Grid>
 					</div>
 
-					<Grid item xs={12} sm={12} lg={12}>
-						<Typography variant='h5' component='h5' gutterBottom>
-							სტატისტიკა
-						</Typography>
-						<div className='flex mb-30'>
-							<Grid item xs={6} className={classes.marginRight}>
-								<Paper className={classes.paper}>
-									<div className='flex align-items-center'>
-										<span className={classes.Margin2}>
-											კითხვების რაოდენობა:
-										</span>{' '}
-										<span>ჯეკო</span>
-									</div>
-								</Paper>
-								<Paper className={classes.paper}>
-									<div className='flex align-items-center'>
-										<span className={classes.Margin2}>
-											კითხვებზე გაცემული პასუხი:
-										</span>{' '}
-										<span>ჯეკო</span>
-									</div>
-								</Paper>
-								<Paper className={classes.paper}>
-									<div className='flex align-items-center'>
-										<span className={classes.Margin2}>
-											სწორად გაცემული პასუხი:
-										</span>{' '}
-										<span>ჯეკო</span>
-									</div>
-
-									<Button
-										onClick={handleClickOpen}
-										variant='contained'
-										color='secondary'
-									>
-										წაშლა
-									</Button>
-								</Paper>
-							</Grid>
-						</div>
+					<Typography variant='h5' component='h5' gutterBottom>
+						სტატისტიკა
+					</Typography>
+					<Grid container xs={12} sm={12} lg={12} justify='center'>
+						<Grid item xs={6}>
+							<Typography
+								variant='h5'
+								component='h5'
+								className='text-center'
+								gutterBottom
+							>
+								სტატისტიკა
+							</Typography>
+							<Doughnut data={data} legend={false} />
+						</Grid>
+					</Grid>
+					<Grid
+						container
+						xs={12}
+						sm={12}
+						lg={12}
+						justify='center'
+						className='mb-50'
+					>
+						<Grid item xs={6}>
+							<Typography
+								variant='h5'
+								component='h5'
+								className='text-center'
+								gutterBottom
+							>
+								სტატისტიკა
+							</Typography>
+							<Doughnut data={data} legend={false} />
+						</Grid>
+						<Grid item xs={6}>
+							<Typography
+								variant='h5'
+								component='h5'
+								className='text-center'
+								gutterBottom
+							>
+								სტატისტიკა
+							</Typography>
+							<Doughnut data={data} legend={false} />
+						</Grid>
 					</Grid>
 
 					<Typography variant='h5' component='h5' gutterBottom>
@@ -218,7 +242,6 @@ const useStyles = makeStyles((theme) => ({
 		padding: theme.spacing(2),
 		textAlign: 'left',
 		display: 'flex',
-		justifyContent: 'space-between',
 		marginBottom: '15px',
 		color: theme.palette.text.secondary,
 	},
