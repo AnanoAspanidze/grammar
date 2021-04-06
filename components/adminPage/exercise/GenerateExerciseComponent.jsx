@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormikContext } from 'formik';
 
 import TestQuestion from '../../../components/adminPage/exercise/TestQuestion';
@@ -9,24 +9,58 @@ import TagsQuestions from '../../../components/adminPage/exercise/TagsQuestions'
 import TrueOrFalse from '../../../components/adminPage/exercise/TrueOrFalse';
 
 function GenerateExerciseComponent({ name }) {
-	const { values, errors, setFieldError, setFieldValue } = useFormikContext();
+	const [index, setIndex] = useState('1');
+	const [count, setcount] = useState(1);
+	const [arrayItems, setArrayItems] = useState([1]);
+
+	const { values, setFieldValue } = useFormikContext();
+
+	useEffect(() => {
+		setFieldValue('index', 1);
+	}, [values.part]);
+
+	useEffect(() => {
+		setcount(values.index);
+	}, [values.index]);
+
+	useEffect(() => {
+		if (count > 1) {
+			setIndex((prev) => `${prev}${parseInt(count)}`);
+		}
+
+		if (count === 1) {
+			setIndex('1');
+		}
+	}, [count]);
+
+	useEffect(() => {
+		const arrayOfDigits = Array.from(String(index), Number);
+		setArrayItems(arrayOfDigits);
+	}, [index]);
 
 	return (
-		<div>
-			{values[name] === '1' ? (
-				<TestQuestion />
-			) : values[name] === '2' ? (
-				<SelectQuestions />
-			) : values[name] === '3' ? (
-				<WritableQuestions />
-			) : values[name] === '4' ? (
-				<ChangableQuestion />
-			) : values[name] === '5' ? (
-				<TagsQuestions />
-			) : values[name] === '6' ? (
-				<TrueOrFalse />
-			) : null}
-		</div>
+		<>
+			<div>
+				{values[name] === 1 &&
+					arrayItems &&
+					arrayItems.map((item) => <TestQuestion />)}
+				{values[name] === 2 &&
+					arrayItems &&
+					arrayItems.map((item) => <SelectQuestions />)}
+				{values[name] === 3 &&
+					arrayItems &&
+					arrayItems.map((item) => <WritableQuestions />)}
+				{values[name] === 4 &&
+					arrayItems &&
+					arrayItems.map((item) => <ChangableQuestion />)}
+				{values[name] === 5 &&
+					arrayItems &&
+					arrayItems.map((item) => <TagsQuestions />)}
+				{values[name] === 6 &&
+					arrayItems &&
+					arrayItems.map((item) => <TrueOrFalse />)}
+			</div>
+		</>
 	);
 }
 
