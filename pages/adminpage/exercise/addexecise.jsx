@@ -15,6 +15,7 @@ import AppBarComponnent from '../../../components/adminPage/header/AppBar';
 import SubmitButton from '../../../components/adminPage/reusable/SubmitButton';
 import ButtonComponent from '../../../components/adminPage/reusable/ButtonComponent';
 import GenerateExerciseComponent from '../../../components/adminPage/exercise/GenerateExerciseComponent';
+import AddNewQuestion from '../../../components/adminPage/exercise/AddNewQuestion';
 
 function addexecise() {
 	const classes = useStyles();
@@ -22,6 +23,9 @@ function addexecise() {
 	const [index, setIndex] = useState('1');
 	const [count, setcount] = useState(1);
 	const [arrayItems, setArrayItems] = useState([1]);
+
+	const [checked, setChecked] = useState(true);
+	const [checkedId, setCheckedId] = useState(null);
 
 	const [array, setarray] = useState([
 		{
@@ -69,17 +73,15 @@ function addexecise() {
 		},
 	]);
 
-	const [checked, setChecked] = useState(true);
-	const [checkedId, setCheckedId] = useState(null);
-
 	const validationSchema = Yup.object().shape({
 		part: Yup.string().required('Fill out the field'),
 		name: Yup.string(),
 	});
 
 	const initialValues = {
-		part: '1',
+		part: 1,
 		name: '',
+		index: 1,
 	};
 
 	useEffect(() => {
@@ -202,6 +204,8 @@ function addexecise() {
 						</div>
 
 						<GenerateExerciseComponent name='part' />
+
+						<AddNewQuestion />
 
 						<div className='flex space-center mt-70'>
 							<SubmitButton

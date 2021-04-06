@@ -9,14 +9,14 @@ import Select from '@material-ui/core/Select';
 
 function SelectComponent({ label, name, value, options }) {
 	const classes = useStyles();
-	const { values, errors, setFieldError, setFieldValue } = useFormikContext();
+	const { values, errors, setFieldValue } = useFormikContext();
 
 	return (
 		<FormControl variant='outlined' className={classes.formControl}>
 			<InputLabel>{label}</InputLabel>
 			<Select
 				value={values[name]}
-				onChange={(event) => setFieldValue(name, event.target.value)}
+				onChange={(event) => setFieldValue(name, parseInt(event.target.value))}
 				label={label}
 			>
 				{options &&
