@@ -14,12 +14,7 @@ import AppForm from '../../../components/client/forms/AppForm';
 import AppBarComponnent from '../../../components/adminPage/header/AppBar';
 import SubmitButton from '../../../components/adminPage/reusable/SubmitButton';
 import ButtonComponent from '../../../components/adminPage/reusable/ButtonComponent';
-import TestQuestion from '../../../components/adminPage/exercise/TestQuestion';
-import SelectQuestions from '../../../components/adminPage/exercise/SelectQuestions';
-import WritableQuestions from '../../../components/adminPage/exercise/WritableQuestions';
-import ChangableQuestion from '../../../components/adminPage/exercise/ChangableQuestion';
-import TagsQuestions from '../../../components/adminPage/exercise/TagsQuestions';
-import TrueOrFalse from '../../../components/adminPage/exercise/TrueOrFalse';
+import GenerateExerciseComponent from '../../../components/adminPage/exercise/GenerateExerciseComponent';
 
 function addexecise() {
 	const classes = useStyles();
@@ -29,6 +24,39 @@ function addexecise() {
 	const [arrayItems, setArrayItems] = useState([1]);
 
 	const [array, setarray] = useState([
+		{
+			id: 1,
+			value: '1',
+			label: '1',
+		},
+		{
+			id: 2,
+			value: '2',
+			label: '2',
+		},
+		{
+			id: 3,
+			value: '3',
+			label: '3',
+		},
+		{
+			id: 4,
+			value: '4',
+			label: '4',
+		},
+		{
+			id: 5,
+			value: '5',
+			label: '5',
+		},
+		{
+			id: 6,
+			value: '6',
+			label: '6',
+		},
+	]);
+
+	const [array2, setarray2] = useState([
 		{
 			id: 1,
 			value: 'მორფოლოგია',
@@ -50,7 +78,7 @@ function addexecise() {
 	});
 
 	const initialValues = {
-		part: '',
+		part: '1',
 		name: '',
 	};
 
@@ -83,13 +111,13 @@ function addexecise() {
 				<Grid container spacing={5} justify='center'>
 					<Grid item xs={12} sm={12} md={6}>
 						<div className='mb-30 mt-30'>
-							<SelectComponent name='part' label='ნაწილი' options={array} />
+							<SelectComponent name='name' label='ნაწილი' options={array2} />
 						</div>
 						<div className='mb-30 mt-30'>
 							<SelectComponent
-								name='part'
+								name='name'
 								label='საკითხის არჩევა'
-								options={array}
+								options={array2}
 							/>
 						</div>
 
@@ -173,12 +201,7 @@ function addexecise() {
 							/>
 						</div>
 
-						<TestQuestion />
-						{/* <SelectQuestions /> */}
-						{/* <WritableQuestions /> */}
-						{/* <ChangableQuestion /> */}
-						{/* <TagsQuestions /> */}
-						{/* <TrueOrFalse /> */}
+						<GenerateExerciseComponent name='part' />
 
 						<div className='flex space-center mt-70'>
 							<SubmitButton
