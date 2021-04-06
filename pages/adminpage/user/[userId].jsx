@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, HorizontalBar } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Pagination from '@material-ui/lab/Pagination';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import Link from 'next/link';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import EditIcon from '@material-ui/icons/Edit';
 
 import AppBarComponnent from '../../../components/adminPage/header/AppBar';
+import TableComponent from '../../../components/adminPage/tables/TableComponent';
+import TableHeadComponent from '../../../components/adminPage/tables/TableHeadComponent';
 
 const data = {
 	labels: ['Red', 'Blue', 'Yellow'],
@@ -27,6 +38,30 @@ const data = {
 		},
 	],
 };
+
+const options = {
+	scales: {
+		yAxes: [
+			{
+				ticks: {
+					beginAtZero: true,
+				},
+			},
+		],
+	},
+};
+
+function createData(name, calories, fat, carbs, protein) {
+	return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+	createData('Eclair', 262, 16.0, 24, 6.0),
+	createData('Cupcake', 305, 3.7, 67, 4.3),
+	createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
 
 function UserPage() {
 	const classes = useStyles();
@@ -123,6 +158,65 @@ function UserPage() {
 							<Doughnut data={data} legend={false} />
 						</Grid>
 					</Grid>
+					<Grid
+						container
+						xs={12}
+						sm={12}
+						lg={12}
+						justify='center'
+						className='mb-50'
+					>
+						<HorizontalBar
+							data={data}
+							legend={false}
+							options={options}
+							height={100}
+						/>
+					</Grid>
+
+					<Typography variant='h5' component='h5' gutterBottom>
+						მოსწავლეები
+					</Typography>
+					<TableComponent>
+						<TableHeadComponent>
+							<TableCell>სახელი</TableCell>
+							<TableCell align='left'>გვარი</TableCell>
+							<TableCell align='left'>მეილი</TableCell>
+							<TableCell align='left'>როლი</TableCell>
+							<TableCell align='left'>რეგიონი</TableCell>
+							<TableCell align='left'>სკოლა</TableCell>
+							<TableCell align='left'></TableCell>
+						</TableHeadComponent>
+
+						<TableBody>
+							{rows.map((row) => (
+								<TableRow key={row.name}>
+									<TableCell component='th' scope='row'>
+										<Link href='/adminpage/user/334'>
+											<a className={classes.underline}>{row.name}</a>
+										</Link>
+									</TableCell>
+									<TableCell align='left'>{row.calories}</TableCell>
+									<TableCell align='left'>{row.calories}</TableCell>
+									<TableCell align='left'>{row.calories}</TableCell>
+									<TableCell align='left'>{row.calories}</TableCell>
+									<TableCell align='left'>{row.calories}</TableCell>
+									<TableCell align='left'>
+										<IconButton>
+											<EditIcon />
+										</IconButton>
+										<IconButton>
+											<VisibilityIcon />
+										</IconButton>
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</TableComponent>
+
+					<div className='flex space-center' style={{ marginTop: 30 }}>
+						<Pagination count={10} size='large' color='primary' />
+					</div>
 				</Grid>
 			</Grid>
 
@@ -171,5 +265,10 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'space-between',
 		marginBottom: '15px',
 		color: theme.palette.text.secondary,
+	},
+	underline: {
+		textDecoration: 'underline',
+		color: 'inherit',
+		paddingBottom: '5px',
 	},
 }));

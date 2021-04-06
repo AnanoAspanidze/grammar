@@ -45,7 +45,21 @@ function profile() {
 							<TextFieldComponent placeholder='გვარი' name='lastName' />
 						</div>
 						<div className='mb-30'>
-							<TextFieldComponent placeholder='პაროლი' name='password' />
+							<TextFieldComponent
+								placeholder='მიმდინარე პაროლი'
+								name='password'
+							/>
+						</div>
+
+						<div className='mb-30'>
+							<TextFieldComponent placeholder='ახალი პაროლი' name='password' />
+						</div>
+
+						<div className='mb-30'>
+							<TextFieldComponent
+								placeholder='გაიმეორეთ ახალი პაროლი'
+								name='password'
+							/>
 						</div>
 
 						<div className='flex space-center'>

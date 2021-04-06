@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import * as Yup from 'yup';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import Fab from '@material-ui/core/Fab';
+import GraphicEqRoundedIcon from '@material-ui/icons/GraphicEqRounded';
 
 import SelectComponent from '../../../components/adminPage/reusable/SelectComponent';
 import TextFieldComponent from '../../../components/adminPage/reusable/TextFieldComponent';
@@ -12,9 +14,19 @@ import AppForm from '../../../components/client/forms/AppForm';
 import AppBarComponnent from '../../../components/adminPage/header/AppBar';
 import SubmitButton from '../../../components/adminPage/reusable/SubmitButton';
 import ButtonComponent from '../../../components/adminPage/reusable/ButtonComponent';
+import TestQuestion from '../../../components/adminPage/exercise/TestQuestion';
+import SelectQuestions from '../../../components/adminPage/exercise/SelectQuestions';
+import WritableQuestions from '../../../components/adminPage/exercise/WritableQuestions';
+import ChangableQuestion from '../../../components/adminPage/exercise/ChangableQuestion';
+import TagsQuestions from '../../../components/adminPage/exercise/TagsQuestions';
+import TrueOrFalse from '../../../components/adminPage/exercise/TrueOrFalse';
 
 function addexecise() {
 	const classes = useStyles();
+
+	const [index, setIndex] = useState('1');
+	const [count, setcount] = useState(1);
+	const [arrayItems, setArrayItems] = useState([1]);
 
 	const [array, setarray] = useState([
 		{
@@ -34,13 +46,18 @@ function addexecise() {
 
 	const validationSchema = Yup.object().shape({
 		part: Yup.string().required('Fill out the field'),
-		name: Yup.string().required('Fill out the field'),
+		name: Yup.string(),
 	});
 
 	const initialValues = {
 		part: '',
 		name: '',
 	};
+
+	useEffect(() => {
+		const arrayOfDigits = Array.from(String(index), Number);
+		setArrayItems(arrayOfDigits);
+	}, [index]);
 
 	function onSubmit(data, action) {
 		console.log(data);
@@ -101,20 +118,71 @@ function addexecise() {
 						</div>
 
 						<div className='mb-30'>
-							<ButtonComponent title='გრამატიკის წესები' />
+							<TextareaAutosize
+								className={classes.Textarea}
+								aria-label='empty textarea'
+								placeholder='გრამატიკის წესები'
+							/>
+
+							<input
+								accept='image/*'
+								className={classes.input}
+								id='contained-button-file'
+								multiple
+								type='file'
+							/>
+							<label htmlFor='contained-button-file'>
+								<Fab component='span'>
+									<GraphicEqRoundedIcon />
+								</Fab>
+							</label>
+						</div>
+
+						<div className='mb-30'>
+							{arrayItems &&
+								arrayItems.map((item) => (
+									<div className='mb-10'>
+										<TextFieldComponent
+											placeholder={`youtube ის ლინკი ${item}`}
+											name='name'
+										/>
+									</div>
+								))}
+
+							<ButtonComponent
+								onClick={() => {
+									setcount(count + 1);
+									setIndex((prev) => `${prev}${parseInt(count) + 1}`);
+								}}
+								variant='contained'
+								color='primary'
+								title='დამატება'
+							/>
 						</div>
 
 						<div className='mb-30'>
 							<TextareaAutosize
 								className={classes.Textarea}
 								aria-label='empty textarea'
-								placeholder='Empty'
+								placeholder='სავარჯიშოს აღწერა'
+							/>
+							<ButtonComponent
+								variant='contained'
+								color='primary'
+								title='ვიდეო ახსნა'
 							/>
 						</div>
 
-						<div className='flex space-center'>
+						<TestQuestion />
+						{/* <SelectQuestions /> */}
+						{/* <WritableQuestions /> */}
+						{/* <ChangableQuestion /> */}
+						{/* <TagsQuestions /> */}
+						{/* <TrueOrFalse /> */}
+
+						<div className='flex space-center mt-70'>
 							<SubmitButton
-								title='Add Issue'
+								title='სავარჯიშოს დამატება'
 								size='large'
 								color='primary'
 								variant='contained'
@@ -142,5 +210,8 @@ const useStyles = makeStyles((theme) => ({
 		border: '1px solid rgba(0, 0, 0, 0.23)',
 		fontSize: '16px',
 		resize: 'none',
+	},
+	input: {
+		display: 'none',
 	},
 }));

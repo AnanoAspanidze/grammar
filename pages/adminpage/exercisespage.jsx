@@ -52,10 +52,10 @@ function Exercises() {
 				<Grid item lg={12}>
 					<TableComponent>
 						<TableHeadComponent>
-							<TableCell>სავარჯიშოს ნაწილი</TableCell>
+							<TableCell>სათაური</TableCell>
+							<TableCell align='left'>სავარჯიშოს ნაწილი</TableCell>
 							<TableCell align='left'>საკითხი</TableCell>
 							<TableCell align='left'>ტიპი</TableCell>
-							<TableCell align='left'>სათაური</TableCell>
 							<TableCell align='left'>შემაჯამებელი სავარჯიშო</TableCell>
 							<TableCell align='left'></TableCell>
 						</TableHeadComponent>
@@ -63,12 +63,14 @@ function Exercises() {
 						<TableBody>
 							{rows.map((row, index) => (
 								<TableRow key={row.name}>
-									<TableCell component='th' scope='row'>
+									<TableCell align='left'>
 										<Link href='/adminpage/exercise/334'>
 											<a className={classes.underline}>{row.name}</a>
 										</Link>
 									</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
+									<TableCell component='th' scope='row'>
+										{row.name}
+									</TableCell>
 									<TableCell align='left'>{row.calories}</TableCell>
 									<TableCell align='left'>{row.calories}</TableCell>
 									<TableCell align='left'>

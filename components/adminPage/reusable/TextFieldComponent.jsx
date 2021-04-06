@@ -16,7 +16,7 @@ function TextFieldComponent({ placeholder, name }, props) {
 	// }, [authErrors]);
 
 	return (
-		<div>
+		<div className='w-100'>
 			<TextField
 				className={classes.TextField}
 				variant='outlined'

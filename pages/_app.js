@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from 'react';
 import jwt_decode from 'jwt-decode';
+import 'react-quill/dist/quill.snow.css';
 import '../public/assets/reset.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import userContext from '../context/user/userContext';
 import UserState from '../context/user/UserState';
 import { getCookie } from '../helpers/cookie';

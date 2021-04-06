@@ -78,7 +78,7 @@ function userspage() {
 							{rows.map((row) => (
 								<TableRow key={row.name}>
 									<TableCell component='th' scope='row'>
-										<Link href='/adminpage/teacher/334'>
+										<Link href='/adminpage/user/334'>
 											<a className={classes.underline}>{row.name}</a>
 										</Link>
 									</TableCell>
@@ -88,12 +88,6 @@ function userspage() {
 									<TableCell align='left'>{row.calories}</TableCell>
 									<TableCell align='left'>{row.calories}</TableCell>
 									<TableCell align='left'>
-										<IconButton>
-											<EditIcon />
-										</IconButton>
-										<IconButton>
-											<VisibilityIcon />
-										</IconButton>
 										<Button onClick={handleClickOpen}>როლის ცვლილება</Button>
 									</TableCell>
 								</TableRow>
