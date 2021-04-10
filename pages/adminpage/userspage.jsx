@@ -25,6 +25,7 @@ import Toolbar from '../../components/adminPage/tables/Toolbar';
 import AppBarComponnent from '../../components/adminPage/header/AppBar';
 import TableComponent from '../../components/adminPage/tables/TableComponent';
 import TableHeadComponent from '../../components/adminPage/tables/TableHeadComponent';
+import { getCookie } from '../../helpers/cookie';
 
 function createData(name, calories, fat, carbs, protein) {
 	return { name, calories, fat, carbs, protein };
@@ -43,7 +44,7 @@ const rows = [
 	createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-function userspage() {
+function userspage({ drawerIsOpen }) {
 	const classes = useStyles();
 
 	const [open, setOpen] = useState(false);
@@ -61,7 +62,7 @@ function userspage() {
 		setOpen(false);
 	};
 	return (
-		<AppBarComponnent>
+		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Grid container spacing={3} justify='center'>
 				<Grid item xs={12} sm={12} lg={12}>
 					<div className='mb-30 mt-30'>
@@ -163,3 +164,17 @@ const useStyles = makeStyles((theme) => ({
 		paddingBottom: '5px',
 	},
 }));
+
+export async function getServerSideProps(ctx) {
+	let cookie = '';
+
+	if (getCookie('Drawer', ctx.req)) {
+		cookie = getCookie('Drawer', ctx.req);
+	} else {
+		cookie = 'true';
+	}
+
+	return {
+		props: { drawerIsOpen: cookie },
+	};
+}

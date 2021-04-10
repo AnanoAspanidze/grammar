@@ -14,6 +14,7 @@ import Toolbar from '../../components/adminPage/tables/Toolbar';
 import AppBarComponnent from '../../components/adminPage/header/AppBar';
 import TableComponent from '../../components/adminPage/tables/TableComponent';
 import TableHeadComponent from '../../components/adminPage/tables/TableHeadComponent';
+import { getCookie } from '../../helpers/cookie';
 
 function createData(name, calories, fat, carbs, protein, visible) {
 	return { name, calories, fat, carbs, protein, visible };
@@ -32,7 +33,7 @@ const rows = [
 	createData('Gingerbread', 356, 16.0, 49, 3.9, false),
 ];
 
-function Issuespage() {
+function Issuespage({ drawerIsOpen }) {
 	const [array, setArray] = useState(rows);
 
 	const generateArray = (index) => {
@@ -51,7 +52,7 @@ function Issuespage() {
 	};
 
 	return (
-		<AppBarComponnent>
+		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Toolbar
 				btnHref='/adminpage/issue/addissue'
 				btnTitle='საკითხის დამატება'
@@ -106,3 +107,17 @@ function Issuespage() {
 }
 
 export default Issuespage;
+
+export async function getServerSideProps(ctx) {
+	let cookie = '';
+
+	if (getCookie('Drawer', ctx.req)) {
+		cookie = getCookie('Drawer', ctx.req);
+	} else {
+		cookie = 'true';
+	}
+
+	return {
+		props: { drawerIsOpen: cookie },
+	};
+}
