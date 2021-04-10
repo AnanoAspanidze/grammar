@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,22 +18,35 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { mainListItems } from './listItems';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PeopleIcon from '@material-ui/icons/People';
+import { setCookie, getCookie } from '../../../helpers/cookie';
 
 const drawerWidth = 240;
 
 export default function AppBarComponnent({ children }) {
+	const router = useRouter();
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(true);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
+		setCookie('Drawer', true);
 	};
 
 	const handleDrawerClose = () => {
 		setOpen(false);
+		setCookie('Drawer', false);
 	};
+
+	useEffect(() => {
+		getCookie('Drawer');
+	}, [open]);
 
 	return (
 		<div className={classes.root}>
@@ -54,11 +69,9 @@ export default function AppBarComponnent({ children }) {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Link href='/'>
-						<Typography variant='h6' noWrap>
-							Mini variant drawer
-						</Typography>
-					</Link>
+					<Typography variant='h6' noWrap>
+						ადმინისტრატორის პანელი
+					</Typography>
 
 					<div className={classes.marginLeft}>
 						<Link href='/adminpage/profile'>
@@ -79,12 +92,14 @@ export default function AppBarComponnent({ children }) {
 			<Drawer
 				variant='permanent'
 				className={clsx(classes.drawer, {
-					[classes.drawerOpen]: open,
+					[classes.drawerOpen]:
+						process.browser && JSON.parse(getCookie('Drawer')),
 					[classes.drawerClose]: !open,
 				})}
 				classes={{
 					paper: clsx({
-						[classes.drawerOpen]: open,
+						[classes.drawerOpen]:
+							process.browser && JSON.parse(getCookie('Drawer')),
 						[classes.drawerClose]: !open,
 					}),
 				}}
@@ -99,8 +114,56 @@ export default function AppBarComponnent({ children }) {
 					</IconButton>
 				</div>
 				<Divider />
-				<List>{mainListItems}</List>
+
+				<List>
+					<div>
+						<Link href='/adminpage/issuespage'>
+							<ListItem
+								button
+								className={`${
+									router.pathname === '/adminpage/issuespage' ? 'bg-blue' : ''
+								}`}
+							>
+								<ListItemIcon>
+									<DashboardIcon />
+								</ListItemIcon>
+								<ListItemText primary='საკითხები' />
+							</ListItem>
+						</Link>
+
+						<Link href='/adminpage/exercisespage'>
+							<ListItem
+								button
+								className={`${
+									router.pathname === '/adminpage/exercisespage'
+										? 'bg-blue'
+										: ''
+								}`}
+							>
+								<ListItemIcon>
+									<ShoppingCartIcon />
+								</ListItemIcon>
+								<ListItemText primary='სავარჯიშოები' />
+							</ListItem>
+						</Link>
+
+						<Link href='/adminpage/userspage'>
+							<ListItem
+								button
+								className={`${
+									router.pathname === '/adminpage/userspage' ? 'bg-blue' : ''
+								}`}
+							>
+								<ListItemIcon>
+									<PeopleIcon />
+								</ListItemIcon>
+								<ListItemText primary='მომხმარებლები' />
+							</ListItem>
+						</Link>
+					</div>
+				</List>
 			</Drawer>
+
 			<main className={classes.content}>
 				<div className={classes.toolbar} />
 				{children}

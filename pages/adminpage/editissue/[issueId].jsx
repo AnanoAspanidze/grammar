@@ -47,7 +47,7 @@ function editissue() {
 				onSubmit={onSubmit}
 			>
 				<Typography variant='h5' component='h5' align='center' gutterBottom>
-					საკითხის დამატება
+					საკითხის რედაქტირება
 				</Typography>
 
 				<Grid container spacing={5} justify='center'>
@@ -62,7 +62,7 @@ function editissue() {
 
 						<div className='flex space-center'>
 							<SubmitButton
-								title='Add Issue'
+								title='რედაქტირება'
 								size='large'
 								color='primary'
 								variant='contained'

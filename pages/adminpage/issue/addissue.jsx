@@ -62,7 +62,7 @@ function Addissue() {
 
 						<div className='flex space-center'>
 							<SubmitButton
-								title='Add Issue'
+								title='დამატება'
 								size='large'
 								color='primary'
 								variant='contained'

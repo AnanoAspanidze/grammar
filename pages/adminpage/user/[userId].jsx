@@ -51,21 +51,42 @@ const options = {
 	},
 };
 
-function createData(name, calories, fat, carbs, protein) {
-	return { name, calories, fat, carbs, protein };
+function createData(name, calories, fat, carbs, protein, visible) {
+	return { name, calories, fat, carbs, protein, visible };
 }
 
 const rows = [
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData('Eclair', 262, 16.0, 24, 6.0),
-	createData('Cupcake', 305, 3.7, 67, 4.3),
-	createData('Gingerbread', 356, 16.0, 49, 3.9),
+	createData('Frozen yoghurt', 159, 6.0, 24, 4.0, false),
+	createData('Ice cream sandwich', 237, 9.0, 37, 4.3, false),
+	createData('Eclair', 262, 16.0, 24, 6.0, false),
+	createData('Cupcake', 305, 3.7, 67, 4.3, false),
+	createData('Gingerbread', 356, 16.0, 49, 3.9, false),
+	createData('Frozen yoghurt', 159, 6.0, 24, 4.0, false),
+	createData('Ice cream sandwich', 237, 9.0, 37, 4.3, false),
+	createData('Eclair', 262, 16.0, 24, 6.0, false),
+	createData('Cupcake', 305, 3.7, 67, 4.3, false),
+	createData('Gingerbread', 356, 16.0, 49, 3.9, false),
 ];
 
 function UserPage() {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
+	const [array, setArray] = useState(rows);
+
+	const generateArray = (index) => {
+		const modifier = array.map((w, i) => {
+			if (i == index) {
+				if (w.visible) {
+					return { ...w, visible: false };
+				} else if (!w.visible) {
+					return { ...w, visible: true };
+				}
+			}
+			return w;
+		});
+
+		setArray(modifier);
+	};
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -189,8 +210,14 @@ function UserPage() {
 						</TableHeadComponent>
 
 						<TableBody>
-							{rows.map((row) => (
-								<TableRow key={row.name}>
+							{array.map((row, index) => (
+								<TableRow
+									visible={row.visible}
+									style={{
+										opacity: `${row.visible ? '0.2' : '1'}`,
+									}}
+									key={index}
+								>
 									<TableCell component='th' scope='row'>
 										<Link href='/adminpage/user/334'>
 											<a className={classes.underline}>{row.name}</a>
@@ -205,7 +232,7 @@ function UserPage() {
 										<IconButton>
 											<EditIcon />
 										</IconButton>
-										<IconButton>
+										<IconButton onClick={(e) => generateArray(index)}>
 											<VisibilityIcon />
 										</IconButton>
 									</TableCell>
