@@ -24,43 +24,43 @@ function addexecise() {
 	const [count, setcount] = useState(1);
 	const [arrayItems, setArrayItems] = useState([1]);
 
-	const [checked, setChecked] = useState(true);
+	const [checked, setChecked] = useState(false);
 	const [checkedId, setCheckedId] = useState(null);
 
-	const [array, setarray] = useState([
+	const [exerciseTypes, setexerciseTypes] = useState([
 		{
 			id: 1,
 			value: '1',
-			label: '1',
+			label: 'ტესტი',
 		},
 		{
 			id: 2,
 			value: '2',
-			label: '2',
+			label: 'ჩამოსაშლელი და ასარჩევი სავარაუდო პასუხებიდან',
 		},
 		{
 			id: 3,
 			value: '3',
-			label: '3',
+			label: 'ჩასაწერი',
 		},
 		{
 			id: 4,
 			value: '4',
-			label: '4',
+			label: 'ჩასწორება',
 		},
 		{
 			id: 5,
 			value: '5',
-			label: '5',
+			label: 'წინადადებაში სიტყვის ან სიტყვების არჩევა',
 		},
 		{
 			id: 6,
 			value: '6',
-			label: '6',
+			label: 'ჭეშმარიტია/მცდარია',
 		},
 	]);
 
-	const [array2, setarray2] = useState([
+	const [Part, setPart] = useState([
 		{
 			id: 1,
 			value: 'მორფოლოგია',
@@ -111,15 +111,15 @@ function addexecise() {
 				</Typography>
 
 				<Grid container spacing={5} justify='center'>
-					<Grid item xs={12} sm={12} md={6}>
+					<Grid item xs={12} sm={12} md={8}>
 						<div className='mb-30 mt-30'>
-							<SelectComponent name='name' label='ნაწილი' options={array2} />
+							<SelectComponent name='name' label='ნაწილი' options={Part} />
 						</div>
 						<div className='mb-30 mt-30'>
 							<SelectComponent
 								name='name'
 								label='საკითხის არჩევა'
-								options={array2}
+								options={Part}
 							/>
 						</div>
 
@@ -136,7 +136,7 @@ function addexecise() {
 							<SelectComponent
 								name='part'
 								label='სავარჯიშოს ტიპი'
-								options={array}
+								options={exerciseTypes}
 							/>
 						</div>
 
@@ -154,18 +154,24 @@ function addexecise() {
 								placeholder='გრამატიკის წესები'
 							/>
 
-							<input
-								accept='image/*'
-								className={classes.input}
-								id='contained-button-file'
-								multiple
-								type='file'
-							/>
-							<label htmlFor='contained-button-file'>
-								<Fab component='span'>
-									<GraphicEqRoundedIcon />
-								</Fab>
-							</label>
+							<div>
+								<input
+									accept='image/*'
+									className={classes.input}
+									id='contained-button-file'
+									multiple
+									type='file'
+								/>
+								<label
+									htmlFor='contained-button-file'
+									className={classes.MarginLeft}
+								>
+									<Fab component='span'>
+										<GraphicEqRoundedIcon />
+									</Fab>
+								</label>
+								აუდიოს ატვირთვა
+							</div>
 						</div>
 
 						<div className='mb-30'>
@@ -196,18 +202,22 @@ function addexecise() {
 								aria-label='empty textarea'
 								placeholder='სავარჯიშოს აღწერა'
 							/>
+						</div>
+
+						<AddNewQuestion />
+
+						<div className='mt-30 mb-50'>
 							<ButtonComponent
+								size='large'
 								variant='contained'
-								color='primary'
-								title='ვიდეო ახსნა'
+								color='secondary'
+								title='კითხვების დამატების ვიდეო ახსნა'
 							/>
 						</div>
 
 						<GenerateExerciseComponent name='part' />
 
-						<AddNewQuestion />
-
-						<div className='flex space-center mt-70'>
+						<div className='flex space-center mt-70 mt-30'>
 							<SubmitButton
 								title='სავარჯიშოს დამატება'
 								size='large'
@@ -240,5 +250,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	input: {
 		display: 'none',
+	},
+
+	MarginLeft: {
+		marginRight: '10px',
 	},
 }));

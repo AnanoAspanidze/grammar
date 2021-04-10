@@ -8,7 +8,7 @@ function AddNewQuestion() {
 
 	return (
 		<Button onClick={() => setFieldValue('index', values['index'] + 1)}>
-			დამატება <AddIcon />
+			კითხვის დამატება <AddIcon />
 		</Button>
 	);
 }

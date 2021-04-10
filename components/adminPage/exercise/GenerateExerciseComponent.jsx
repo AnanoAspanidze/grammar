@@ -41,22 +41,22 @@ function GenerateExerciseComponent({ name }) {
 	return (
 		<>
 			<div>
-				{values[name] === 1 &&
+				{values[name] == '1' &&
 					arrayItems &&
 					arrayItems.map((item) => <TestQuestion />)}
-				{values[name] === 2 &&
+				{values[name] == '2' &&
 					arrayItems &&
 					arrayItems.map((item) => <SelectQuestions />)}
-				{values[name] === 3 &&
+				{values[name] == '3' &&
 					arrayItems &&
 					arrayItems.map((item) => <WritableQuestions />)}
-				{values[name] === 4 &&
+				{values[name] == '4' &&
 					arrayItems &&
 					arrayItems.map((item) => <ChangableQuestion />)}
-				{values[name] === 5 &&
+				{values[name] == '5' &&
 					arrayItems &&
 					arrayItems.map((item) => <TagsQuestions />)}
-				{values[name] === 6 &&
+				{values[name] == '6' &&
 					arrayItems &&
 					arrayItems.map((item) => <TrueOrFalse />)}
 			</div>

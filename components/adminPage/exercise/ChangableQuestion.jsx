@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-
-import TextFieldComponent from '../reusable/TextFieldComponent';
+import { makeStyles } from '@material-ui/core/styles';
 
 const DynamicComponentWithNoSSR = dynamic(() => import('react-quill'), {
 	ssr: false,
@@ -9,9 +8,9 @@ const DynamicComponentWithNoSSR = dynamic(() => import('react-quill'), {
 
 function ChangableQuestion() {
 	const [value, setValue] = useState('');
-
+	const classes = useStyles();
 	return (
-		<div>
+		<div v>
 			<DynamicComponentWithNoSSR
 				theme='snow'
 				value={value}
@@ -30,6 +29,7 @@ function ChangableQuestion() {
 
 			<DynamicComponentWithNoSSR
 				theme='snow'
+				className='mt-80'
 				value={value}
 				onChange={setValue}
 				placeholder='კომენტარი პასუხის სწორად გაცემის შემთხვევაში'
@@ -48,3 +48,13 @@ function ChangableQuestion() {
 }
 
 export default ChangableQuestion;
+
+const useStyles = makeStyles((theme) => ({
+	EcercisesBorder: {
+		padding: '30px 50px',
+		marginBottom: '50px',
+		marginBottom: '50px',
+		borderRadius: '6px',
+		boxShadow: 'rgb(3 102 214 / 30%) 0px 0px 0px 3px',
+	},
+}));

@@ -280,6 +280,11 @@ a:active {
 	color: rgba(0, 0, 0, 0.6);
 }
 
+.bg-blue {
+	background-color: #4051b5 !important;
+	color: #fff !important;
+}
+
 .font-bold {
 	font-weight: bold;
 }
@@ -374,6 +379,9 @@ a:active {
 .mt-30 {
 	margin-top: 30px;
 }
+.mt-80 {
+	margin-top: 80px;
+}
 
 .mb-50 {
 	margin-bottom: 50px;
@@ -384,6 +392,9 @@ a:active {
 }
 .ml-5 {
 	margin-left: 5px;
+}
+.mr-15 {
+	margin-right: 15px;
 }
 
 .main__section {

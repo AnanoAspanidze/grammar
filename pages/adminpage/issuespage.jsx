@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
+import Link from 'next/link';
 import Pagination from '@material-ui/lab/Pagination';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,19 +15,41 @@ import AppBarComponnent from '../../components/adminPage/header/AppBar';
 import TableComponent from '../../components/adminPage/tables/TableComponent';
 import TableHeadComponent from '../../components/adminPage/tables/TableHeadComponent';
 
-function createData(name, calories, fat, carbs, protein) {
-	return { name, calories, fat, carbs, protein };
+function createData(name, calories, fat, carbs, protein, visible) {
+	return { name, calories, fat, carbs, protein, visible };
 }
 
 const rows = [
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData('Eclair', 262, 16.0, 24, 6.0),
-	createData('Cupcake', 305, 3.7, 67, 4.3),
-	createData('Gingerbread', 356, 16.0, 49, 3.9),
+	createData('Frozen yoghurt', 159, 6.0, 24, 4.0, false),
+	createData('Ice cream sandwich', 237, 9.0, 37, 4.3, false),
+	createData('Eclair', 262, 16.0, 24, 6.0, false),
+	createData('Cupcake', 305, 3.7, 67, 4.3, false),
+	createData('Gingerbread', 356, 16.0, 49, 3.9, false),
+	createData('Frozen yoghurt', 159, 6.0, 24, 4.0, false),
+	createData('Ice cream sandwich', 237, 9.0, 37, 4.3, false),
+	createData('Eclair', 262, 16.0, 24, 6.0, false),
+	createData('Cupcake', 305, 3.7, 67, 4.3, false),
+	createData('Gingerbread', 356, 16.0, 49, 3.9, false),
 ];
 
 function Issuespage() {
+	const [array, setArray] = useState(rows);
+
+	const generateArray = (index) => {
+		const modifier = array.map((w, i) => {
+			if (i == index) {
+				if (w.visible) {
+					return { ...w, visible: false };
+				} else if (!w.visible) {
+					return { ...w, visible: true };
+				}
+			}
+			return w;
+		});
+
+		setArray(modifier);
+	};
+
 	return (
 		<AppBarComponnent>
 			<Toolbar
@@ -45,17 +68,26 @@ function Issuespage() {
 						</TableHeadComponent>
 
 						<TableBody>
-							{rows.map((row) => (
-								<TableRow key={row.name}>
+							{array.map((row, index) => (
+								<TableRow
+									visible={row.visible}
+									style={{
+										opacity: `${row.visible ? '0.2' : '1'}`,
+									}}
+									key={index}
+								>
 									<TableCell component='th' scope='row'>
 										{row.name}
 									</TableCell>
 									<TableCell align='left'>{row.calories}</TableCell>
 									<TableCell align='left'>
-										<IconButton>
-											<EditIcon />
-										</IconButton>
-										<IconButton>
+										<Link href='/adminpage/editissue/2435'>
+											<IconButton>
+												<EditIcon />
+											</IconButton>
+										</Link>
+
+										<IconButton onClick={(e) => generateArray(index)}>
 											<VisibilityIcon />
 										</IconButton>
 									</TableCell>

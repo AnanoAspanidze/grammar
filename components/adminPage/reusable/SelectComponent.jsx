@@ -16,7 +16,7 @@ function SelectComponent({ label, name, value, options }) {
 			<InputLabel>{label}</InputLabel>
 			<Select
 				value={values[name]}
-				onChange={(event) => setFieldValue(name, parseInt(event.target.value))}
+				onChange={(event) => setFieldValue(name, event.target.value)}
 				label={label}
 			>
 				{options &&

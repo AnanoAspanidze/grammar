@@ -1,12 +1,17 @@
 import React from 'react';
 import AppBarComponnent from '../components/adminPage/header/AppBar';
+import redirect from '../helpers/redirect';
 
 function adminpage() {
-	return (
-		<AppBarComponnent>
-			<main className='main__section'>ტესტ</main>
-		</AppBarComponnent>
-	);
+	return <AppBarComponnent></AppBarComponnent>;
 }
 
 export default adminpage;
+
+export async function getServerSideProps(ctx) {
+	redirect('/adminpage/exercisespage', ctx);
+
+	return {
+		props: {},
+	};
+}
