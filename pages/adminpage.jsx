@@ -2,16 +2,12 @@ import React from 'react';
 import AppBarComponnent from '../components/adminPage/header/AppBar';
 import redirect from '../helpers/redirect';
 
-function adminpage() {
+function Adminpage() {
 	return <AppBarComponnent></AppBarComponnent>;
 }
 
-export default adminpage;
+export default Adminpage;
 
-export async function getServerSideProps(ctx) {
-	redirect('/adminpage/exercisespage', ctx);
-
-	return {
-		props: {},
-	};
-}
+Adminpage.getInitialProps = async (ctx) => {
+	return redirect('/adminpage/exercisespage', ctx);
+};
