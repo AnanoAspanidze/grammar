@@ -17,6 +17,7 @@ import ButtonComponent from '../../components/adminPage/reusable/ButtonComponent
 import AppBarComponnent from '../../components/adminPage/header/AppBar';
 import TableComponent from '../../components/adminPage/tables/TableComponent';
 import TableHeadComponent from '../../components/adminPage/tables/TableHeadComponent';
+import { getCookie } from '../../helpers/cookie';
 
 function createData(name, calories, fat, carbs, protein, visible) {
 	return { name, calories, fat, carbs, protein, visible };
@@ -35,7 +36,7 @@ const rows = [
 	createData('Gingerbread', 356, 16.0, 49, 3.9, false),
 ];
 
-function Exercises() {
+function Exercises({ drawerIsOpen }) {
 	const classes = useStyles();
 
 	const [checked, setChecked] = React.useState(true);
@@ -63,7 +64,7 @@ function Exercises() {
 	};
 
 	return (
-		<AppBarComponnent>
+		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Toolbar
 				btnHref='/adminpage/exercise/addexecise'
 				btnTitle='სავარჯიშოს დამატება'
@@ -135,3 +136,17 @@ const useStyles = makeStyles((theme) => ({
 		paddingBottom: '5px',
 	},
 }));
+
+export async function getServerSideProps(ctx) {
+	let cookie = '';
+
+	if (getCookie('Drawer', ctx.req)) {
+		cookie = getCookie('Drawer', ctx.req);
+	} else {
+		cookie = 'true';
+	}
+
+	return {
+		props: { drawerIsOpen: cookie },
+	};
+}

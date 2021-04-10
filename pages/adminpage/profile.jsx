@@ -7,8 +7,9 @@ import TextFieldComponent from '../../components/adminPage/reusable/TextFieldCom
 import AppBarComponnent from '../../components/adminPage/header/AppBar';
 import AppForm from '../../components/client/forms/AppForm';
 import SubmitButton from '../../components/adminPage/reusable/SubmitButton';
+import { getCookie } from '../../helpers/cookie';
 
-function profile() {
+function profile({ drawerIsOpen }) {
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().required('Fill out the field'),
 		lastName: Yup.string().required('Fill out the field'),
@@ -26,7 +27,7 @@ function profile() {
 	}
 
 	return (
-		<AppBarComponnent>
+		<AppBarComponnent isOpen={drawerIsOpen}>
 			<AppForm
 				initialValues={initialValues}
 				validateOnChange={true}
@@ -78,3 +79,17 @@ function profile() {
 }
 
 export default profile;
+
+export async function getServerSideProps(ctx) {
+	let cookie = '';
+
+	if (getCookie('Drawer', ctx.req)) {
+		cookie = getCookie('Drawer', ctx.req);
+	} else {
+		cookie = 'true';
+	}
+
+	return {
+		props: { drawerIsOpen: cookie },
+	};
+}

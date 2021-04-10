@@ -8,8 +8,9 @@ import TextFieldComponent from '../../../components/adminPage/reusable/TextField
 import AppForm from '../../../components/client/forms/AppForm';
 import AppBarComponnent from '../../../components/adminPage/header/AppBar';
 import SubmitButton from '../../../components/adminPage/reusable/SubmitButton';
+import { getCookie } from '../../../helpers/cookie';
 
-function editissue() {
+function editissue({ drawerIsOpen }) {
 	const [array, setarray] = useState([
 		{
 			id: 1,
@@ -39,7 +40,7 @@ function editissue() {
 	}
 
 	return (
-		<AppBarComponnent>
+		<AppBarComponnent isOpen={drawerIsOpen}>
 			<AppForm
 				initialValues={initialValues}
 				validateOnChange={true}
@@ -76,3 +77,17 @@ function editissue() {
 }
 
 export default editissue;
+
+export async function getServerSideProps(ctx) {
+	let cookie = '';
+
+	if (getCookie('Drawer', ctx.req)) {
+		cookie = getCookie('Drawer', ctx.req);
+	} else {
+		cookie = 'true';
+	}
+
+	return {
+		props: { drawerIsOpen: cookie },
+	};
+}

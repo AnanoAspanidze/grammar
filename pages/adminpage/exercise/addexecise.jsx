@@ -16,8 +16,9 @@ import SubmitButton from '../../../components/adminPage/reusable/SubmitButton';
 import ButtonComponent from '../../../components/adminPage/reusable/ButtonComponent';
 import GenerateExerciseComponent from '../../../components/adminPage/exercise/GenerateExerciseComponent';
 import AddNewQuestion from '../../../components/adminPage/exercise/AddNewQuestion';
+import { getCookie } from '../../../helpers/cookie';
 
-function addexecise() {
+function addexecise({ drawerIsOpen }) {
 	const classes = useStyles();
 
 	const [index, setIndex] = useState('1');
@@ -99,7 +100,7 @@ function addexecise() {
 	};
 
 	return (
-		<AppBarComponnent>
+		<AppBarComponnent isOpen={drawerIsOpen}>
 			<AppForm
 				initialValues={initialValues}
 				validateOnChange={true}
@@ -256,3 +257,17 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: '10px',
 	},
 }));
+
+export async function getServerSideProps(ctx) {
+	let cookie = '';
+
+	if (getCookie('Drawer', ctx.req)) {
+		cookie = getCookie('Drawer', ctx.req);
+	} else {
+		cookie = 'true';
+	}
+
+	return {
+		props: { drawerIsOpen: cookie },
+	};
+}

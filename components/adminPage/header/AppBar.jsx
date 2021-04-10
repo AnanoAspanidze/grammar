@@ -28,11 +28,16 @@ import { setCookie, getCookie } from '../../../helpers/cookie';
 
 const drawerWidth = 240;
 
-export default function AppBarComponnent({ children }) {
+export default function AppBarComponnent({ isOpen, children }) {
 	const router = useRouter();
 	const classes = useStyles();
 	const theme = useTheme();
-	const [open, setOpen] = React.useState(true);
+	const [open, setOpen] = React.useState(null);
+	// const [cookie, setcookie] = React.useState(null);
+
+	useEffect(() => {
+		setOpen(null);
+	}, []);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -44,17 +49,14 @@ export default function AppBarComponnent({ children }) {
 		setCookie('Drawer', false);
 	};
 
-	useEffect(() => {
-		getCookie('Drawer');
-	}, [open]);
-
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
 			<AppBar
 				position='fixed'
 				className={clsx(classes.appBar, {
-					[classes.appBarShift]: open,
+					[classes.appBarShift]:
+						open == true || open == false ? open : JSON.parse(isOpen),
 				})}
 			>
 				<Toolbar>
@@ -64,7 +66,8 @@ export default function AppBarComponnent({ children }) {
 						onClick={handleDrawerOpen}
 						edge='start'
 						className={clsx(classes.menuButton, {
-							[classes.hide]: open,
+							[classes.hide]:
+								open == true || open == false ? open : JSON.parse(isOpen),
 						})}
 					>
 						<MenuIcon />
@@ -93,14 +96,16 @@ export default function AppBarComponnent({ children }) {
 				variant='permanent'
 				className={clsx(classes.drawer, {
 					[classes.drawerOpen]:
-						process.browser && JSON.parse(getCookie('Drawer')),
-					[classes.drawerClose]: !open,
+						open == true || open == false ? open : JSON.parse(isOpen),
+					[classes.drawerClose]:
+						open == true || open == false ? !open : !JSON.parse(isOpen),
 				})}
 				classes={{
 					paper: clsx({
 						[classes.drawerOpen]:
-							process.browser && JSON.parse(getCookie('Drawer')),
-						[classes.drawerClose]: !open,
+							open == true || open == false ? open : JSON.parse(isOpen),
+						[classes.drawerClose]:
+							open == true || open == false ? !open : !JSON.parse(isOpen),
 					}),
 				}}
 			>
@@ -210,6 +215,8 @@ const useStyles = makeStyles((theme) => ({
 		}),
 	},
 	drawerClose: {
+		width: '100%',
+		marginLeft: 0,
 		transition: theme.transitions.create('width', {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen,
