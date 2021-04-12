@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
-
+import TextFieldComponent from '../reusable/TextFieldComponent';
 import ExerciseCheckbox from './ExerciseCheckbox';
 
 const DynamicComponentWithNoSSR = dynamic(() => import('react-quill'), {
@@ -32,6 +32,13 @@ function TagsQuestions() {
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
+			{arrayItems &&
+				arrayItems.map((item) => (
+					<div className='flex align-items-center mb-20 mt-30'>
+						<TextFieldComponent placeholder='სიტყვა' name='1' />
+					</div>
+				))}
+
 			<Fab
 				component='span'
 				onClick={() => {
@@ -41,17 +48,6 @@ function TagsQuestions() {
 			>
 				<AddIcon />
 			</Fab>
-
-			{arrayItems &&
-				arrayItems.map((item) => (
-					<div className='flex align-items-center mb-20 mt-30'>
-						<ExerciseCheckbox
-							placeholder='სიტყვა'
-							name='1'
-							inputName='answer'
-						/>
-					</div>
-				))}
 
 			<DynamicComponentWithNoSSR
 				theme='snow'

@@ -10,7 +10,7 @@ function ChangableQuestion() {
 	const [value, setValue] = useState('');
 	const classes = useStyles();
 	return (
-		<div v>
+		<div>
 			<DynamicComponentWithNoSSR
 				theme='snow'
 				value={value}

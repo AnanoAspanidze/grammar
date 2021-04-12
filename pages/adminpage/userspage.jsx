@@ -125,22 +125,19 @@ function userspage({ drawerIsOpen }) {
 								onChange={handleChange}
 								input={<Input />}
 							>
-								<MenuItem value=''>
-									<em>None</em>
-								</MenuItem>
-								<MenuItem value={10}>Ten</MenuItem>
-								<MenuItem value={20}>Twenty</MenuItem>
-								<MenuItem value={30}>Thirty</MenuItem>
+								<MenuItem value={1}>ადმინისტრატორი</MenuItem>
+								<MenuItem value={20}>მასწავლებელი</MenuItem>
+								<MenuItem value={30}>მოსწავლე</MenuItem>
 							</Select>
 						</FormControl>
 					</form>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose} color='primary'>
-						Cancel
+						დახურვა
 					</Button>
-					<Button onClick={handleClose} color='primary'>
-						Ok
+					<Button onClick={handleClose} variant='contained' color='primary'>
+						შეცვლა
 					</Button>
 				</DialogActions>
 			</Dialog>

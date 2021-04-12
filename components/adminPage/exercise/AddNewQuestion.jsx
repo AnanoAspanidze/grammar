@@ -6,11 +6,15 @@ import { useFormikContext } from 'formik';
 function AddNewQuestion() {
 	const { values, setFieldValue } = useFormikContext();
 
-	return (
-		<Button onClick={() => setFieldValue('index', values['index'] + 1)}>
-			კითხვის დამატება <AddIcon />
-		</Button>
-	);
+	if (values['part'] != 7 && values['part'] != 8) {
+		return (
+			<Button onClick={() => setFieldValue('index', values['index'] + 1)}>
+				კითხვის დამატება <AddIcon />
+			</Button>
+		);
+	} else {
+		return null;
+	}
 }
 
 export default AddNewQuestion;

@@ -59,6 +59,16 @@ function addexecise({ drawerIsOpen }) {
 			value: '6',
 			label: 'ჭეშმარიტია/მცდარია',
 		},
+		{
+			id: 7,
+			value: '7',
+			label: 'drag and drop',
+		},
+		{
+			id: 8,
+			value: '8',
+			label: 'კროსვორდი',
+		},
 	]);
 
 	const [Part, setPart] = useState([
