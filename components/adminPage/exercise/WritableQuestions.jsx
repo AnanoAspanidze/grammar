@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import TextFieldComponent from '../reusable/TextFieldComponent';
 
@@ -9,9 +11,23 @@ const DynamicComponentWithNoSSR = dynamic(() => import('react-quill'), {
 
 function WritableQuestions() {
 	const [value, setValue] = useState('');
+
+	const [index, setIndex] = useState('1');
+	const [count, setcount] = useState(1);
+	const [arrayItems, setArrayItems] = useState([1]);
+
 	const classes = useStyles();
+
+	useEffect(() => {
+		const arrayOfDigits = Array.from(String(index), Number);
+		setArrayItems(arrayOfDigits);
+	}, [index]);
+
 	return (
 		<div className={classes.EcercisesBorder}>
+			<div>
+				იმ ადგილას, სადაც გინდათ, რომ გამოჩნდეს ასარჩევი, ჩაწერეთ #input
+			</div>
 			<DynamicComponentWithNoSSR
 				theme='snow'
 				value={value}
@@ -20,9 +36,22 @@ function WritableQuestions() {
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
-			<div className='flex align-items-center mb-20 mt-30'>
-				<TextFieldComponent placeholder='სწორი პასუხი' name='correct' />
-			</div>
+			{arrayItems &&
+				arrayItems.map((item) => (
+					<div className='flex align-items-center mb-20 mt-30'>
+						<TextFieldComponent placeholder='სწორი პასუხი' name='correct' />
+					</div>
+				))}
+
+			<Fab
+				component='span'
+				onClick={() => {
+					setcount(count + 1);
+					setIndex((prev) => `${prev}${parseInt(count) + 1}`);
+				}}
+			>
+				<AddIcon />
+			</Fab>
 
 			<DynamicComponentWithNoSSR
 				theme='snow'

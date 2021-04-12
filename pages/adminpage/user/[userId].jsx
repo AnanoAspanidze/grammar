@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Doughnut, HorizontalBar } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
+import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -24,7 +25,7 @@ import TableHeadComponent from '../../../components/adminPage/tables/TableHeadCo
 import { getCookie } from '../../../helpers/cookie';
 
 const data = {
-	labels: ['Red', 'Blue', 'Yellow'],
+	labels: ['არასწორი პასუხები', 'სწორი პასუხები', 'პასუხგაუცემელი'],
 	datasets: [
 		{
 			label: '# of Votes',
@@ -38,18 +39,6 @@ const data = {
 			borderWidth: 1,
 		},
 	],
-};
-
-const options = {
-	scales: {
-		yAxes: [
-			{
-				ticks: {
-					beginAtZero: true,
-				},
-			},
-		],
-	},
 };
 
 function createData(name, calories, fat, carbs, protein, visible) {
@@ -87,14 +76,6 @@ function UserPage({ drawerIsOpen }) {
 		});
 
 		setArray(modifier);
-	};
-
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
 	};
 
 	return (
@@ -144,7 +125,7 @@ function UserPage({ drawerIsOpen }) {
 								className='text-center'
 								gutterBottom
 							>
-								სტატისტიკა
+								საერთო სტატისტიკა
 							</Typography>
 							<Doughnut data={data} legend={false} />
 						</Grid>
@@ -164,7 +145,7 @@ function UserPage({ drawerIsOpen }) {
 								className='text-center'
 								gutterBottom
 							>
-								სტატისტიკა
+								მორფოლოგია
 							</Typography>
 							<Doughnut data={data} legend={false} />
 						</Grid>
@@ -175,7 +156,7 @@ function UserPage({ drawerIsOpen }) {
 								className='text-center'
 								gutterBottom
 							>
-								სტატისტიკა
+								სინტაქტი
 							</Typography>
 							<Doughnut data={data} legend={false} />
 						</Grid>
@@ -188,12 +169,38 @@ function UserPage({ drawerIsOpen }) {
 						justify='center'
 						className='mb-50'
 					>
-						<HorizontalBar
-							data={data}
-							legend={false}
-							options={options}
-							height={100}
-						/>
+						<div className='row w-100'>
+							<h6 className='chart__h6'>Bar One</h6>
+							<div class='chart w-100'>
+								<span
+									css={`
+										width: 40%;
+									`}
+									className='block'
+								>
+									<span className='value'>40%</span>
+									<span className='legend'>პასუხგაუცემელი</span>
+								</span>
+								<span
+									css={`
+										width: 40%;
+									`}
+									className='block'
+								>
+									<span className='value'>40%</span>
+									<span className='legend'>სწორი პასუხები</span>
+								</span>
+								<span
+									css={`
+										width: 20%;
+									`}
+									className='block'
+								>
+									<span className='value'>20%</span>
+									<span className='legend'>არასწორი პასუხები</span>
+								</span>
+							</div>
+						</div>
 					</Grid>
 
 					<Typography variant='h5' component='h5' gutterBottom>
@@ -207,7 +214,6 @@ function UserPage({ drawerIsOpen }) {
 							<TableCell align='left'>როლი</TableCell>
 							<TableCell align='left'>რეგიონი</TableCell>
 							<TableCell align='left'>სკოლა</TableCell>
-							<TableCell align='left'></TableCell>
 						</TableHeadComponent>
 
 						<TableBody>
@@ -229,14 +235,6 @@ function UserPage({ drawerIsOpen }) {
 									<TableCell align='left'>{row.calories}</TableCell>
 									<TableCell align='left'>{row.calories}</TableCell>
 									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>
-										<IconButton>
-											<EditIcon />
-										</IconButton>
-										<IconButton onClick={(e) => generateArray(index)}>
-											<VisibilityIcon />
-										</IconButton>
-									</TableCell>
 								</TableRow>
 							))}
 						</TableBody>
@@ -247,25 +245,6 @@ function UserPage({ drawerIsOpen }) {
 					</div>
 				</Grid>
 			</Grid>
-
-			<Dialog
-				disableBackdropClick
-				disableEscapeKeyDown
-				open={open}
-				onClose={handleClose}
-			>
-				<DialogTitle className='text-center'>
-					ნამდვილად გსურთ წაშლა?
-				</DialogTitle>
-				<DialogActions>
-					<Button variant='contained' onClick={handleClose}>
-						არა
-					</Button>
-					<Button variant='contained' color='secondary' onClick={handleClose}>
-						კი
-					</Button>
-				</DialogActions>
-			</Dialog>
 		</AppBarComponnent>
 	);
 }

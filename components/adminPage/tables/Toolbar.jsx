@@ -25,7 +25,7 @@ const Toolbar = ({
 				{downloadExelFile && (
 					<ButtonComponent
 						style={{ marginRight: '20px' }}
-						title='გადმოწერე exel ის ფაილად'
+						title='გადმოწერე EXCEL ის ფაილად'
 						color='primary'
 						variant='contained'
 					/>

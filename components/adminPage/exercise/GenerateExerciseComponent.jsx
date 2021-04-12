@@ -7,6 +7,7 @@ import WritableQuestions from '../../../components/adminPage/exercise/WritableQu
 import ChangableQuestion from '../../../components/adminPage/exercise/ChangableQuestion';
 import TagsQuestions from '../../../components/adminPage/exercise/TagsQuestions';
 import TrueOrFalse from '../../../components/adminPage/exercise/TrueOrFalse';
+import DragEndDropQuestion from './DragEndDropQuestion';
 
 function GenerateExerciseComponent({ name }) {
 	const [index, setIndex] = useState('1');
@@ -59,6 +60,9 @@ function GenerateExerciseComponent({ name }) {
 				{values[name] == '6' &&
 					arrayItems &&
 					arrayItems.map((item) => <TrueOrFalse />)}
+				{values[name] == '7' || values[name] == '8' ? (
+					<DragEndDropQuestion />
+				) : null}
 			</div>
 		</>
 	);
