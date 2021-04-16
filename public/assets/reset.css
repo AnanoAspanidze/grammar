@@ -443,7 +443,7 @@ a:active {
 }
 .chart .block {
 	display: block;
-	height: 60px;
+	height: 30px;
 	color: #fff;
 	float: left;
 	position: relative;

@@ -20,6 +20,8 @@ function profile({ drawerIsOpen }) {
 		name: '',
 		lastName: '',
 		password: '',
+		password2: '',
+		password3: '',
 	};
 
 	function onSubmit(data, action) {
@@ -53,13 +55,13 @@ function profile({ drawerIsOpen }) {
 						</div>
 
 						<div className='mb-30'>
-							<TextFieldComponent placeholder='ახალი პაროლი' name='password' />
+							<TextFieldComponent placeholder='ახალი პაროლი' name='password2' />
 						</div>
 
 						<div className='mb-30'>
 							<TextFieldComponent
 								placeholder='გაიმეორეთ ახალი პაროლი'
-								name='password'
+								name='password3'
 							/>
 						</div>
 

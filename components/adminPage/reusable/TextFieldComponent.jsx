@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { useFormikContext } from 'formik';
 
-function TextFieldComponent({ placeholder, name }, props) {
+function TextFieldComponent({ placeholder, name, ...props }) {
 	const { values, handleChange, errors, setFieldError } = useFormikContext();
 
 	const classes = useStyles();
@@ -22,8 +22,9 @@ function TextFieldComponent({ placeholder, name }, props) {
 				variant='outlined'
 				name={name}
 				value={values[name]}
-				placeholder={placeholder}
+				label={placeholder}
 				onChange={handleChange(name)}
+				{...props}
 			/>
 
 			{errors[name] && (

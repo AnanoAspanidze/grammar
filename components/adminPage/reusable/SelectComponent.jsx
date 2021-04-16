@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useFormikContext } from 'formik';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -10,6 +10,26 @@ import Select from '@material-ui/core/Select';
 function SelectComponent({ label, name, value, options }) {
 	const classes = useStyles();
 	const { values, errors, setFieldValue } = useFormikContext();
+
+	useEffect(() => {
+		if (values['part'] == '1') {
+			setFieldValue('desc', 'ტესტური კითხვის აღწერა');
+		} else if (values['part'] == '2') {
+			setFieldValue('desc', 'ჩამოსაშლელი და ასარჩევი კითხვის აღწერა');
+		} else if (values['part'] == '3') {
+			setFieldValue('desc', 'ჩასაწერი კითხვის აღწერა');
+		} else if (values['part'] == '4') {
+			setFieldValue('desc', 'ჩასწორებადი კითხვის აღწერა');
+		} else if (values['part'] == '5') {
+			setFieldValue('desc', 'სიტყვის ან სიტყვების არჩევის კითხვის აღწერა');
+		} else if (values['part'] == '6') {
+			setFieldValue('desc', 'ჭეშმარიტია/მცდარია კითხვის აღწერა');
+		} else if (values['part'] == '7') {
+			setFieldValue('desc', 'drag and drop კითხვის აღწერა');
+		} else if (values['part'] == '8') {
+			setFieldValue('desc', 'კროსვორდის კითხვის აღწერა');
+		}
+	}, [values]);
 
 	return (
 		<FormControl variant='outlined' className={classes.formControl}>
