@@ -11,6 +11,7 @@ const DynamicComponentWithNoSSR = dynamic(() => import('react-quill'), {
 
 function TestQuestion() {
 	const [value, setValue] = useState('');
+	const [value2, setValue2] = useState('');
 	const classes = useStyles();
 	const [index, setIndex] = useState('123');
 	const [count, setcount] = useState(3);
@@ -27,7 +28,7 @@ function TestQuestion() {
 				theme='snow'
 				value={value}
 				onChange={setValue}
-				placeholder='კითხვა'
+				placeholder='კითხვა *'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
@@ -35,9 +36,9 @@ function TestQuestion() {
 				arrayItems.map((item) => (
 					<div className='flex align-items-center mb-20 mt-30'>
 						<ExerciseCheckbox
-							placeholder='პასუხი'
-							name='1'
-							inputName='answer'
+							placeholder='პასუხი *'
+							name={`${item}`}
+							inputName={`${item}`}
 						/>
 					</div>
 				))}
@@ -63,8 +64,8 @@ function TestQuestion() {
 
 			<DynamicComponentWithNoSSR
 				theme='snow'
-				value={value}
-				onChange={setValue}
+				value={value2}
+				onChange={setValue2}
 				placeholder='კომენტარი პასუხის არასწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>

@@ -38,7 +38,7 @@ function TrueOrFalse() {
 					<FormControlLabel
 						value='true'
 						control={<Radio color='primary' />}
-						label='ჭეეშმარიტია'
+						label='ჭეშმარიტია'
 					/>
 
 					<FormControlLabel

@@ -140,7 +140,8 @@ export default function AppBarComponnent({ isOpen, children }) {
 							<ListItem
 								button
 								className={`${
-									router.pathname === '/adminpage/exercisespage'
+									router.pathname === '/adminpage/exercisespage' ||
+									router.pathname === '/adminpage/exercise/addexecise'
 										? 'bg-blue'
 										: ''
 								}`}

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -84,15 +85,31 @@ function addexecise({ drawerIsOpen }) {
 		},
 	]);
 
+	const [Part2, setPart2] = useState([
+		{
+			id: 1,
+			value: 'საკითხი',
+			label: 'საკითხი',
+		},
+		{
+			id: 2,
+			value: 'საკითხი',
+			label: 'საკითხი',
+		},
+	]);
+
 	const validationSchema = Yup.object().shape({
 		part: Yup.string().required('Fill out the field'),
 		name: Yup.string(),
 	});
 
 	const initialValues = {
-		part: 1,
+		part: '1',
 		name: '',
 		index: 1,
+		name44: '',
+		name2: 'მორფოლოგია',
+		desc: '',
 	};
 
 	useEffect(() => {
@@ -111,134 +128,154 @@ function addexecise({ drawerIsOpen }) {
 
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
-			<AppForm
+			<Formik
 				initialValues={initialValues}
 				validateOnChange={true}
 				validationSchema={validationSchema}
 				onSubmit={onSubmit}
 			>
-				<Typography variant='h5' component='h5' align='center' gutterBottom>
-					სავარჯიშოს დამატება
-				</Typography>
+				{({ values, errors, handleChange }) => (
+					<Fragment>
+						<Typography variant='h5' component='h5' align='center' gutterBottom>
+							სავარჯიშოს დამატება
+						</Typography>
 
-				<Grid container spacing={5} justify='center'>
-					<Grid item xs={12} sm={12} md={8}>
-						<div className='mb-30 mt-30'>
-							<SelectComponent name='name' label='ნაწილი' options={Part} />
-						</div>
-						<div className='mb-30 mt-30'>
-							<SelectComponent
-								name='name'
-								label='საკითხის არჩევა'
-								options={Part}
-							/>
-						</div>
-
-						<div className='flex align-items-center mb-30'>
-							<span>შემაჯამებელი სავარჯიშო</span>
-							<Checkbox
-								checked={checked}
-								color='primary'
-								onChange={handleChange}
-							/>
-						</div>
-
-						<div className='mb-30 mt-30'>
-							<SelectComponent
-								name='part'
-								label='სავარჯიშოს ტიპი'
-								options={exerciseTypes}
-							/>
-						</div>
-
-						<div className='mb-30'>
-							<TextFieldComponent
-								placeholder='სავარჯიშოს სათაური'
-								name='name'
-							/>
-						</div>
-
-						<div className='mb-30'>
-							<TextareaAutosize
-								className={classes.Textarea}
-								aria-label='empty textarea'
-								placeholder='გრამატიკის წესები'
-							/>
-
-							<div>
-								<input
-									accept='image/*'
-									className={classes.input}
-									id='contained-button-file'
-									multiple
-									type='file'
-								/>
-								<label
-									htmlFor='contained-button-file'
-									className={classes.MarginLeft}
-								>
-									<Fab component='span'>
-										<GraphicEqRoundedIcon />
-									</Fab>
-								</label>
-								აუდიოს ატვირთვა
-							</div>
-						</div>
-
-						<div className='mb-30'>
-							{arrayItems &&
-								arrayItems.map((item) => (
-									<div className='mb-10'>
+						<Grid container spacing={5} justify='center'>
+							<Grid item xs={12} sm={12} md={8}>
+								<div className='mb-30 mt-30'>
+									<SelectComponent
+										name='name'
+										label='ნაწილი *'
+										options={Part}
+									/>
+								</div>
+								<div className='mb-30 mt-30'>
+									<SelectComponent
+										name='name2'
+										label='საკითხის არჩევა *'
+										options={Part}
+									/>
+								</div>
+								{!checked && (
+									<div className='mb-30 mt-30'>
 										<TextFieldComponent
-											placeholder={`youtube ის ლინკი ${item}`}
-											name='name'
+											name='name44'
+											variant='outlined'
+											label='მერამდენე იყოს ეს სავარჯიშო *'
 										/>
 									</div>
-								))}
+								)}
 
-							<ButtonComponent
-								onClick={() => {
-									setcount(count + 1);
-									setIndex((prev) => `${prev}${parseInt(count) + 1}`);
-								}}
-								variant='contained'
-								color='primary'
-								title='დამატება'
-							/>
-						</div>
+								<div className='flex align-items-center mb-30'>
+									<span>შემაჯამებელი სავარჯიშო</span>
+									<Checkbox
+										checked={checked}
+										color='primary'
+										onChange={handleChange}
+									/>
+								</div>
 
-						<div className='mb-30'>
-							<TextareaAutosize
-								className={classes.Textarea}
-								aria-label='empty textarea'
-								placeholder='სავარჯიშოს აღწერა'
-							/>
-						</div>
+								<div className='mb-30 mt-30'>
+									<SelectComponent
+										name='part'
+										label='სავარჯიშოს ტიპი *'
+										options={exerciseTypes}
+									/>
+								</div>
 
-						<AddNewQuestion />
+								<div className='mb-30'>
+									<TextFieldComponent
+										placeholder='სავარჯიშოს სათაური'
+										name='name4'
+									/>
+								</div>
 
-						<div className='mt-30 mb-50'>
-							<ButtonComponent
-								size='large'
-								variant='contained'
-								color='secondary'
-								title='კითხვების დამატების ვიდეო ახსნა'
-							/>
-						</div>
+								<div className='mb-30'>
+									<TextareaAutosize
+										className={classes.Textarea}
+										aria-label='empty textarea'
+										placeholder='გრამატიკის წესები'
+									/>
 
-						<GenerateExerciseComponent name='part' />
+									<div>
+										<input
+											accept='image/*'
+											className={classes.input}
+											id='contained-button-file'
+											multiple
+											type='file'
+										/>
+										<label
+											htmlFor='contained-button-file'
+											className={classes.MarginLeft}
+										>
+											<Fab component='span'>
+												<GraphicEqRoundedIcon />
+											</Fab>
+										</label>
+										აუდიოს ატვირთვა
+									</div>
+								</div>
 
-						<div className='flex space-center mt-70 mt-30'>
-							<SubmitButton
-								title='სავარჯიშოს დამატება'
-								size='large'
-								color='primary'
-								variant='contained'
-							/>
-						</div>
-					</Grid>
-				</Grid>
-			</AppForm>
+								<div className='mb-30'>
+									{arrayItems &&
+										arrayItems.map((item) => (
+											<div className='mb-10'>
+												<TextFieldComponent
+													placeholder={`youtube ის ლინკი ${item}`}
+													name={`${item}`}
+												/>
+											</div>
+										))}
+
+									<ButtonComponent
+										onClick={() => {
+											setcount(count + 1);
+											setIndex((prev) => `${prev}${parseInt(count) + 1}`);
+										}}
+										variant='contained'
+										color='primary'
+										title='დამატება'
+									/>
+								</div>
+
+								<div className='mb-30'>
+									<TextareaAutosize
+										name='desc'
+										className={classes.Textarea}
+										aria-label='empty textarea'
+										placeholder='სავარჯიშოს აღწერა *'
+										value={values.desc}
+										onChange={handleChange}
+									/>
+								</div>
+
+								<div className='mt-30 mb-50'>
+									<ButtonComponent
+										size='large'
+										variant='contained'
+										color='primary'
+										title='კითხვების დამატების ვიდეო ახსნა'
+									/>
+								</div>
+
+								<GenerateExerciseComponent name='part' />
+
+								<AddNewQuestion />
+
+								<div className='flex space-center mt-70 mt-30'>
+									<SubmitButton
+										title='სავარჯიშოს დამატება'
+										size='large'
+										color='primary'
+										variant='contained'
+									/>
+								</div>
+							</Grid>
+						</Grid>
+					</Fragment>
+				)}
+			</Formik>
 		</AppBarComponnent>
 	);
 }

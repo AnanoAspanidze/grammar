@@ -26,7 +26,7 @@ function WritableQuestions() {
 	return (
 		<div className={classes.EcercisesBorder}>
 			<div>
-				იმ ადგილას, სადაც გინდათ, რომ გამოჩნდეს ასარჩევი, ჩაწერეთ #input
+				იმ ადგილას, სადაც გინდათ, რომ გამოჩნდეს ჩასაწერი, ჩაწერეთ #input
 			</div>
 			<DynamicComponentWithNoSSR
 				theme='snow'

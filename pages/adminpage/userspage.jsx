@@ -124,6 +124,7 @@ function userspage({ drawerIsOpen }) {
 								value={age}
 								onChange={handleChange}
 								input={<Input />}
+								required
 							>
 								<MenuItem value={1}>ადმინისტრატორი</MenuItem>
 								<MenuItem value={20}>მასწავლებელი</MenuItem>
@@ -136,7 +137,7 @@ function userspage({ drawerIsOpen }) {
 					<Button onClick={handleClose} color='primary'>
 						დახურვა
 					</Button>
-					<Button onClick={handleClose} variant='contained' color='primary'>
+					<Button variant='contained' type='submit' color='primary'>
 						შეცვლა
 					</Button>
 				</DialogActions>
