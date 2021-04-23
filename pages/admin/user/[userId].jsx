@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Doughnut } from 'react-chartjs-2';
-import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -9,19 +8,14 @@ import Pagination from '@material-ui/lab/Pagination';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
 import Link from 'next/link';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import EditIcon from '@material-ui/icons/Edit';
 
-import AppBarComponnent from '../../../components/adminPage/header/AppBar';
-import TableComponent from '../../../components/adminPage/tables/TableComponent';
-import TableHeadComponent from '../../../components/adminPage/tables/TableHeadComponent';
+import AppBarComponnent from '../../../components/admin/header/AppBar';
+import TableComponent from '../../../components/admin/tables/TableComponent';
+import TableHeadComponent from '../../../components/admin/tables/TableHeadComponent';
 import { getCookie } from '../../../helpers/cookie';
 
 const data = {
@@ -226,7 +220,7 @@ function UserPage({ drawerIsOpen }) {
 									key={index}
 								>
 									<TableCell component='th' scope='row'>
-										<Link href='/adminpage/user/334'>
+										<Link href='/admin/user/334'>
 											<a className={classes.underline}>{row.name}</a>
 										</Link>
 									</TableCell>

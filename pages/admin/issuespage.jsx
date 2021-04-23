@@ -1,7 +1,6 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '../../components/adminPage/tables/Toolbar';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
+import Link from 'next/link';
 import Pagination from '@material-ui/lab/Pagination';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,13 +9,11 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import EditIcon from '@material-ui/icons/Edit';
-import Link from 'next/link';
-import Checkbox from '@material-ui/core/Checkbox';
 
-import ButtonComponent from '../../components/adminPage/reusable/ButtonComponent';
-import AppBarComponnent from '../../components/adminPage/header/AppBar';
-import TableComponent from '../../components/adminPage/tables/TableComponent';
-import TableHeadComponent from '../../components/adminPage/tables/TableHeadComponent';
+import Toolbar from '../../components/admin/tables/Toolbar';
+import AppBarComponnent from '../../components/admin/header/AppBar';
+import TableComponent from '../../components/admin/tables/TableComponent';
+import TableHeadComponent from '../../components/admin/tables/TableHeadComponent';
 import { getCookie } from '../../helpers/cookie';
 
 function createData(name, calories, fat, carbs, protein, visible) {
@@ -36,12 +33,8 @@ const rows = [
 	createData('Gingerbread', 356, 16.0, 49, 3.9, false),
 ];
 
-function Exercises({ drawerIsOpen }) {
-	const classes = useStyles();
-
-	const [checked, setChecked] = React.useState(true);
-	const [checkedId, setCheckedId] = React.useState(null);
-	const [array, setArray] = React.useState(rows);
+function Issuespage({ drawerIsOpen }) {
+	const [array, setArray] = useState(rows);
 
 	const generateArray = (index) => {
 		const modifier = array.map((w, i) => {
@@ -58,27 +51,20 @@ function Exercises({ drawerIsOpen }) {
 		setArray(modifier);
 	};
 
-	const handleChange = (event) => {
-		setChecked(event.target.checked);
-		setCheckedId(parseInt(event.target.id));
-	};
-
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Toolbar
-				btnHref='/adminpage/exercise/addexecise'
-				btnTitle='სავარჯიშოს დამატება'
+				btnHref='/admin/issue/addissue'
+				btnTitle='საკითხის დამატება'
 				searchFieldPlacehoolder='search'
 			/>
+
 			<Grid container spacing={3} justify='center'>
-				<Grid item lg={12}>
+				<Grid item xs={12} sm={12} lg={8}>
 					<TableComponent>
 						<TableHeadComponent>
-							<TableCell>სათაური</TableCell>
-							<TableCell align='left'>სავარჯიშოს ნაწილი</TableCell>
-							<TableCell align='left'>საკითხი</TableCell>
-							<TableCell align='left'>ტიპი</TableCell>
-							<TableCell align='left'>შემაჯამებელი სავარჯიშო</TableCell>
+							<TableCell>საკითხი</TableCell>
+							<TableCell align='left'>ნაწილი</TableCell>
 							<TableCell align='left'></TableCell>
 						</TableHeadComponent>
 
@@ -91,24 +77,17 @@ function Exercises({ drawerIsOpen }) {
 									}}
 									key={index}
 								>
-									<TableCell align='left'>{row.name}</TableCell>
 									<TableCell component='th' scope='row'>
 										{row.name}
 									</TableCell>
 									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
 									<TableCell align='left'>
-										<Checkbox
-											checked={checked && index === checkedId}
-											color='primary'
-											id={index}
-											onChange={handleChange}
-										/>
-									</TableCell>
-									<TableCell align='left'>
-										<IconButton>
-											<EditIcon />
-										</IconButton>
+										<Link href='/admin/editissue/2435'>
+											<IconButton>
+												<EditIcon />
+											</IconButton>
+										</Link>
+
 										<IconButton onClick={(e) => generateArray(index)}>
 											<VisibilityIcon />
 										</IconButton>
@@ -127,15 +106,7 @@ function Exercises({ drawerIsOpen }) {
 	);
 }
 
-export default Exercises;
-
-const useStyles = makeStyles((theme) => ({
-	underline: {
-		textDecoration: 'underline',
-		color: 'inherit',
-		paddingBottom: '5px',
-	},
-}));
+export default Issuespage;
 
 export async function getServerSideProps(ctx) {
 	let cookie = '';

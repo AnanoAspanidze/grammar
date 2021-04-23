@@ -9,14 +9,13 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Fab from '@material-ui/core/Fab';
 import GraphicEqRoundedIcon from '@material-ui/icons/GraphicEqRounded';
 
-import SelectComponent from '../../../components/adminPage/reusable/SelectComponent';
-import TextFieldComponent from '../../../components/adminPage/reusable/TextFieldComponent';
-import AppForm from '../../../components/client/forms/AppForm';
-import AppBarComponnent from '../../../components/adminPage/header/AppBar';
-import SubmitButton from '../../../components/adminPage/reusable/SubmitButton';
-import ButtonComponent from '../../../components/adminPage/reusable/ButtonComponent';
-import GenerateExerciseComponent from '../../../components/adminPage/exercise/GenerateExerciseComponent';
-import AddNewQuestion from '../../../components/adminPage/exercise/AddNewQuestion';
+import SelectComponent from '../../../components/admin/reusable/SelectComponent';
+import TextFieldComponent from '../../../components/admin/reusable/TextFieldComponent';
+import AppBarComponnent from '../../../components/admin/header/AppBar';
+import SubmitButton from '../../../components/admin/reusable/SubmitButton';
+import ButtonComponent from '../../../components/admin/reusable/ButtonComponent';
+import GenerateExerciseComponent from '../../../components/admin/exercise/GenerateExerciseComponent';
+import AddNewQuestion from '../../../components/admin/exercise/AddNewQuestion';
 import { getCookie } from '../../../helpers/cookie';
 
 function addexecise({ drawerIsOpen }) {
@@ -109,7 +108,7 @@ function addexecise({ drawerIsOpen }) {
 		index: 1,
 		name44: '',
 		name2: 'მორფოლოგია',
-		desc: '',
+		desc: 'ტესტური კითხვის აღწერა',
 	};
 
 	useEffect(() => {
@@ -121,10 +120,12 @@ function addexecise({ drawerIsOpen }) {
 		console.log(data);
 	}
 
-	const handleChange = (event) => {
+	const handleChange2 = (event) => {
 		setChecked(event.target.checked);
 		setCheckedId(parseInt(event.target.id));
 	};
+
+	console.log('RENDER...');
 
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
@@ -156,24 +157,24 @@ function addexecise({ drawerIsOpen }) {
 										options={Part}
 									/>
 								</div>
-								{!checked && (
-									<div className='mb-30 mt-30'>
-										<TextFieldComponent
-											name='name44'
-											variant='outlined'
-											label='მერამდენე იყოს ეს სავარჯიშო *'
-										/>
-									</div>
-								)}
-
 								<div className='flex align-items-center mb-30'>
 									<span>შემაჯამებელი სავარჯიშო</span>
 									<Checkbox
 										checked={checked}
 										color='primary'
-										onChange={handleChange}
+										onChange={handleChange2}
 									/>
 								</div>
+
+								{!checked && (
+									<div className='mb-30 mt-30'>
+										<TextFieldComponent
+											name='name44'
+											variant='outlined'
+											label='მერამდენე იყოს ეს სავარჯიშო'
+										/>
+									</div>
+								)}
 
 								<div className='mb-30 mt-30'>
 									<SelectComponent
@@ -243,8 +244,6 @@ function addexecise({ drawerIsOpen }) {
 									<TextareaAutosize
 										name='desc'
 										className={classes.Textarea}
-										aria-label='empty textarea'
-										placeholder='სავარჯიშოს აღწერა *'
 										value={values.desc}
 										onChange={handleChange}
 									/>

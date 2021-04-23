@@ -29,7 +29,7 @@ function SelectComponent({ label, name, value, options }) {
 		} else if (values['part'] == '8') {
 			setFieldValue('desc', 'კროსვორდის კითხვის აღწერა');
 		}
-	}, [values]);
+	}, [values.part]);
 
 	return (
 		<FormControl variant='outlined' className={classes.formControl}>

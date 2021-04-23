@@ -9,7 +9,7 @@ import PeopleIcon from '@material-ui/icons/People';
 console.log(window.location);
 export const mainListItems = (
 	<div>
-		<Link href='/adminpage/issuespage'>
+		<Link href='/admin/issuespage'>
 			<ListItem button>
 				<ListItemIcon>
 					<DashboardIcon />
@@ -17,7 +17,7 @@ export const mainListItems = (
 			</ListItem>
 		</Link>
 
-		<Link href='/adminpage/exercisespage'>
+		<Link href='/admin/exercisespage'>
 			<ListItem button>
 				<ListItemIcon>
 					<ShoppingCartIcon />
@@ -25,7 +25,7 @@ export const mainListItems = (
 			</ListItem>
 		</Link>
 
-		<Link href='/adminpage/userspage'>
+		<Link href='/admin/userspage'>
 			<ListItem button>
 				<ListItemIcon>
 					<PeopleIcon />

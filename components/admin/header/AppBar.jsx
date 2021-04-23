@@ -77,7 +77,7 @@ export default function AppBarComponnent({ isOpen, children }) {
 					</Typography>
 
 					<div className={classes.marginLeft}>
-						<Link href='/adminpage/profile'>
+						<Link href='/admin/profile'>
 							<Button className={classes.colors}>
 								<AccountCircleIcon />
 								<span className={classes.iconMargin}>პროფილის რედაქტირება</span>
@@ -122,11 +122,11 @@ export default function AppBarComponnent({ isOpen, children }) {
 
 				<List>
 					<div>
-						<Link href='/adminpage/issuespage'>
+						<Link href='/admin/issuespage'>
 							<ListItem
 								button
 								className={`${
-									router.pathname === '/adminpage/issuespage' ? 'bg-blue' : ''
+									router.pathname === '/admin/issuespage' ? 'bg-blue' : ''
 								}`}
 							>
 								<ListItemIcon>
@@ -136,12 +136,12 @@ export default function AppBarComponnent({ isOpen, children }) {
 							</ListItem>
 						</Link>
 
-						<Link href='/adminpage/exercisespage'>
+						<Link href='/admin/exercisespage'>
 							<ListItem
 								button
 								className={`${
-									router.pathname === '/adminpage/exercisespage' ||
-									router.pathname === '/adminpage/exercise/addexecise'
+									router.pathname === '/admin/exercisespage' ||
+									router.pathname === '/admin/exercise/addexecise'
 										? 'bg-blue'
 										: ''
 								}`}
@@ -153,11 +153,11 @@ export default function AppBarComponnent({ isOpen, children }) {
 							</ListItem>
 						</Link>
 
-						<Link href='/adminpage/userspage'>
+						<Link href='/admin/userspage'>
 							<ListItem
 								button
 								className={`${
-									router.pathname === '/adminpage/userspage' ? 'bg-blue' : ''
+									router.pathname === '/admin/userspage' ? 'bg-blue' : ''
 								}`}
 							>
 								<ListItemIcon>

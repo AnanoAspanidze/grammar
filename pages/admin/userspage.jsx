@@ -21,10 +21,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Link from 'next/link';
 
-import Toolbar from '../../components/adminPage/tables/Toolbar';
-import AppBarComponnent from '../../components/adminPage/header/AppBar';
-import TableComponent from '../../components/adminPage/tables/TableComponent';
-import TableHeadComponent from '../../components/adminPage/tables/TableHeadComponent';
+import Toolbar from '../../components/admin/tables/Toolbar';
+import AppBarComponnent from '../../components/admin/header/AppBar';
+import TableComponent from '../../components/admin/tables/TableComponent';
+import TableHeadComponent from '../../components/admin/tables/TableHeadComponent';
 import { getCookie } from '../../helpers/cookie';
 
 function createData(name, calories, fat, carbs, protein) {
@@ -84,7 +84,7 @@ function userspage({ drawerIsOpen }) {
 							{rows.map((row) => (
 								<TableRow key={row.name}>
 									<TableCell component='th' scope='row'>
-										<Link href='/adminpage/user/334'>
+										<Link href='/admin/user/334'>
 											<a className={classes.underline}>{row.name}</a>
 										</Link>
 									</TableCell>
