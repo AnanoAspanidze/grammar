@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useFormikContext } from 'formik';
 
-import TestQuestion from '../../../components/adminPage/exercise/TestQuestion';
-import SelectQuestions from '../../../components/adminPage/exercise/SelectQuestions';
-import WritableQuestions from '../../../components/adminPage/exercise/WritableQuestions';
-import ChangableQuestion from '../../../components/adminPage/exercise/ChangableQuestion';
-import TagsQuestions from '../../../components/adminPage/exercise/TagsQuestions';
-import TrueOrFalse from '../../../components/adminPage/exercise/TrueOrFalse';
+import TestQuestion from '../../../components/admin/exercise/TestQuestion';
+import SelectQuestions from '../../../components/admin/exercise/SelectQuestions';
+import WritableQuestions from '../../../components/admin/exercise/WritableQuestions';
+import ChangableQuestion from '../../../components/admin/exercise/ChangableQuestion';
+import TagsQuestions from '../../../components/admin/exercise/TagsQuestions';
+import TrueOrFalse from '../../../components/admin/exercise/TrueOrFalse';
 import DragEndDropQuestion from './DragEndDropQuestion';
 
 function GenerateExerciseComponent({ name }) {

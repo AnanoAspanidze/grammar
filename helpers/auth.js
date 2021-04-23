@@ -13,12 +13,6 @@ export const redirectIfAuthenticated = (path, ctx) => {
 	return false;
 };
 
-export const redirectIfNotCostumer = (path, ctx) => {
-	if (getCookie('isRegisteredCustomer', ctx.req) === 'false') {
-		redirect(path, ctx);
-	}
-};
-
 export const redirectIfNotAuthenticated = (path, ctx) => {
 	if (!isAuthenticated(ctx)) {
 		redirect(path, ctx);

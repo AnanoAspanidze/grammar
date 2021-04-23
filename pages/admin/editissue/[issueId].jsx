@@ -3,11 +3,11 @@ import * as Yup from 'yup';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import SelectComponent from '../../../components/adminPage/reusable/SelectComponent';
-import TextFieldComponent from '../../../components/adminPage/reusable/TextFieldComponent';
+import SelectComponent from '../../../components/admin/reusable/SelectComponent';
+import TextFieldComponent from '../../../components/admin/reusable/TextFieldComponent';
 import AppForm from '../../../components/client/forms/AppForm';
-import AppBarComponnent from '../../../components/adminPage/header/AppBar';
-import SubmitButton from '../../../components/adminPage/reusable/SubmitButton';
+import AppBarComponnent from '../../../components/admin/header/AppBar';
+import SubmitButton from '../../../components/admin/reusable/SubmitButton';
 import { getCookie } from '../../../helpers/cookie';
 
 function editissue({ drawerIsOpen }) {
