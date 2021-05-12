@@ -107,9 +107,7 @@ function MyComponent() {
 				<Route path='/admin/userspage' exact>
 					<Userspage />
 				</Route>
-				<Route path='/admin/user/:userId'>
-					<UserPage />
-				</Route>
+				<Route path='/admin/user/:userId' component={UserPage}></Route>
 			</Switch>
 		</Router>
 	);

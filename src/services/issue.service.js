@@ -5,6 +5,8 @@ export const issueService = {
 	updateIssue,
 	getIssue,
 	getIssues,
+	hideIssue,
+	unHideIssue,
 };
 
 function createIssue(Name, CategoryId) {
@@ -28,5 +30,17 @@ function getIssue(id) {
 function getIssues() {
 	return fetchWrapper
 		.get('/SubCategories/GetSubCategories')
+		.then((part) => part);
+}
+
+function hideIssue(id) {
+	return fetchWrapper
+		.post(`/SubCategories/HideSubCategory`, { id })
+		.then((part) => part);
+}
+
+function unHideIssue(id) {
+	return fetchWrapper
+		.post(`/SubCategories/unHideSubCategory`, { id })
 		.then((part) => part);
 }

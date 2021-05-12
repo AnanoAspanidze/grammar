@@ -39,6 +39,20 @@ function Issuespage({ drawerIsOpen }) {
 	// 	setArray(modifier);
 	// };
 
+	const toggleVisible = (id, isActive) => {
+		console.log(isActive);
+		console.log(id);
+		if (isActive) {
+			issueService.unHideIssue(id).then((res) => {
+				console.log(res);
+			});
+		}
+
+		// if(!isActive) {
+
+		// }
+	};
+
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Toolbar
@@ -76,7 +90,9 @@ function Issuespage({ drawerIsOpen }) {
 											</IconButton>
 										</Link>
 
-										<IconButton>
+										<IconButton
+											onClick={() => toggleVisible(row.Id, row.IsActive)}
+										>
 											<VisibilityIcon />
 										</IconButton>
 									</TableCell>

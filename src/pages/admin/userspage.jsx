@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import SnackbarComponent from '../../components/admin/reusable/SnackbarComponent';
 // import IconButton from '@material-ui/core/IconButton';
 // import VisibilityIcon from '@material-ui/icons/Visibility';
 // import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
@@ -26,40 +27,83 @@ import AppBarComponnent from '../../components/admin/header/AppBar';
 import TableComponent from '../../components/admin/tables/TableComponent';
 import TableHeadComponent from '../../components/admin/tables/TableHeadComponent';
 
-function createData(name, calories, fat, carbs, protein) {
-	return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData('Eclair', 262, 16.0, 24, 6.0),
-	createData('Cupcake', 305, 3.7, 67, 4.3),
-	createData('Gingerbread', 356, 16.0, 49, 3.9),
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-	createData('Eclair', 262, 16.0, 24, 6.0),
-	createData('Cupcake', 305, 3.7, 67, 4.3),
-	createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+import { commonService } from '../../services/common.service';
+import { accountService } from '../../services/user.service';
 
 function Userspage({ drawerIsOpen }) {
 	const classes = useStyles();
 
+	const [state, setState] = useState({
+		open: false,
+		vertical: 'top',
+		horizontal: 'center',
+		severity: '',
+		error: null,
+	});
+
+	const [users, setUsers] = useState(null);
+	const [roles, setRoles] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [open, setOpen] = useState(false);
-	const [age, setAge] = useState('');
+	const [selectedUser, setSelectedUser] = useState({
+		userId: '',
+		userRoleId: '',
+	});
+
+	useEffect(() => {
+		commonService.getRoles().then((res) => setRoles(res));
+		accountService.getUsers().then((res) => setUsers(res));
+	}, []);
 
 	const handleChange = (event) => {
-		setAge(Number(event.target.value) || '');
+		setSelectedUser({
+			userId: selectedUser.userId,
+			userRoleId: Number(event.target.value),
+		});
 	};
 
-	const handleClickOpen = () => {
+	const handleClickOpen = (id, userRoleId) => {
 		setOpen(true);
+		setSelectedUser({
+			userId: id,
+			userRoleId: userRoleId,
+		});
 	};
 
 	const handleClose = () => {
 		setOpen(false);
+		setSelectedUser(null);
 	};
+
+	const changeRole = () => {
+		setLoading(true);
+
+		accountService
+			.changeUserRole(selectedUser.userId, selectedUser.userRoleId)
+			.then((res) => {
+				handleClose();
+				handleClickSnackbar(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
+					res.Message
+				);
+				setLoading(false);
+			})
+			.catch((err) => {
+				handleClickSnackbar(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
+					err
+				);
+			});
+	};
+
+	const handleClickSnackbar = (newState, message) => {
+		setState({ open: true, error: message, ...newState });
+	};
+
+	const handleCloseSnackbar = () => {
+		setState({ ...state, open: false });
+	};
+
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Grid container spacing={3} justify='center'>
@@ -80,23 +124,28 @@ function Userspage({ drawerIsOpen }) {
 						</TableHeadComponent>
 
 						<TableBody>
-							{rows.map((row) => (
-								<TableRow key={row.name}>
-									<TableCell component='th' scope='row'>
-										<Link to='/admin/user/334'>
-											<a className={classes.underline}>{row.name}</a>
-										</Link>
-									</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>
-										<Button onClick={handleClickOpen}>როლის ცვლილება</Button>
-									</TableCell>
-								</TableRow>
-							))}
+							{users &&
+								users.map((row) => (
+									<TableRow key={row.Id}>
+										<TableCell component='th' scope='row'>
+											<Link to={`/admin/user/${row.Id}`}>
+												<span className={classes.underline}>{row.Name}</span>
+											</Link>
+										</TableCell>
+										<TableCell align='left'>{row.Surname}</TableCell>
+										<TableCell align='left'>{row.Email}</TableCell>
+										<TableCell align='left'>{row.Role.Name}</TableCell>
+										<TableCell align='left'>{row.RegionName}</TableCell>
+										<TableCell align='left'>{row.School}</TableCell>
+										<TableCell align='left'>
+											<Button
+												onClick={() => handleClickOpen(row.Id, row.Role.Id)}
+											>
+												როლის ცვლილება
+											</Button>
+										</TableCell>
+									</TableRow>
+								))}
 						</TableBody>
 					</TableComponent>
 
@@ -120,14 +169,17 @@ function Userspage({ drawerIsOpen }) {
 							<Select
 								labelId='demo-dialog-select-label'
 								id='demo-dialog-select'
-								value={age}
+								value={selectedUser ? selectedUser.userRoleId : ''}
 								onChange={handleChange}
 								input={<Input />}
 								required
 							>
-								<MenuItem value={1}>ადმინისტრატორი</MenuItem>
-								<MenuItem value={20}>მასწავლებელი</MenuItem>
-								<MenuItem value={30}>მოსწავლე</MenuItem>
+								{roles &&
+									roles.map((role) => (
+										<MenuItem key={role.Id} value={role.Id}>
+											{role.Name}
+										</MenuItem>
+									))}
 							</Select>
 						</FormControl>
 					</form>
@@ -136,11 +188,24 @@ function Userspage({ drawerIsOpen }) {
 					<Button onClick={handleClose} color='primary'>
 						დახურვა
 					</Button>
-					<Button variant='contained' type='submit' color='primary'>
+					<Button
+						variant='contained'
+						type='submit'
+						color='primary'
+						onClick={changeRole}
+						disabled={loading}
+					>
 						შეცვლა
 					</Button>
 				</DialogActions>
 			</Dialog>
+
+			<SnackbarComponent
+				open={state.open}
+				message={state.error}
+				severity={state.severity}
+				handleClose={handleCloseSnackbar}
+			/>
 		</AppBarComponnent>
 	);
 }

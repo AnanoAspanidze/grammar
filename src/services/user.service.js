@@ -4,6 +4,9 @@ export const accountService = {
 	userSignin,
 	adminSignin,
 	updateAdminInfo,
+	getUserdetails,
+	getUsers,
+	changeUserRole,
 };
 
 function userSignin(Email, Password) {
@@ -20,4 +23,20 @@ function adminSignin(Email, Password) {
 
 function updateAdminInfo(data) {
 	return fetchWrapper.post('/Users/editadmininfo', data).then((info) => info);
+}
+
+function getUserdetails(id) {
+	return fetchWrapper
+		.get(`/Users/userdetails?itemId=${id}`)
+		.then((info) => info);
+}
+
+function getUsers() {
+	return fetchWrapper.get('/Users/users').then((user) => user);
+}
+
+function changeUserRole(UserId, RoleId) {
+	return fetchWrapper
+		.post('/Users/changeuserrole', { UserId, RoleId })
+		.then((user) => user);
 }

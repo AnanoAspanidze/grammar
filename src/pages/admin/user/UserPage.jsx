@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Doughnut } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
@@ -18,6 +18,8 @@ import AppBarComponnent from '../../../components/admin/header/AppBar';
 import TableComponent from '../../../components/admin/tables/TableComponent';
 import TableHeadComponent from '../../../components/admin/tables/TableHeadComponent';
 
+import { accountService } from '../../../services/user.service';
+
 const data = {
 	labels: ['არასწორი პასუხები', 'სწორი პასუხები', 'პასუხგაუცემელი'],
 	datasets: [
@@ -35,42 +37,22 @@ const data = {
 	],
 };
 
-function createData(name, calories, fat, carbs, protein, visible) {
-	return { name, calories, fat, carbs, protein, visible };
-}
-
-const rows = [
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0, false),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3, false),
-	createData('Eclair', 262, 16.0, 24, 6.0, false),
-	createData('Cupcake', 305, 3.7, 67, 4.3, false),
-	createData('Gingerbread', 356, 16.0, 49, 3.9, false),
-	createData('Frozen yoghurt', 159, 6.0, 24, 4.0, false),
-	createData('Ice cream sandwich', 237, 9.0, 37, 4.3, false),
-	createData('Eclair', 262, 16.0, 24, 6.0, false),
-	createData('Cupcake', 305, 3.7, 67, 4.3, false),
-	createData('Gingerbread', 356, 16.0, 49, 3.9, false),
-];
-
-function UserPage({ drawerIsOpen }) {
+function UserPage({ drawerIsOpen, match }) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
-	const [array, setArray] = useState(rows);
+	// const [array, setArray] = useState(rows);
+	const [userData, setUserData] = useState({
+		Name: '',
+		Surname: '',
+		role: '',
+		Email: '',
+		School: '',
+		RegionName: '',
+	});
 
-	const generateArray = (index) => {
-		const modifier = array.map((w, i) => {
-			if (i == index) {
-				if (w.visible) {
-					return { ...w, visible: false };
-				} else if (!w.visible) {
-					return { ...w, visible: true };
-				}
-			}
-			return w;
-		});
-
-		setArray(modifier);
-	};
+	useEffect(() => {
+		accountService.getUserdetails().then((res) => setUserData(res));
+	}, []);
 
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
@@ -86,22 +68,26 @@ function UserPage({ drawerIsOpen }) {
 								<span>ჯეკო</span>
 							</Paper>
 							<Paper className={classes.paper}>
-								<span className={classes.Margin}>გვარი:</span> <span>ჯეკო</span>
+								<span className={classes.Margin}>გვარი:</span>{' '}
+								<span>{userData.Name}</span>
 							</Paper>
 							<Paper className={classes.paper}>
-								<span className={classes.Margin}>მეილი:</span> <span>ჯეკო</span>
+								<span className={classes.Margin}>მეილი:</span>{' '}
+								<span>{userData.Email}</span>
 							</Paper>
 						</Grid>
 						<Grid item xs={6}>
 							<Paper className={classes.paper}>
-								<span className={classes.Margin}>როლი:</span> <span>ჯეკო</span>
+								<span className={classes.Margin}>როლი:</span>{' '}
+								<span>{userData.role}</span>
 							</Paper>
 							<Paper className={classes.paper}>
 								<span className={classes.Margin}>რეგიონი:</span>{' '}
-								<span>ჯეკო</span>
+								<span>{userData.RegionName}</span>
 							</Paper>
 							<Paper className={classes.paper}>
-								<span className={classes.Margin}>სკოლა:</span> <span>ჯეკო</span>
+								<span className={classes.Margin}>სკოლა:</span>{' '}
+								<span>{userData.school}</span>
 							</Paper>
 						</Grid>
 					</div>
@@ -211,7 +197,7 @@ function UserPage({ drawerIsOpen }) {
 						</TableHeadComponent>
 
 						<TableBody>
-							{array.map((row, index) => (
+							{/* {array.map((row, index) => (
 								<TableRow
 									visible={row.visible}
 									style={{
@@ -230,7 +216,7 @@ function UserPage({ drawerIsOpen }) {
 									<TableCell align='left'>{row.calories}</TableCell>
 									<TableCell align='left'>{row.calories}</TableCell>
 								</TableRow>
-							))}
+							))} */}
 						</TableBody>
 					</TableComponent>
 
