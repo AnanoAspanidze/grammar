@@ -1,0 +1,32 @@
+import { fetchWrapper } from '../helpers/fetch-wrapper';
+
+export const issueService = {
+	createIssue,
+	updateIssue,
+	getIssue,
+	getIssues,
+};
+
+function createIssue(Name, CategoryId) {
+	return fetchWrapper
+		.post('/SubCategories/createsubcategories', { Name, CategoryId })
+		.then((part) => part);
+}
+
+function updateIssue(id, Name, CategoryId) {
+	return fetchWrapper
+		.put(`/SubCategories/editsubcategories?id=${id}`, { Name, CategoryId })
+		.then((part) => part);
+}
+
+function getIssue(id) {
+	return fetchWrapper
+		.get(`/SubCategories/subcategorydetails?id=${id}`)
+		.then((part) => part);
+}
+
+function getIssues() {
+	return fetchWrapper
+		.get('/SubCategories/GetSubCategories')
+		.then((part) => part);
+}
