@@ -35,12 +35,12 @@ function getIssues() {
 
 function hideIssue(id) {
 	return fetchWrapper
-		.post(`/SubCategories/HideSubCategory`, { id })
+		.post(`/SubCategories/HideSubCategory/${id}`)
 		.then((part) => part);
 }
 
 function unHideIssue(id) {
 	return fetchWrapper
-		.post(`/SubCategories/unHideSubCategory`, { id })
+		.post(`/SubCategories/unHideSubCategory/${id}`)
 		.then((part) => part);
 }

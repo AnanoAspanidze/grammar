@@ -17,6 +17,8 @@ const Toolbar = ({
 	btnTitle,
 	searchFieldPlacehoolder,
 	downloadExelFile,
+	onChange,
+	value,
 	...rest
 }) => {
 	return (
@@ -50,6 +52,8 @@ const Toolbar = ({
 								fullWidth
 								placeholder={searchFieldPlacehoolder}
 								variant='outlined'
+								onChange={onChange}
+								value={value}
 								InputProps={{
 									startAdornment: (
 										<InputAdornment position='start'>

@@ -10,6 +10,9 @@ import SnackbarComponent from '../../components/admin/reusable/SnackbarComponent
 // import VisibilityIcon from '@material-ui/icons/Visibility';
 // import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 // import EditIcon from '@material-ui/icons/Edit';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -26,9 +29,11 @@ import Toolbar from '../../components/admin/tables/Toolbar';
 import AppBarComponnent from '../../components/admin/header/AppBar';
 import TableComponent from '../../components/admin/tables/TableComponent';
 import TableHeadComponent from '../../components/admin/tables/TableHeadComponent';
+import PaginationComponent from '../../components/admin/reusable/PaginationComponent';
 
 import { commonService } from '../../services/common.service';
 import { accountService } from '../../services/user.service';
+import { authHeader } from '../../helpers/auth-header';
 
 function Userspage({ drawerIsOpen }) {
 	const classes = useStyles();
@@ -43,6 +48,14 @@ function Userspage({ drawerIsOpen }) {
 
 	const [users, setUsers] = useState(null);
 	const [roles, setRoles] = useState(false);
+	const [searchValue, setSearchValue] = useState('');
+	const [currentPage, setcurrentPage] = useState(1);
+
+	const [rotate, setRotate] = useState('Name');
+	const [rotateValue, setRotateValue] = useState('asc');
+	const [sortOrder, setSortOrder] = useState('');
+	const [sortOrderValue, setSortOrderValue] = useState('name_asc');
+
 	const [loading, setLoading] = useState(false);
 	const [open, setOpen] = useState(false);
 	const [selectedUser, setSelectedUser] = useState({
@@ -51,9 +64,40 @@ function Userspage({ drawerIsOpen }) {
 	});
 
 	useEffect(() => {
-		commonService.getRoles().then((res) => setRoles(res));
-		accountService.getUsers().then((res) => setUsers(res));
+		const requestOptions = {
+			method: 'GET',
+			headers: {
+				...authHeader(),
+			},
+		};
+
+		fetch(
+			'https://grammar.emis.ge/api/Users/userexeldata',
+			requestOptions
+		).then((res) => console.log(res));
+
+		// accountService.userexeldata().then((res) => console.log(res));
 	}, []);
+
+	useEffect(() => {
+		commonService.getRoles().then((res) => setRoles(res));
+	}, []);
+
+	useEffect(() => {
+		setLoading(true);
+
+		accountService
+			.getUsers({
+				PageNumber: currentPage,
+				SortOrder: sortOrderValue,
+				PageSize: 10,
+				SearchQuery: searchValue,
+			})
+			.then((res) => {
+				setUsers(res);
+				setLoading(false);
+			});
+	}, [currentPage, sortOrderValue, searchValue]);
 
 	const handleChange = (event) => {
 		setSelectedUser({
@@ -96,6 +140,25 @@ function Userspage({ drawerIsOpen }) {
 			});
 	};
 
+	const filterData = (filterValue, secondParam) => {
+		if (filterValue !== rotate) {
+			setRotateValue('asc');
+			setRotate(filterValue);
+			setSortOrder(secondParam);
+		} else {
+			setRotateValue(rotateValue === 'desc' ? 'asc' : 'desc');
+			setRotate(filterValue);
+			setSortOrder(secondParam);
+		}
+	};
+
+	useEffect(() => {
+		if (sortOrder) {
+			console.log(rotateValue);
+			setSortOrderValue(`${sortOrder}_${rotateValue}`);
+		}
+	}, [sortOrder, rotateValue]);
+
 	const handleClickSnackbar = (newState, message) => {
 		setState({ open: true, error: message, ...newState });
 	};
@@ -104,28 +167,90 @@ function Userspage({ drawerIsOpen }) {
 		setState({ ...state, open: false });
 	};
 
+	const handleChange3 = (event, value) => {
+		setLoading(true);
+		setcurrentPage(value);
+	};
+
+	const paginate = (pageNumber) => setcurrentPage(pageNumber);
+
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Grid container spacing={3} justify='center'>
 				<Grid item xs={12} sm={12} lg={12}>
 					<div className='mb-30 mt-30'>
-						<Toolbar searchFieldPlacehoolder='search' downloadExelFile={true} />
+						<Toolbar
+							searchFieldPlacehoolder='search'
+							downloadExelFile={true}
+							value={searchValue}
+							onChange={(e) => setSearchValue(e.target.value)}
+						/>
 					</div>
 
+					<div style={{ height: '4px' }}>{loading && <LinearProgress />}</div>
 					<TableComponent>
 						<TableHeadComponent>
-							<TableCell>სახელი</TableCell>
-							<TableCell align='left'>გვარი</TableCell>
-							<TableCell align='left'>მეილი</TableCell>
-							<TableCell align='left'>როლი</TableCell>
-							<TableCell align='left'>რეგიონი</TableCell>
-							<TableCell align='left'>სკოლა</TableCell>
+							<TableCell
+								className='cursor-pointer'
+								onClick={() => filterData('Name', 'name')}
+							>
+								<div className='flex align-items-center'>
+									<div>სახელი</div>
+									<ArrowDropDownIcon
+										style={{
+											transform: `rotate(${
+												rotateValue === 'asc' ? 0 : 180
+											}deg)`,
+											display: `${rotate !== 'Name' ? 'none' : 'initial'}`,
+										}}
+									/>
+								</div>
+							</TableCell>
+							<TableCell
+								className='cursor-pointer'
+								align='left'
+								onClick={() => filterData('Surname', 'Surname')}
+							>
+								<div className='flex'>
+									<div>გვარი</div>
+									<ArrowDropDownIcon
+										style={{
+											transform: `rotate(${
+												rotateValue === 'asc' ? 0 : 180
+											}deg)`,
+											display: `${rotate !== 'Surname' ? 'none' : 'initial'}`,
+										}}
+									/>
+								</div>
+							</TableCell>
+							<TableCell align='left'>
+								<div>მეილი</div>
+							</TableCell>
+							<TableCell align='left'>
+								<div>როლი</div>
+							</TableCell>
+							<TableCell align='left'>
+								<div>რეგიონი</div>
+							</TableCell>
+							<TableCell align='left'>
+								<div className='flex'>
+									<div>სკოლა</div>
+									<ArrowDropDownIcon
+										style={{
+											transform: `rotate(${
+												rotateValue === 'asc' ? 0 : 180
+											}deg)`,
+											display: `${rotate !== 'School' ? 'none' : 'initial'}`,
+										}}
+									/>
+								</div>
+							</TableCell>
 							<TableCell align='left'></TableCell>
 						</TableHeadComponent>
 
 						<TableBody>
 							{users &&
-								users.map((row) => (
+								users.Users.map((row) => (
 									<TableRow key={row.Id}>
 										<TableCell component='th' scope='row'>
 											<Link to={`/admin/user/${row.Id}`}>
@@ -150,7 +275,13 @@ function Userspage({ drawerIsOpen }) {
 					</TableComponent>
 
 					<div className='flex space-center' style={{ marginTop: 30 }}>
-						<Pagination count={10} size='large' color='primary' />
+						{users && (
+							<PaginationComponent
+								postsPerPage={10}
+								totalPosts={users.UsersQuantity}
+								paginate={paginate}
+							/>
+						)}
 					</div>
 				</Grid>
 			</Grid>

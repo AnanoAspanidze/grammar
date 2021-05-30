@@ -7,7 +7,16 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 
-function SelectComponent({ label, name, text, value, options, isExerciePage }) {
+function SelectComponent({
+	label,
+	name,
+	text,
+	value,
+	options,
+	hasOnchange,
+	onChange,
+	isExerciePage,
+}) {
 	const classes = useStyles();
 	const { values, errors, setFieldValue } = useFormikContext();
 
@@ -38,7 +47,13 @@ function SelectComponent({ label, name, text, value, options, isExerciePage }) {
 			<InputLabel>{label}</InputLabel>
 			<Select
 				value={values[name]}
-				onChange={(event) => setFieldValue(name, event.target.value)}
+				onChange={(event) => {
+					setFieldValue(name, event.target.value);
+
+					if (hasOnchange) {
+						onChange(event.target.value);
+					}
+				}}
 				label={label}
 			>
 				{options &&
@@ -62,6 +77,7 @@ export default SelectComponent;
 
 SelectComponent.defaultProps = {
 	isExerciePage: false,
+	hasOnchange: false,
 };
 
 const useStyles = makeStyles((theme) => ({

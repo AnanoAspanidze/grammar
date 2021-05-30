@@ -41,3 +41,23 @@ export const updateAdminInfoSchema = Yup.object().shape({
 		then: Yup.string().oneOf([Yup.ref('NewPassword')], 'პაროლები არ ემთხვევა'),
 	}),
 });
+
+export const addExerciseValidationSchema = Yup.object().shape({
+	category: Yup.string().required('შეავსეთ ველი'),
+	SubCategoryId: Yup.string().required('შეავსეთ ველი'),
+	Name: Yup.string().required('შეავსეთ ველი'),
+	Description: Yup.string().required('შეავსეთ ველი'),
+	TypeId: Yup.string().required('შეავსეთ ველი'),
+	Instruction: Yup.string().required('შეავსეთ ველი'),
+	IsSummaryExercise: Yup.boolean(),
+	OrderNumber: Yup.string().when(
+		'IsSummaryExercise',
+		(IsSummaryExercise, schema) => {
+			if (IsSummaryExercise) {
+				return Yup.string().notRequired();
+			} else {
+				return Yup.string().required('შეავსეთ ველი');
+			}
+		}
+	),
+});

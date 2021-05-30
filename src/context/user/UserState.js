@@ -2,8 +2,7 @@ import React, { useReducer } from 'react';
 
 import userContext from './userContext';
 import userReducer from './userReducer';
-import jwt_decode from 'jwt-decode';
-import { setCookie, getCookie, removeCookie } from '../../helpers/cookie';
+import { setCookie, removeCookie } from '../../helpers/cookie';
 import { SET_CURRENT_USER, GET_ERRORS, CLEAR_SERVER_ERROR } from './types';
 
 const UserState = (props) => {
@@ -24,8 +23,10 @@ const UserState = (props) => {
 			payload: { decodedUser, token, refreshToken },
 		});
 
-		setCookie('JwtToken', token);
-		setCookie('RefreshToken', refreshToken);
+		if (Object.keys(decodedUser).length > 0) {
+			setCookie('JwtToken', token);
+			setCookie('RefreshToken', refreshToken);
+		}
 	};
 
 	const setError = (error) => dispatch({ type: GET_ERRORS, payload: error });
@@ -36,6 +37,7 @@ const UserState = (props) => {
 		removeCookie('JwtToken');
 		removeCookie('RefreshToken');
 		setCurrentUser({}, null, null);
+		window.location.href = '/';
 	};
 
 	return (

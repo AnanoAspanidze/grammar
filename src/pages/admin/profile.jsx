@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -10,18 +10,55 @@ import { accountService } from '../../services/user.service';
 import { updateAdminInfoSchema } from '../../helpers/schema';
 import userContext from '../../context/user/userContext';
 import SnackbarComponent from '../../components/admin/reusable/SnackbarComponent';
+import { authHeader } from '../../helpers/auth-header';
 
-function Profile() {
-	const [state, setState] = React.useState({
+function Profile({ drawerIsOpen }) {
+	const [state, setState] = useState({
 		open: false,
 		vertical: 'top',
 		horizontal: 'center',
 		severity: '',
 		error: null,
 	});
+
+	const [initialValues, setinitialValues] = useState({
+		Name: '',
+		Surname: '',
+		oldPassword: '',
+		NewPassword: '',
+		RepeatNewPassword: '',
+		RegionId: 1,
+	});
+
 	const { open } = state;
 
 	const { user, clearErrors } = useContext(userContext);
+
+	useEffect(() => {
+		const requestOptions = {
+			method: 'POST',
+			headers: {
+				...authHeader(),
+			},
+		};
+
+		fetch(
+			`${process.env.REACT_APP_HOST}/Account/refresh-token`,
+			requestOptions
+		).then((res) => {
+			console.log(res);
+		});
+	}, []);
+
+	useEffect(() => {
+		if (Object.keys(user).length > 0) {
+			setinitialValues({
+				...initialValues,
+				Name: user.unique_name,
+				Surname: user.family_name,
+			});
+		}
+	}, [user]);
 
 	const handleClick = (newState, message) => {
 		setState({ open: true, error: message, ...newState });
@@ -32,14 +69,6 @@ function Profile() {
 		setState({ ...state, open: false });
 	};
 
-	const initialValues = {
-		Name: user.Name,
-		Surname: user.Surname,
-		oldPassword: '',
-		NewPassword: '',
-		RepeatNewPassword: '',
-	};
-
 	function onSubmit(data, action) {
 		accountService
 			.updateAdminInfo({ ...data, Id: user.Id })
@@ -48,22 +77,24 @@ function Profile() {
 					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
 					res.Message
 				);
+
+				accountService.refreshToken().then((res) => console.log(res));
 				action.setSubmitting(false);
 			})
 			.catch((err) => {
 				handleClick(
 					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
-					err
+					err.Message
 				);
 				action.setSubmitting(false);
 			});
 	}
 
 	return (
-		<AppBarComponnent isOpen='true'>
+		<AppBarComponnent isOpen={drawerIsOpen}>
 			<AppForm
 				initialValues={initialValues}
-				validateOnChange={true}
+				enableReinitialize={true}
 				validationSchema={updateAdminInfoSchema}
 				onSubmit={onSubmit}
 			>

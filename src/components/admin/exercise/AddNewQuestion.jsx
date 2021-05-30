@@ -8,7 +8,26 @@ function AddNewQuestion() {
 
 	if (values['part'] != 7 && values['part'] != 8) {
 		return (
-			<Button onClick={() => setFieldValue('index', values['index'] + 1)}>
+			<Button
+				onClick={() => {
+					setFieldValue('index', values['index'] + 1);
+					setFieldValue('Questions', [
+						...values.Questions,
+						{
+							Answers: [
+								{
+									id: 1,
+									Text: '',
+									IsCorrect: false,
+								},
+							],
+							Text: '',
+							WrongAnswerText: '',
+							RightAnswerText: '',
+						},
+					]);
+				}}
+			>
 				კითხვის დამატება <AddIcon />
 			</Button>
 		);

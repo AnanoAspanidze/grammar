@@ -23,8 +23,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
-import { setCookie, getCookie } from '../../../helpers/cookie';
+import { setCookie } from '../../../helpers/cookie';
 import userContext from '../../../context/user/userContext';
+import drawerContext from '../../../context/drawer/drawerContext';
 
 const drawerWidth = 240;
 
@@ -33,18 +34,21 @@ export default function AppBarComponnent({ isOpen, children }) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(null);
-	const { logOutUser } = useContext(userContext);
+	const { logOutUser, isAuthenticated } = useContext(userContext);
+	const { changeDrawer } = useContext(drawerContext);
 
 	useEffect(() => {
 		setOpen(null);
 	}, []);
 
 	const handleDrawerOpen = () => {
+		changeDrawer(true);
 		setOpen(true);
 		setCookie('Drawer', true);
 	};
 
 	const handleDrawerClose = () => {
+		changeDrawer(false);
 		setOpen(false);
 		setCookie('Drawer', false);
 	};
@@ -75,21 +79,25 @@ export default function AppBarComponnent({ isOpen, children }) {
 						ადმინისტრატორის პანელი
 					</Typography>
 
-					<div className={classes.marginLeft}>
-						<Link to='/admin/profile'>
-							<Button className={classes.colors}>
-								<AccountCircleIcon />
-								<span className={classes.iconMargin}>პროფილის რედაქტირება</span>
-							</Button>
-						</Link>
+					{isAuthenticated && (
+						<div className={classes.marginLeft}>
+							<Link to='/admin/profile'>
+								<Button className={classes.colors}>
+									<AccountCircleIcon />
+									<span className={classes.iconMargin}>
+										პროფილის რედაქტირება
+									</span>
+								</Button>
+							</Link>
 
-						<Button className={classes.colors}>
-							<ExitToAppIcon />
-							<span className={classes.iconMargin} onClick={logOutUser}>
-								გასვლა
-							</span>
-						</Button>
-					</div>
+							<Button className={classes.colors}>
+								<ExitToAppIcon />
+								<span className={classes.iconMargin} onClick={logOutUser}>
+									გასვლა
+								</span>
+							</Button>
+						</div>
+					)}
 				</Toolbar>
 			</AppBar>
 

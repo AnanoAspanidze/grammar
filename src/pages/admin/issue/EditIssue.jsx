@@ -14,6 +14,10 @@ import { issueService } from '../../../services/issue.service';
 import SnackbarComponent from '../../../components/admin/reusable/SnackbarComponent';
 
 function Editissue({ drawerIsOpen, match }) {
+	const [initialState, setInitialState] = useState({
+		Name: '',
+		CategoryId: '',
+	});
 	const [data, setData] = useState(null);
 	const [parts, setParts] = useState(null);
 	const [state, setState] = React.useState({
@@ -31,11 +35,6 @@ function Editissue({ drawerIsOpen, match }) {
 		Name: Yup.string().required('შეავსეთ ველი'),
 	});
 
-	const initialValues = {
-		Name: data ? data.Name : '',
-		CategoryId: '',
-	};
-
 	useEffect(() => {
 		commonService.getParts().then((res) => {
 			setParts(res);
@@ -45,6 +44,10 @@ function Editissue({ drawerIsOpen, match }) {
 	useEffect(() => {
 		issueService.getIssue(match.params.issueId).then((res) => {
 			setData(res);
+			setInitialState({
+				Name: res.Name,
+				CategoryId: res.Category.Id,
+			});
 		});
 	}, [match.params.issueId]);
 
@@ -58,7 +61,7 @@ function Editissue({ drawerIsOpen, match }) {
 
 	function onSubmit(data, action) {
 		issueService
-			.updateIssue(4, data.Name, data.CategoryId)
+			.updateIssue(match.params.issueId, data.Name, data.CategoryId)
 			.then((res) => {
 				handleClick(
 					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
@@ -78,8 +81,7 @@ function Editissue({ drawerIsOpen, match }) {
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
 			<AppForm
-				initialValues={initialValues}
-				validateOnChange={true}
+				initialValues={initialState}
 				enableReinitialize={true}
 				validationSchema={validationSchema}
 				onSubmit={onSubmit}
@@ -94,6 +96,7 @@ function Editissue({ drawerIsOpen, match }) {
 							<div style={{ height: '10px' }}>
 								{!data && <LinearProgress />}
 							</div>
+
 							<SelectComponent
 								name='CategoryId'
 								label='ნაწილი *'

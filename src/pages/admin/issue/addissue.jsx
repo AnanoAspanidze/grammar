@@ -48,6 +48,7 @@ function Addissue({ drawerIsOpen }) {
 					res.Message
 				);
 				action.setSubmitting(false);
+				action.resetForm({});
 			})
 			.catch((err) => {
 				handleClick(

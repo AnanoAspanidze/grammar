@@ -8,6 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Fab from '@material-ui/core/Fab';
 import GraphicEqRoundedIcon from '@material-ui/icons/GraphicEqRounded';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import SelectComponent from '../../../components/admin/reusable/SelectComponent';
 import TextFieldComponent from '../../../components/admin/reusable/TextFieldComponent';
@@ -16,99 +17,52 @@ import SubmitButton from '../../../components/admin/reusable/SubmitButton';
 import ButtonComponent from '../../../components/admin/reusable/ButtonComponent';
 import GenerateExerciseComponent from '../../../components/admin/exercise/GenerateExerciseComponent';
 import AddNewQuestion from '../../../components/admin/exercise/AddNewQuestion';
-import { getCookie } from '../../../helpers/cookie';
+import { exerciseService } from '../../../services/exercise.service';
+import { commonService } from '../../../services/common.service';
+import { issueService } from '../../../services/issue.service';
+import { addExerciseValidationSchema } from '../../../helpers/schema';
 
 function Addexecise({ drawerIsOpen }) {
 	const classes = useStyles();
+
+	const [parts, setParts] = useState([]);
+	const [selectedPart, setselectedPart] = useState('');
+	const [issues, setissues] = useState([]);
 
 	const [index, setIndex] = useState('1');
 	const [count, setcount] = useState(1);
 	const [arrayItems, setArrayItems] = useState([1]);
 
-	const [checked, setChecked] = useState(false);
-	const [checkedId, setCheckedId] = useState(null);
-
-	const [exerciseTypes, setexerciseTypes] = useState([
-		{
-			id: 1,
-			value: '1',
-			label: 'ტესტი',
-		},
-		{
-			id: 2,
-			value: '2',
-			label: 'ჩამოსაშლელი და ასარჩევი სავარაუდო პასუხებიდან',
-		},
-		{
-			id: 3,
-			value: '3',
-			label: 'ჩასაწერი',
-		},
-		{
-			id: 4,
-			value: '4',
-			label: 'ჩასწორება',
-		},
-		{
-			id: 5,
-			value: '5',
-			label: 'წინადადებაში სიტყვის ან სიტყვების არჩევა',
-		},
-		{
-			id: 6,
-			value: '6',
-			label: 'ჭეშმარიტია/მცდარია',
-		},
-		{
-			id: 7,
-			value: '7',
-			label: 'drag and drop',
-		},
-		{
-			id: 8,
-			value: '8',
-			label: 'კროსვორდი',
-		},
-	]);
-
-	const [Part, setPart] = useState([
-		{
-			id: 1,
-			value: 'მორფოლოგია',
-			label: 'მორფოლოგია',
-		},
-		{
-			id: 2,
-			value: 'სინტაქსი',
-			label: 'სინტაქსი',
-		},
-	]);
-
-	const [Part2, setPart2] = useState([
-		{
-			id: 1,
-			value: 'საკითხი',
-			label: 'საკითხი',
-		},
-		{
-			id: 2,
-			value: 'საკითხი',
-			label: 'საკითხი',
-		},
-	]);
-
-	const validationSchema = Yup.object().shape({
-		part: Yup.string().required('Fill out the field'),
-		name: Yup.string(),
-	});
+	const [exerciseTypes, setexerciseTypes] = useState(null);
 
 	const initialValues = {
+		Name: '',
+		Description: '',
+		category: '',
+		SubCategoryId: '',
+		TypeId: 1,
+		OrderNumber: '',
+		IsSummaryExercise: false,
+		Name: '',
+		VideoLinks: [],
+		Instruction: '',
+		Questions: [
+			{
+				Answers: [
+					{
+						id: 1,
+						Text: '',
+						IsCorrect: false,
+					},
+				],
+				Text: '',
+				WrongAnswerText: '',
+				RightAnswerText: '',
+			},
+		],
+
 		part: '1',
-		name: '',
 		index: 1,
-		name44: '',
-		name2: 'მორფოლოგია',
-		desc: 'ტესტური კითხვის აღწერა',
 	};
 
 	useEffect(() => {
@@ -116,25 +70,57 @@ function Addexecise({ drawerIsOpen }) {
 		setArrayItems(arrayOfDigits);
 	}, [index]);
 
+	useEffect(() => {
+		commonService.getParts().then((res) => setParts(res));
+		commonService.getEExerciseTypes().then((res) => setexerciseTypes(res));
+	}, []);
+
+	useEffect(() => {
+		if (selectedPart) {
+			commonService
+				.selectedSubcategories(selectedPart)
+				.then((res) => setissues(res));
+		}
+	}, [selectedPart]);
+
 	function onSubmit(data, action) {
 		console.log(data);
-	}
 
-	const handleChange2 = (event) => {
-		setChecked(event.target.checked);
-		setCheckedId(parseInt(event.target.id));
-	};
+		let modifierAnswer = data.Questions.map((w) => {
+			w.Answers.map((c) => delete c.id);
+			return w;
+		});
+
+		console.log(modifierAnswer);
+
+		let d = {
+			Name: data.Name,
+			OrderNumber: 0,
+			Description: data.Description,
+			Instruction: data.Instruction,
+			IsSummaryExercise: data.IsSummaryExercise,
+			SubCategoryId: data.SubCategoryId,
+			TypeId: data.TypeId,
+			Questions: modifierAnswer,
+			AudioFile: {},
+			VideoLinks: [],
+		};
+
+		exerciseService.createExercise(d).then((res) => console.log(res));
+		action.setSubmitting(false);
+	}
 
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Formik
 				initialValues={initialValues}
 				validateOnChange={true}
-				validationSchema={validationSchema}
+				enableReinitialize={true}
+				validationSchema={addExerciseValidationSchema}
 				onSubmit={onSubmit}
 			>
-				{({ values, errors, handleChange }) => (
-					<Fragment>
+				{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
+					<form onSubmit={handleSubmit}>
 						<Typography variant='h5' component='h5' align='center' gutterBottom>
 							სავარჯიშოს დამატება
 						</Typography>
@@ -143,58 +129,89 @@ function Addexecise({ drawerIsOpen }) {
 							<Grid item xs={12} sm={12} md={8}>
 								<div className='mb-30 mt-30'>
 									<SelectComponent
-										name='name'
+										name='category'
 										label='ნაწილი *'
-										options={Part}
-									/>
-								</div>
-								<div className='mb-30 mt-30'>
-									<SelectComponent
-										name='name2'
-										label='საკითხის არჩევა *'
-										options={Part}
-									/>
-								</div>
-								<div className='flex align-items-center mb-30'>
-									<span>შემაჯამებელი სავარჯიშო</span>
-									<Checkbox
-										checked={checked}
-										color='primary'
-										onChange={handleChange2}
+										text='Name'
+										value='Id'
+										hasOnchange={true}
+										onChange={(e) => {
+											setselectedPart(e);
+											handleChange('category');
+										}}
+										options={parts}
 									/>
 								</div>
 
-								{!checked && (
+								<div className='mb-30 mt-30'>
+									<SelectComponent
+										name='SubCategoryId'
+										text='Name'
+										value='Id'
+										label='საკითხის არჩევა *'
+										options={issues}
+									/>
+								</div>
+
+								<div className='flex align-items-center mb-30'>
+									<span>შემაჯამებელი სავარჯიშო</span>
+									<Checkbox
+										checked={values['IsSummaryExercise']}
+										color='primary'
+										value={values['IsSummaryExercise']}
+										onChange={(e) => {
+											setFieldValue(
+												'IsSummaryExercise',
+												!values['IsSummaryExercise']
+											);
+										}}
+									/>
+								</div>
+
+								{!values['IsSummaryExercise'] && (
 									<div className='mb-30 mt-30'>
 										<TextFieldComponent
-											name='name44'
+											name='OrderNumber'
 											variant='outlined'
 											label='მერამდენე იყოს ეს სავარჯიშო'
+											onChange={handleChange}
 										/>
 									</div>
 								)}
 
 								<div className='mb-30 mt-30'>
 									<SelectComponent
-										name='part'
+										name='TypeId'
+										text='Name'
+										value='Id'
 										label='სავარჯიშოს ტიპი *'
 										options={exerciseTypes}
+										onChange={handleChange}
 									/>
 								</div>
 
 								<div className='mb-30'>
 									<TextFieldComponent
 										placeholder='სავარჯიშოს სათაური'
-										name='name4'
+										name='Name'
+										onChange={handleChange}
 									/>
 								</div>
 
 								<div className='mb-30'>
 									<TextareaAutosize
+										name='Description'
 										className={classes.Textarea}
 										aria-label='empty textarea'
 										placeholder='გრამატიკის წესები'
+										onChange={handleChange}
 									/>
+									{errors.Description && (
+										<div className='mb-20'>
+											<FormHelperText error={true} variant='standard'>
+												{errors.Description}
+											</FormHelperText>
+										</div>
+									)}
 
 									<div>
 										<input
@@ -223,6 +240,10 @@ function Addexecise({ drawerIsOpen }) {
 												<TextFieldComponent
 													placeholder={`youtube ის ლინკი ${item}`}
 													name={`${item}`}
+													value={values['VideoLinks']}
+													onChange={() =>
+														setFieldValue('VideoLinks', { Url: item })
+													}
 												/>
 											</div>
 										))}
@@ -240,11 +261,19 @@ function Addexecise({ drawerIsOpen }) {
 
 								<div className='mb-30'>
 									<TextareaAutosize
-										name='desc'
+										name='Instruction'
 										className={classes.Textarea}
 										value={values.desc}
 										onChange={handleChange}
 									/>
+
+									{errors.Instruction && (
+										<div className='mb-20'>
+											<FormHelperText error={true} variant='standard'>
+												{errors.Instruction}
+											</FormHelperText>
+										</div>
+									)}
 								</div>
 
 								<div className='mt-30 mb-50'>
@@ -256,7 +285,7 @@ function Addexecise({ drawerIsOpen }) {
 									/>
 								</div>
 
-								<GenerateExerciseComponent name='part' />
+								<GenerateExerciseComponent name='TypeId' />
 
 								<AddNewQuestion />
 
@@ -270,7 +299,7 @@ function Addexecise({ drawerIsOpen }) {
 								</div>
 							</Grid>
 						</Grid>
-					</Fragment>
+					</form>
 				)}
 			</Formik>
 		</AppBarComponnent>
@@ -301,9 +330,3 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: '10px',
 	},
 }));
-
-Addexecise.getInitialProps = async (ctx) => {
-	return {
-		props: { drawerIsOpen: 'false' },
-	};
-};

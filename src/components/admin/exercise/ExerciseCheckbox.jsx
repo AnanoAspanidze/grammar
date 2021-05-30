@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
-import TextFieldComponent from '../reusable/TextFieldComponent';
+import TextField from '@material-ui/core/TextField';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import { makeStyles } from '@material-ui/core/styles';
+import { useFormikContext } from 'formik';
 
-function ExerciseCheckbox({ name, placeholder, inputName }) {
-	const [checked, setChecked] = useState(false);
+function ExerciseCheckbox({
+	name,
+	placeholder,
+	checked,
+	inputValue,
+	onChange,
+	handleInputChange,
+	disabled,
+}) {
+	const classes = useStyles();
 
-	const handleChange = () => {
-		setChecked(!checked);
-	};
+	const { values, handleChange, errors, setFieldError } = useFormikContext();
 
 	return (
 		<>
@@ -15,11 +24,36 @@ function ExerciseCheckbox({ name, placeholder, inputName }) {
 				checked={checked}
 				name={name}
 				color='primary'
-				onChange={handleChange}
+				onChange={onChange}
+				disabled={disabled}
 			/>
-			<TextFieldComponent placeholder={placeholder} name={inputName} />
+			<div className='w-100'>
+				<TextField
+					className={classes.TextField}
+					variant='outlined'
+					name={name}
+					value={inputValue}
+					label={placeholder}
+					onChange={handleInputChange}
+					disabled={disabled}
+				/>
+
+				{errors[name] && (
+					<FormHelperText error={true}>{errors[name]}</FormHelperText>
+				)}
+			</div>
 		</>
 	);
 }
 
 export default ExerciseCheckbox;
+
+ExerciseCheckbox.defaultProps = {
+	disabled: false,
+};
+
+const useStyles = makeStyles((theme) => ({
+	TextField: {
+		width: '100%',
+	},
+}));

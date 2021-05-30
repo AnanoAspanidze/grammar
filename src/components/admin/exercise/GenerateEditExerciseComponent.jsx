@@ -9,7 +9,13 @@ import TagsQuestions from '../../../components/admin/exercise/TagsQuestions';
 import TrueOrFalse from '../../../components/admin/exercise/TrueOrFalse';
 import DragEndDropQuestion from './DragEndDropQuestion';
 
-function GenerateExerciseComponent({ name, value }) {
+function GenerateEditExerciseComponent({
+	name,
+	value,
+	setDeleteQuestion,
+	closeModal,
+	onClick,
+}) {
 	const [index, setIndex] = useState('1');
 	const [count, setcount] = useState(1);
 	const [arrayItems, setArrayItems] = useState([1]);
@@ -45,7 +51,13 @@ function GenerateExerciseComponent({ name, value }) {
 				{values[name] === 1 &&
 					arrayItems &&
 					arrayItems.map((item, i) => (
-						<TestQuestion myvalue={values.Questions[i]} key={item} />
+						<TestQuestion
+							data={values.Questions[i]}
+							key={item}
+							onClick={onClick}
+							setDeleteQuestion={setDeleteQuestion}
+							closeModal={closeModal}
+						/>
 					))}
 				{values[name] === 2 &&
 					arrayItems &&
@@ -70,4 +82,4 @@ function GenerateExerciseComponent({ name, value }) {
 	);
 }
 
-export default GenerateExerciseComponent;
+export default GenerateEditExerciseComponent;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Doughnut } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +10,8 @@ import Pagination from '@material-ui/lab/Pagination';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import PaginationComponent from '../../../components/admin/reusable/PaginationComponent';
 
 // import VisibilityIcon from '@material-ui/icons/Visibility';
 // import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
@@ -19,28 +22,20 @@ import TableComponent from '../../../components/admin/tables/TableComponent';
 import TableHeadComponent from '../../../components/admin/tables/TableHeadComponent';
 
 import { accountService } from '../../../services/user.service';
-
-const data = {
-	labels: ['არასწორი პასუხები', 'სწორი პასუხები', 'პასუხგაუცემელი'],
-	datasets: [
-		{
-			label: '# of Votes',
-			data: [12, 19, 3],
-			backgroundColor: [
-				'rgba(255, 99, 132, 0.2)',
-				'rgba(18, 135, 41, 0.2)',
-				'rgba(84, 84, 84, 0.2)',
-			],
-			borderColor: ['#c71639', '#22a915', '#373737'],
-			borderWidth: 1,
-		},
-	],
-};
+import Userspage from '../userspage';
 
 function UserPage({ drawerIsOpen, match }) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
-	// const [array, setArray] = useState(rows);
+	const [loading, setloading] = useState(false);
+
+	const [rotate, setRotate] = useState('Name');
+	const [rotateValue, setRotateValue] = useState('asc');
+
+	const [currentPage, setCurrentPage] = useState(1);
+	const [postsPerPage] = useState(10);
+
+	const [statistics, setStatistics] = useState(null);
 	const [userData, setUserData] = useState({
 		Name: '',
 		Surname: '',
@@ -48,11 +43,109 @@ function UserPage({ drawerIsOpen, match }) {
 		Email: '',
 		School: '',
 		RegionName: '',
+		Students: [],
 	});
 
+	const data1 = {
+		labels: ['არასწორი პასუხები', 'სწორი პასუხები', 'პასუხგაუცემელი'],
+		datasets: [
+			{
+				label: '# of Votes',
+				data: [
+					statistics ? statistics.GeneralAnswers.RightAnswers : 0,
+					statistics ? statistics.GeneralAnswers.UnAnswered : 0,
+					statistics ? statistics.GeneralAnswers.WrongAnswers : 0,
+				],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(18, 135, 41, 0.2)',
+					'rgba(84, 84, 84, 0.2)',
+				],
+				borderColor: ['#c71639', '#22a915', '#373737'],
+				borderWidth: 1,
+			},
+		],
+	};
+
+	const data2 = {
+		labels: ['არასწორი პასუხები', 'სწორი პასუხები', 'პასუხგაუცემელი'],
+		datasets: [
+			{
+				label: '# of Votes',
+				data: [
+					statistics ? statistics.AnswersByCategories.RightAnswers : 0,
+					statistics ? statistics.AnswersByCategories.UnAnswered : 0,
+					statistics ? statistics.AnswersByCategories.WrongAnswers : 0,
+				],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(18, 135, 41, 0.2)',
+					'rgba(84, 84, 84, 0.2)',
+				],
+				borderColor: ['#c71639', '#22a915', '#373737'],
+				borderWidth: 1,
+			},
+		],
+	};
+	const data3 = {
+		labels: ['არასწორი პასუხები', 'სწორი პასუხები', 'პასუხგაუცემელი'],
+		datasets: [
+			{
+				label: '# of Votes',
+				data: [
+					statistics ? statistics.AnswersBySubCategories.RightAnswers : 0,
+					statistics ? statistics.AnswersBySubCategories.UnAnswered : 0,
+					statistics ? statistics.AnswersBySubCategories.WrongAnswers : 0,
+				],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(18, 135, 41, 0.2)',
+					'rgba(84, 84, 84, 0.2)',
+				],
+				borderColor: ['#c71639', '#22a915', '#373737'],
+				borderWidth: 1,
+			},
+		],
+	};
+
 	useEffect(() => {
-		accountService.getUserdetails().then((res) => setUserData(res));
+		setloading(true);
+
+		accountService.getUserdetails(match.params.userId).then((res) => {
+			setUserData(res);
+			setloading(false);
+		});
+
+		accountService
+			.userStatistics(match.params.userId)
+			.then((res) => setStatistics(res));
 	}, []);
+
+	const filterData = (filterValue) => {
+		if (filterValue !== rotate) {
+			setRotateValue('asc');
+			setRotate(filterValue);
+		} else {
+			setRotateValue(rotateValue === 'desc' ? 'asc' : 'desc');
+			setRotate(filterValue);
+		}
+	};
+
+	let x = userData.Students.sort((a, b) => {
+		let isReverced = rotateValue === 'asc' ? 1 : -1;
+		return isReverced * a[rotate].localeCompare(b[rotate]);
+	});
+
+	const indexOfLastPost = currentPage * postsPerPage;
+	const indexOfFirstPost = indexOfLastPost - postsPerPage;
+	let currentPosts;
+
+	if (userData.Students) {
+		currentPosts = x.slice(indexOfFirstPost, indexOfLastPost);
+	}
+
+	// Change page
+	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
@@ -65,11 +158,11 @@ function UserPage({ drawerIsOpen, match }) {
 						<Grid item xs={6} className={classes.marginRight}>
 							<Paper className={classes.paper}>
 								<span className={classes.Margin}>სახელი:</span>{' '}
-								<span>ჯეკო</span>
+								<span>{userData.Name}</span>
 							</Paper>
 							<Paper className={classes.paper}>
 								<span className={classes.Margin}>გვარი:</span>{' '}
-								<span>{userData.Name}</span>
+								<span>{userData.Surname}</span>
 							</Paper>
 							<Paper className={classes.paper}>
 								<span className={classes.Margin}>მეილი:</span>{' '}
@@ -79,7 +172,7 @@ function UserPage({ drawerIsOpen, match }) {
 						<Grid item xs={6}>
 							<Paper className={classes.paper}>
 								<span className={classes.Margin}>როლი:</span>{' '}
-								<span>{userData.role}</span>
+								<span>{userData.Name && userData.Role.Name}</span>
 							</Paper>
 							<Paper className={classes.paper}>
 								<span className={classes.Margin}>რეგიონი:</span>{' '}
@@ -87,7 +180,7 @@ function UserPage({ drawerIsOpen, match }) {
 							</Paper>
 							<Paper className={classes.paper}>
 								<span className={classes.Margin}>სკოლა:</span>{' '}
-								<span>{userData.school}</span>
+								<span>{userData.School}</span>
 							</Paper>
 						</Grid>
 					</div>
@@ -107,7 +200,7 @@ function UserPage({ drawerIsOpen, match }) {
 							>
 								საერთო სტატისტიკა
 							</Typography>
-							<Doughnut data={data} legend={false} />
+							<Doughnut data={data1} legend={false} />
 						</Grid>
 					</Grid>
 					<Grid
@@ -127,7 +220,7 @@ function UserPage({ drawerIsOpen, match }) {
 							>
 								მორფოლოგია
 							</Typography>
-							<Doughnut data={data} legend={false} />
+							<Doughnut data={data2} legend={false} />
 						</Grid>
 						<Grid item xs={6}>
 							<Typography
@@ -138,7 +231,7 @@ function UserPage({ drawerIsOpen, match }) {
 							>
 								სინტაქტი
 							</Typography>
-							<Doughnut data={data} legend={false} />
+							<Doughnut data={data3} legend={false} />
 						</Grid>
 					</Grid>
 					<Grid
@@ -150,8 +243,7 @@ function UserPage({ drawerIsOpen, match }) {
 						className='mb-50'
 					>
 						<div className='row w-100'>
-							<h6 className='chart__h6'>Bar One</h6>
-							<div class='chart w-100'>
+							<div className='chart w-100'>
 								<span
 									css={`
 										width: 40%;
@@ -186,10 +278,44 @@ function UserPage({ drawerIsOpen, match }) {
 					<Typography variant='h5' component='h5' gutterBottom>
 						მოსწავლეები
 					</Typography>
+					{!userData.Id && loading && <LinearProgress />}
+
 					<TableComponent>
 						<TableHeadComponent>
-							<TableCell>სახელი</TableCell>
-							<TableCell align='left'>გვარი</TableCell>
+							<TableCell
+								className='cursor-pointer'
+								onClick={() => filterData('Name', 'name')}
+							>
+								<div className='flex'>
+									სახელი
+									<ArrowDropDownIcon
+										style={{
+											transform: `rotate(${
+												rotateValue === 'asc' ? 0 : 180
+											}deg)`,
+											display: `${rotate !== 'Name' ? 'none' : 'initial'}`,
+										}}
+									/>
+								</div>
+							</TableCell>
+
+							<TableCell
+								align='left'
+								className='cursor-pointer'
+								onClick={() => filterData('Surname', 'Surname')}
+							>
+								<div className='flex'>
+									გვარი
+									<ArrowDropDownIcon
+										style={{
+											transform: `rotate(${
+												rotateValue === 'asc' ? 0 : 180
+											}deg)`,
+											display: `${rotate !== 'Surname' ? 'none' : 'initial'}`,
+										}}
+									/>
+								</div>
+							</TableCell>
 							<TableCell align='left'>მეილი</TableCell>
 							<TableCell align='left'>როლი</TableCell>
 							<TableCell align='left'>რეგიონი</TableCell>
@@ -197,7 +323,7 @@ function UserPage({ drawerIsOpen, match }) {
 						</TableHeadComponent>
 
 						<TableBody>
-							{/* {array.map((row, index) => (
+							{currentPosts.map((row, index) => (
 								<TableRow
 									visible={row.visible}
 									style={{
@@ -206,22 +332,26 @@ function UserPage({ drawerIsOpen, match }) {
 									key={index}
 								>
 									<TableCell component='th' scope='row'>
-										<Link to='/admin/user/334'>
-											<a className={classes.underline}>{row.name}</a>
-										</Link>
+										{row.Name}
 									</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
-									<TableCell align='left'>{row.calories}</TableCell>
+									<TableCell align='left'>{row.Surname}</TableCell>
+									<TableCell align='left'>{row.Email}</TableCell>
+									<TableCell align='left'>{row.Role}</TableCell>
+									<TableCell align='left'>{row.Region}</TableCell>
+									<TableCell align='left'>{row.School}</TableCell>
 								</TableRow>
-							))} */}
+							))}
 						</TableBody>
 					</TableComponent>
 
 					<div className='flex space-center' style={{ marginTop: 30 }}>
-						<Pagination count={10} size='large' color='primary' />
+						{userData && userData.Students.length > 0 && (
+							<PaginationComponent
+								postsPerPage={postsPerPage}
+								totalPosts={userData.Students.length}
+								paginate={paginate}
+							/>
+						)}
 					</div>
 				</Grid>
 			</Grid>

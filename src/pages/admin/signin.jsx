@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 
 import TextFieldComponent from '../../components/admin/reusable/TextFieldComponent';
@@ -12,15 +11,13 @@ import { userSigninSchema } from '../../helpers/schema';
 import userContext from '../../context/user/userContext';
 import SnackbarComponent from '../../components/admin/reusable/SnackbarComponent';
 
-function Signin() {
-	let history = useHistory();
-
+function Signin({ drawerIsOpen }) {
 	const [state, setState] = React.useState({
 		open: false,
 		vertical: 'top',
 		horizontal: 'center',
 	});
-	const { vertical, horizontal, open } = state;
+	const { open } = state;
 
 	const { errors, setCurrentUser, setError, clearErrors } = useContext(
 		userContext
@@ -31,29 +28,43 @@ function Signin() {
 		Password: 'Admin123!',
 	};
 
-	const handleClick = (newState) => {
-		setState({ open: true, ...newState });
+	const handleClick = (newState, message) => {
+		setState({ open: true, error: message, ...newState });
+	};
+
+	const handleClose = () => {
+		clearErrors();
+		setState({ ...state, open: false });
 	};
 
 	function onSubmit(data, action) {
 		accountService
 			.adminSignin(data.Email, data.Password)
 			.then((res) => {
-				setCurrentUser({ ...res, Id: res.Id }, res.JwtToken, res.RefreshToken);
+				if (res.Id) {
+					setCurrentUser(
+						{ ...res, Id: res.Id },
+						res.JwtToken,
+						res.RefreshToken
+					);
+					window.location.href = '/admin';
+				} else {
+				}
+
 				action.setSubmitting(false);
-				history.push('/admin');
 			})
 			.catch((err) => {
-				handleClick({ vertical: 'bottom', horizontal: 'center' });
+				handleClick({ severity: 'error' }, err.message.Message);
 				action.setSubmitting(false);
 			});
 	}
 
 	return (
-		<AppBarComponnent isOpen='false'>
+		<AppBarComponnent isOpen={drawerIsOpen}>
 			<AppForm
 				initialValues={initialValues}
 				validateOnChange={true}
+				enableReinitialize={true}
 				validationSchema={userSigninSchema}
 				onSubmit={onSubmit}
 			>
@@ -91,14 +102,12 @@ function Signin() {
 				</Grid>
 			</AppForm>
 
-			{/* {errors && (
-				<SnackbarComponent
-					open={open}
-					message={errors}
-					severity='error'
-					handleClose={handleClose}
-				/>
-			)} */}
+			<SnackbarComponent
+				open={open}
+				message={state.error}
+				severity={state.severity}
+				handleClose={handleClose}
+			/>
 		</AppBarComponnent>
 	);
 }

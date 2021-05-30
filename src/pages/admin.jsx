@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBarComponnent from '../components/admin/header/AppBar';
 import AdminpageHead from '../components/admin/AdminpageHead';
-import { getCookie } from '../helpers/cookie';
+// import { getCookie } from '../helpers/cookie';
 
 function Adminpage() {
 	return (
