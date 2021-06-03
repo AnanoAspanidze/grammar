@@ -7,11 +7,11 @@ import WritableQuestions from '../../../components/admin/exercise/WritableQuesti
 import ChangableQuestion from '../../../components/admin/exercise/ChangableQuestion';
 import TagsQuestions from '../../../components/admin/exercise/TagsQuestions';
 import TrueOrFalse from '../../../components/admin/exercise/TrueOrFalse';
-import DragEndDropQuestion from './DragEndDropQuestion';
 
 function GenerateEditExerciseComponent({
 	name,
 	value,
+	isEditPage,
 	setDeleteQuestion,
 	closeModal,
 	onClick,
@@ -54,6 +54,7 @@ function GenerateEditExerciseComponent({
 						<TestQuestion
 							data={values.Questions[i]}
 							key={item}
+							isEditPage={isEditPage}
 							onClick={onClick}
 							setDeleteQuestion={setDeleteQuestion}
 							closeModal={closeModal}
@@ -61,7 +62,9 @@ function GenerateEditExerciseComponent({
 					))}
 				{values[name] === 2 &&
 					arrayItems &&
-					arrayItems.map((item) => <SelectQuestions key={item} />)}
+					arrayItems.map((item) => (
+						<SelectQuestions isEditPage={isEditPage} key={item} />
+					))}
 				{values[name] === 3 &&
 					arrayItems &&
 					arrayItems.map((item) => <WritableQuestions key={item} />)}
@@ -74,9 +77,6 @@ function GenerateEditExerciseComponent({
 				{values[name] === 6 &&
 					arrayItems &&
 					arrayItems.map((item) => <TrueOrFalse key={item} />)}
-				{values[name] === 7 || values[name] === 8 ? (
-					<DragEndDropQuestion />
-				) : null}
 			</div>
 		</>
 	);

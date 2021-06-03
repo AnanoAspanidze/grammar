@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -19,7 +18,6 @@ import GenerateExerciseComponent from '../../../components/admin/exercise/Genera
 import AddNewQuestion from '../../../components/admin/exercise/AddNewQuestion';
 import { exerciseService } from '../../../services/exercise.service';
 import { commonService } from '../../../services/common.service';
-import { issueService } from '../../../services/issue.service';
 import { addExerciseValidationSchema } from '../../../helpers/schema';
 
 function Addexecise({ drawerIsOpen }) {
@@ -36,6 +34,7 @@ function Addexecise({ drawerIsOpen }) {
 	const [exerciseTypes, setexerciseTypes] = useState(null);
 
 	const initialValues = {
+		exerciseId: 0,
 		Name: '',
 		Description: '',
 		category: '',
@@ -46,20 +45,17 @@ function Addexecise({ drawerIsOpen }) {
 		Name: '',
 		VideoLinks: [],
 		Instruction: '',
-		Questions: [
+		AudioFile: {
+			AudioFileData: '',
+		},
+		VideoLinks: [
 			{
-				Answers: [
-					{
-						id: 1,
-						Text: '',
-						IsCorrect: false,
-					},
-				],
-				Text: '',
-				WrongAnswerText: '',
-				RightAnswerText: '',
+				Id: 0,
+				Name: '',
+				Url: '',
 			},
 		],
+		Questions: [],
 
 		part: '1',
 		index: 1,
@@ -90,8 +86,6 @@ function Addexecise({ drawerIsOpen }) {
 			w.Answers.map((c) => delete c.id);
 			return w;
 		});
-
-		console.log(modifierAnswer);
 
 		let d = {
 			Name: data.Name,
@@ -185,7 +179,33 @@ function Addexecise({ drawerIsOpen }) {
 										value='Id'
 										label='სავარჯიშოს ტიპი *'
 										options={exerciseTypes}
-										onChange={handleChange}
+										onChange={(e) => {
+											handleChange('TypeId', e);
+											handleChange('Questions', [
+												{
+													Answers: [
+														{
+															id: 1,
+															Text: '',
+															IsCorrect: false,
+														},
+														{
+															id: 2,
+															Text: '',
+															IsCorrect: false,
+														},
+														{
+															id: 3,
+															Text: '',
+															IsCorrect: false,
+														},
+													],
+													Text: '',
+													WrongAnswerText: '',
+													RightAnswerText: '',
+												},
+											]);
+										}}
 									/>
 								</div>
 
@@ -285,7 +305,7 @@ function Addexecise({ drawerIsOpen }) {
 									/>
 								</div>
 
-								<GenerateExerciseComponent name='TypeId' />
+								<GenerateExerciseComponent name='TypeId' isEditPage={false} />
 
 								<AddNewQuestion />
 

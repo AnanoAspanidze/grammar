@@ -1,63 +1,83 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useFormikContext } from 'formik';
 import ReactQuill from 'react-quill';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import TextFieldComponent from '../reusable/TextFieldComponent';
-import ExerciseCheckbox from './ExerciseCheckbox';
 
-function TagsQuestions() {
+function TagsQuestions({ isEditPage, index }) {
+	const { values, setFieldValue, errors, handleChange } = useFormikContext();
+
 	const classes = useStyles();
-	const [value, setValue] = useState('');
-	const [index, setIndex] = useState('1');
-	const [count, setcount] = useState(1);
-	const [arrayItems, setArrayItems] = useState([1]);
 
-	useEffect(() => {
-		const arrayOfDigits = Array.from(String(index), Number);
-		setArrayItems(arrayOfDigits);
-	}, [index]);
+	const addMore = () => {
+		setFieldValue(`Questions[${index}].Answers`, [
+			...values.Questions[index].Answers,
+			{
+				id: 0,
+				Text: '',
+				IsCorrect: false,
+			},
+		]);
+	};
 
 	return (
 		<div className={classes.EcercisesBorder}>
 			<ReactQuill
+				disabled={isEditPage}
 				theme='snow'
-				value={value}
-				onChange={setValue}
-				placeholder='ტექსტი'
+				readOnly={isEditPage}
+				name={`Questions[${index}].Text`}
+				value={values.Questions[index].Text}
+				onChange={(e) => setFieldValue(`Questions[${index}].Text`, e)}
+				placeholder='კითხვა *'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
-			{arrayItems &&
-				arrayItems.map((item) => (
-					<div className='flex align-items-center mb-20 mt-30'>
-						<TextFieldComponent placeholder='სიტყვა' name='1' />
-					</div>
-				))}
+			{values.Questions[index].Answers.map((item, i) => (
+				<div className='flex align-items-center mb-20 mt-30'>
+					<TextFieldComponent
+						placeholder='სიტყვა'
+						name={`Questions[${index}].Answers[${i}].Text`}
+						value={values.Questions[index].Answers[i].Text}
+						onChange={(e) =>
+							setFieldValue(
+								`Questions[${index}].Answers[${i}].Text`,
+								e.target.value
+							)
+						}
+					/>
+				</div>
+			))}
 
-			<Fab
-				component='span'
-				onClick={() => {
-					setcount(count + 1);
-					setIndex((prev) => `${prev}${parseInt(count) + 1}`);
-				}}
-			>
-				<AddIcon />
-			</Fab>
+			{!isEditPage && (
+				<Fab component='span' onClick={addMore}>
+					<AddIcon />
+				</Fab>
+			)}
 
 			<ReactQuill
 				theme='snow'
 				className='mt-80'
-				value={value}
-				onChange={setValue}
+				name={`Questions[${index}].RightAnswerText`}
+				value={values.Questions[index].RightAnswerText}
+				onChange={(e) =>
+					setFieldValue(`Questions[${index}].RightAnswerText`, e)
+				}
+				readOnly={isEditPage}
 				placeholder='კომენტარი პასუხის სწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
 			<ReactQuill
 				theme='snow'
-				value={value}
-				onChange={setValue}
+				name={`Questions[${index}].WrongAnswerText`}
+				value={values.Questions[index].WrongAnswerText}
+				onChange={(e) =>
+					setFieldValue(`Questions[${index}].WrongAnswerText`, e)
+				}
+				readOnly={isEditPage}
 				placeholder='კომენტარი პასუხის არასწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>

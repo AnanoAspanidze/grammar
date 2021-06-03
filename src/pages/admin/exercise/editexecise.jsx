@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -23,7 +22,6 @@ import ButtonComponent from '../../../components/admin/reusable/ButtonComponent'
 import AddNewQuestion from '../../../components/admin/exercise/AddNewQuestion';
 import { exerciseService } from '../../../services/exercise.service';
 import { commonService } from '../../../services/common.service';
-import { issueService } from '../../../services/issue.service';
 import { addExerciseValidationSchema } from '../../../helpers/schema';
 import GenerateEditExerciseComponent from '../../../components/admin/exercise/GenerateEditExerciseComponent';
 
@@ -37,7 +35,7 @@ function Editexecise({ drawerIsOpen, match }) {
 		index: 1,
 	});
 	const [parts, setParts] = useState([]);
-	const [selectedPart, setselectedPart] = useState('');
+	const [selectedPart, setselectedPart] = useState();
 	const [issues, setissues] = useState([]);
 
 	const [index, setIndex] = useState('1');
@@ -71,12 +69,12 @@ function Editexecise({ drawerIsOpen, match }) {
 	}, []);
 
 	useEffect(() => {
-		if (selectedPart) {
+		if (value.CategoryId) {
 			commonService
-				.selectedSubcategories(selectedPart)
+				.selectedSubcategories(selectedPart ? selectedPart : value.CategoryId)
 				.then((res) => setissues(res));
 		}
-	}, [selectedPart]);
+	}, [value.CategoryId, selectedPart]);
 
 	const handleModalClose = () => {
 		setOpen(false);
@@ -107,201 +105,209 @@ function Editexecise({ drawerIsOpen, match }) {
 					setFieldValue,
 					handleSubmit,
 					isSubmitting,
-				}) => (
-					<>
-						<form onSubmit={handleSubmit}>
-							<Typography
-								variant='h5'
-								component='h5'
-								align='center'
-								gutterBottom
-							>
-								სავარჯიშოს დამატება
-							</Typography>
+				}) => {
+					return (
+						<>
+							<form onSubmit={handleSubmit}>
+								<Typography
+									variant='h5'
+									component='h5'
+									align='center'
+									gutterBottom
+								>
+									სავარჯიშოს რედაქტირება
+								</Typography>
 
-							<Grid container spacing={5} justify='center'>
-								<Grid item xs={12} sm={12} md={8}>
-									<div className='mb-30 mt-30'>
-										<SelectComponent
-											name='category'
-											label='ნაწილი *'
-											text='Name'
-											value='Id'
-											hasOnchange={true}
-											onChange={(e) => {
-												setselectedPart(e);
-												handleChange('category');
-											}}
-											options={parts}
-										/>
-									</div>
-
-									<div className='mb-30 mt-30'>
-										<SelectComponent
-											name='SubCategoryId'
-											text='Name'
-											value='Id'
-											label='საკითხის არჩევა *'
-											options={issues}
-										/>
-									</div>
-
-									<div className='flex align-items-center mb-30'>
-										<span>შემაჯამებელი სავარჯიშო</span>
-										<Checkbox
-											checked={values['IsSummaryExercise']}
-											color='primary'
-											value={values['IsSummaryExercise']}
-											onChange={(e) => {
-												setFieldValue(
-													'IsSummaryExercise',
-													!values['IsSummaryExercise']
-												);
-											}}
-										/>
-									</div>
-
-									{!values['IsSummaryExercise'] && (
+								<Grid container spacing={5} justify='center'>
+									<Grid item xs={12} sm={12} md={8}>
 										<div className='mb-30 mt-30'>
-											<TextFieldComponent
-												name='OrderNumber'
-												variant='outlined'
-												label='მერამდენე იყოს ეს სავარჯიშო'
+											<SelectComponent
+												name='CategoryId'
+												label='ნაწილი *'
+												text='Name'
+												value={`${values.CategoryId}`}
+												hasOnchange={true}
+												onChange={(e) => {
+													setselectedPart(e);
+													handleChange('CategoryId');
+												}}
+												options={parts}
+											/>
+										</div>
+
+										<div className='mb-30 mt-30'>
+											<SelectComponent
+												name='SubCategoryId'
+												text='Name'
+												value='Id'
+												label='საკითხის არჩევა *'
+												options={issues}
+											/>
+										</div>
+
+										<div className='flex align-items-center mb-30'>
+											<span>შემაჯამებელი სავარჯიშო</span>
+											<Checkbox
+												checked={
+													values.IsSummaryExercise
+														? values.IsSummaryExercise
+														: false
+												}
+												color='primary'
+												onChange={(e) => {
+													let parsedValue = JSON.parse(
+														values.IsSummaryExercise
+													);
+													console.log(parsedValue);
+													setFieldValue('IsSummaryExercise', !parsedValue);
+												}}
+											/>
+										</div>
+
+										{!values['IsSummaryExercise'] && (
+											<div className='mb-30 mt-30'>
+												<TextFieldComponent
+													name='OrderNumber'
+													variant='outlined'
+													label='მერამდენე იყოს ეს სავარჯიშო'
+													onChange={handleChange}
+												/>
+											</div>
+										)}
+
+										<div className='mb-30 mt-30'>
+											<SelectComponent
+												name='TypeId'
+												text='Name'
+												value='Id'
+												label='სავარჯიშოს ტიპი *'
+												options={exerciseTypes}
 												onChange={handleChange}
 											/>
 										</div>
-									)}
 
-									<div className='mb-30 mt-30'>
-										<SelectComponent
-											name='TypeId'
-											text='Name'
-											value='Id'
-											label='სავარჯიშოს ტიპი *'
-											options={exerciseTypes}
-											onChange={handleChange}
-										/>
-									</div>
-
-									<div className='mb-30'>
-										<TextFieldComponent
-											placeholder='სავარჯიშოს სათაური'
-											name='Name'
-											onChange={handleChange}
-										/>
-									</div>
-
-									<div className='mb-30'>
-										<TextareaAutosize
-											name='Description'
-											className={classes.Textarea}
-											aria-label='empty textarea'
-											placeholder='გრამატიკის წესები'
-											onChange={handleChange}
-										/>
-										{errors.Description && (
-											<div className='mb-20'>
-												<FormHelperText error={true} variant='standard'>
-													{errors.Description}
-												</FormHelperText>
-											</div>
-										)}
-
-										<div>
-											<input
-												accept='image/*'
-												className={classes.input}
-												id='contained-button-file'
-												multiple
-												type='file'
+										<div className='mb-30'>
+											<TextFieldComponent
+												placeholder='სავარჯიშოს სათაური'
+												name='Name'
+												value={values.Name ? values.Name : ''}
+												onChange={handleChange}
 											/>
-											<label
-												htmlFor='contained-button-file'
-												className={classes.MarginLeft}
-											>
-												<Fab component='span'>
-													<GraphicEqRoundedIcon />
-												</Fab>
-											</label>
-											აუდიოს ატვირთვა
 										</div>
-									</div>
 
-									<div className='mb-30'>
-										{arrayItems &&
-											arrayItems.map((item, i) => (
-												<div className='mb-10' key={i}>
-													<TextFieldComponent
-														placeholder={`youtube ის ლინკი ${item}`}
-														name={`${item}`}
-														value={values['VideoLinks']}
-														onChange={() =>
-															setFieldValue('VideoLinks', { Url: item })
-														}
-													/>
+										<div className='mb-30'>
+											<TextareaAutosize
+												name='Description'
+												className={classes.Textarea}
+												aria-label='empty textarea'
+												placeholder='გრამატიკის წესები'
+												onChange={handleChange}
+											/>
+											{errors.Description && (
+												<div className='mb-20'>
+													<FormHelperText error={true} variant='standard'>
+														{errors.Description}
+													</FormHelperText>
 												</div>
-											))}
+											)}
 
-										<ButtonComponent
-											onClick={() => {
-												setcount(count + 1);
-												setIndex((prev) => `${prev}${parseInt(count) + 1}`);
-											}}
-											variant='contained'
-											color='primary'
-											title='დამატება'
-										/>
-									</div>
-
-									<div className='mb-30'>
-										<TextareaAutosize
-											name='Instruction'
-											className={classes.Textarea}
-											value={values.desc}
-											onChange={handleChange}
-										/>
-
-										{errors.Instruction && (
-											<div className='mb-20'>
-												<FormHelperText error={true} variant='standard'>
-													{errors.Instruction}
-												</FormHelperText>
+											<div>
+												<input
+													accept='image/*'
+													className={classes.input}
+													id='contained-button-file'
+													multiple
+													type='file'
+												/>
+												<label
+													htmlFor='contained-button-file'
+													className={classes.MarginLeft}
+												>
+													<Fab component='span'>
+														<GraphicEqRoundedIcon />
+													</Fab>
+												</label>
+												აუდიოს ატვირთვა
 											</div>
-										)}
-									</div>
+										</div>
 
-									<div className='mt-30 mb-50'>
-										<ButtonComponent
-											size='large'
-											variant='contained'
-											color='primary'
-											title='კითხვების დამატების ვიდეო ახსნა'
+										<div className='mb-30'>
+											{arrayItems &&
+												arrayItems.map((item, i) => (
+													<div className='mb-10' key={i}>
+														<TextFieldComponent
+															placeholder={`youtube ის ლინკი ${item}`}
+															name={`${item}`}
+															value={values['VideoLinks']}
+															onChange={() =>
+																setFieldValue('VideoLinks', { Url: item })
+															}
+														/>
+													</div>
+												))}
+
+											<ButtonComponent
+												onClick={() => {
+													setcount(count + 1);
+													setIndex((prev) => `${prev}${parseInt(count) + 1}`);
+												}}
+												variant='contained'
+												color='primary'
+												title='დამატება'
+											/>
+										</div>
+
+										<div className='mb-30'>
+											<TextareaAutosize
+												name='Instruction'
+												className={classes.Textarea}
+												value={values.desc}
+												onChange={handleChange}
+											/>
+
+											{errors.Instruction && (
+												<div className='mb-20'>
+													<FormHelperText error={true} variant='standard'>
+														{errors.Instruction}
+													</FormHelperText>
+												</div>
+											)}
+										</div>
+
+										<div className='mt-30 mb-50'>
+											<ButtonComponent
+												size='large'
+												variant='contained'
+												color='primary'
+												title='კითხვების დამატების ვიდეო ახსნა'
+											/>
+										</div>
+
+										<GenerateEditExerciseComponent
+											name='TypeId'
+											isEditPage={true}
+											value={value}
+											closeModal={setOpen}
+											setDeleteQuestion={(e) => setDeleteModal(e)}
+											onClick={(e) => setModalData(e)}
 										/>
-									</div>
 
-									<GenerateEditExerciseComponent
-										name='TypeId'
-										value={value}
-										closeModal={setOpen}
-										setDeleteQuestion={(e) => setDeleteModal(e)}
-										onClick={(e) => setModalData(e)}
-									/>
+										<AddNewQuestion />
 
-									<AddNewQuestion />
-
-									<div className='flex space-center mt-70 mt-30'>
-										<SubmitButton
-											title='სავარჯიშოს დამატება'
-											size='large'
-											color='primary'
-											variant='contained'
-										/>
-									</div>
+										<div className='flex space-center mt-70 mt-30'>
+											<SubmitButton
+												title='სავარჯიშოს დამატება'
+												size='large'
+												color='primary'
+												variant='contained'
+											/>
+										</div>
+									</Grid>
 								</Grid>
-							</Grid>
-						</form>
-					</>
-				)}
+							</form>
+						</>
+					);
+				}}
 			</Formik>
 			{modalData && open && (
 				<Dialog

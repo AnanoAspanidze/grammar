@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import { useFormikContext } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
-
+import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -100,6 +100,7 @@ function CreateExercise({ data, closeModal }) {
 				>
 					<CloseRoundedIcon onClick={() => closeModal(false)} />
 				</IconButton>
+
 				<div className={classes.container}>
 					<div className={classes.EcercisesBorder}>
 						<ReactQuill
@@ -126,6 +127,10 @@ function CreateExercise({ data, closeModal }) {
 										}
 										onChange={() => handleCheckbox(item.id)}
 									/>
+
+									<IconButton style={{ marginLeft: '5px' }}>
+										<DeleteIcon />
+									</IconButton>
 								</div>
 							))}
 

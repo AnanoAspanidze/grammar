@@ -7,9 +7,9 @@ import WritableQuestions from '../../../components/admin/exercise/WritableQuesti
 import ChangableQuestion from '../../../components/admin/exercise/ChangableQuestion';
 import TagsQuestions from '../../../components/admin/exercise/TagsQuestions';
 import TrueOrFalse from '../../../components/admin/exercise/TrueOrFalse';
-import DragEndDropQuestion from './DragEndDropQuestion';
+import { arr1, arr3 } from './data';
 
-function GenerateExerciseComponent({ name, value }) {
+function GenerateExerciseComponent({ name, isEditPage }) {
 	const [index, setIndex] = useState('1');
 	const [count, setcount] = useState(1);
 	const [arrayItems, setArrayItems] = useState([1]);
@@ -30,7 +30,7 @@ function GenerateExerciseComponent({ name, value }) {
 		}
 
 		if (count === 1) {
-			setIndex('1');
+			setIndex(1);
 		}
 	}, [count]);
 
@@ -39,35 +39,56 @@ function GenerateExerciseComponent({ name, value }) {
 		setArrayItems(arrayOfDigits);
 	}, [index]);
 
-	return (
-		<>
-			<div>
-				{values[name] === 1 &&
-					arrayItems &&
-					arrayItems.map((item, i) => (
-						<TestQuestion myvalue={values.Questions[i]} key={item} />
-					))}
-				{values[name] === 2 &&
-					arrayItems &&
-					arrayItems.map((item) => <SelectQuestions key={item} />)}
-				{values[name] === 3 &&
-					arrayItems &&
-					arrayItems.map((item) => <WritableQuestions key={item} />)}
-				{values[name] === 4 &&
-					arrayItems &&
-					arrayItems.map((item) => <ChangableQuestion key={item} />)}
-				{values[name] === 5 &&
-					arrayItems &&
-					arrayItems.map((item) => <TagsQuestions key={item} />)}
-				{values[name] === 6 &&
-					arrayItems &&
-					arrayItems.map((item) => <TrueOrFalse key={item} />)}
-				{values[name] === 7 || values[name] === 8 ? (
-					<DragEndDropQuestion />
-				) : null}
-			</div>
-		</>
-	);
+	useEffect(() => {
+		if (values.TypeId === 1 || values.TypeId === 2) {
+			setFieldValue('Questions', arr1);
+		}
+
+		if (values.TypeId === 3 || values.TypeId === 4 || values.TypeId === 5) {
+			setFieldValue('Questions', arr3);
+		}
+	}, [values.TypeId]);
+
+	if (values.Questions.length > 0) {
+		return (
+			<>
+				<div>
+					{values[name] === 1 &&
+						arrayItems &&
+						arrayItems.map((item, i) => (
+							<TestQuestion isEditPage={isEditPage} index={i} key={item} />
+						))}
+					{values[name] === 2 &&
+						arrayItems &&
+						arrayItems.map((item, i) => (
+							<SelectQuestions isEditPage={isEditPage} index={i} key={item} />
+						))}
+					{values[name] === 3 &&
+						arrayItems &&
+						arrayItems.map((item, i) => (
+							<WritableQuestions isEditPage={isEditPage} index={i} key={item} />
+						))}
+					{values[name] === 4 &&
+						arrayItems &&
+						arrayItems.map((item, i) => (
+							<ChangableQuestion isEditPage={isEditPage} index={i} key={item} />
+						))}
+					{values[name] === 5 &&
+						arrayItems &&
+						arrayItems.map((item, i) => (
+							<TagsQuestions isEditPage={isEditPage} index={i} key={item} />
+						))}
+					{values[name] === 6 &&
+						arrayItems &&
+						arrayItems.map((item, i) => (
+							<TrueOrFalse isEditPage={isEditPage} index={i} key={item} />
+						))}
+				</div>
+			</>
+		);
+	} else {
+		return null;
+	}
 }
 
 export default GenerateExerciseComponent;

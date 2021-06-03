@@ -1,140 +1,146 @@
 import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import { useFormikContext } from 'formik';
+import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import ExerciseCheckbox from './ExerciseCheckbox';
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
-function TestQuestion({ data, index, closeModal, setDeleteQuestion, onClick }) {
+function TestQuestion({
+	data,
+	myvalue,
+	closeModal,
+	index,
+	setDeleteQuestion,
+	isEditPage,
+	onClick,
+}) {
 	const classes = useStyles();
-	const { values, setFieldValue } = useFormikContext();
+	const { values, setFieldValue, errors, handleChange } = useFormikContext();
 
-	const [value, setValue] = useState({
-		Answers: [
+	const addMore = () => {
+		setFieldValue(`Questions[${index}].Answers`, [
+			...values.Questions[index].Answers,
 			{
-				id: 1,
+				id: 0,
 				Text: '',
 				IsCorrect: false,
 			},
-		],
-		Text: '',
-		WrongAnswerText: '',
-		RightAnswerText: '',
-	});
-
-	const handleChange = (inputvalue, name) => {
-		setValue({ ...value, [name]: inputvalue });
+		]);
 	};
 
-	const handleInputChange = (v, id) => {
-		const oldState = { ...value };
-		oldState.Answers[id - 1].Text = v;
-
-		setValue(oldState);
-	};
-
-	const addMore = () => {
-		setValue({
-			...value,
-			Answers: [
-				...value.Answers,
-				{
-					id: 0,
-					Text: '',
-					IsCorrect: false,
-				},
-			],
-		});
-	};
-
-	const handleCheckbox = (id) => {
-		const selectedCheckbox = value.Answers.map((c) => {
-			if (c.id === id && c.IsCorrect === false) {
-				return { ...c, IsCorrect: true };
-			} else if (c.id === id && c.IsCorrect === true)
-				return { ...c, IsCorrect: false };
-
-			return c;
-		});
-
-		console.log(selectedCheckbox);
-
-		setValue({ ...value, Answers: selectedCheckbox });
-	};
-
-	useEffect(() => {
-		setFieldValue(`Questions[${values.index - 1}]`, value);
-	}, [value]);
-
-	useEffect(() => {
-		setValue(data);
-	}, []);
-
-	console.log(values);
 	return (
 		<div
 			className={classes.EcercisesBorder}
 			style={{ position: 'relative', paddingTop: '70px' }}
 		>
-			<IconButton
-				onClick={() => {
-					closeModal(true);
-					onClick(data);
-				}}
-				style={{ position: 'absolute', right: '70px', top: '11px' }}
-			>
-				<EditIcon />
-			</IconButton>
+			{isEditPage && (
+				<>
+					<IconButton
+						onClick={() => {
+							closeModal(true);
+							onClick(data);
+						}}
+						style={{ position: 'absolute', right: '70px', top: '11px' }}
+					>
+						<EditIcon />
+					</IconButton>
 
-			<IconButton
-				onClick={() => {
-					setDeleteQuestion(true);
-					onClick(values);
-				}}
-				style={{ position: 'absolute', right: '10px', top: '11px' }}
-			>
-				<DeleteIcon />
-			</IconButton>
+					<IconButton
+						onClick={() => {
+							setDeleteQuestion(true);
+							onClick(values);
+						}}
+						style={{ position: 'absolute', right: '10px', top: '11px' }}
+					>
+						<DeleteIcon />
+					</IconButton>
+				</>
+			)}
+
 			<ReactQuill
-				disabled={true}
+				disabled={isEditPage}
 				theme='snow'
-				readOnly={true}
-				value={value.Text}
-				onChange={(e) => handleChange(e, 'Text')}
+				readOnly={isEditPage}
+				name={`Questions[${index}].Text`}
+				value={values.Questions[index].Text}
+				onChange={(e) => setFieldValue(`Questions[${index}].Text`, e)}
 				placeholder='კითხვა *'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
-			{value.Answers.map((item) => (
+			{values.Questions[index].Answers.map((item, i) => (
 				<div className='flex align-items-center mb-20 mt-30' key={item.id}>
-					<ExerciseCheckbox
-						placeholder='პასუხი *'
-						name={`${item}`}
+					<Checkbox
 						checked={item.IsCorrect}
-						inputValue={item.Text}
-						disabled={true}
+						name={`Questions[${index}].Answers[${i}].IsCorrect`}
+						value={values.Questions[index].Answers[i].IsCorrect}
+						onChange={(e) =>
+							setFieldValue(
+								`Questions[${index}].Answers[${i}].IsCorrect`,
+								e.target.checked
+							)
+						}
+						color='primary'
+						disabled={isEditPage}
 					/>
+
+					<div className='w-100'>
+						<TextField
+							className={classes.TextField}
+							variant='outlined'
+							name={`Questions[${index}].Answers[${i}].Text`}
+							value={values.Questions[index].Answers[i].Text}
+							onChange={(e) =>
+								setFieldValue(
+									`Questions[${index}].Answers[${i}].Text`,
+									e.target.value
+								)
+							}
+							label='პასუხი *'
+							disabled={isEditPage}
+						/>
+
+						{/* {errors[name] && (
+							<FormHelperText error={true}>{errors[name]}</FormHelperText>
+						)} */}
+					</div>
 				</div>
 			))}
+
+			{!isEditPage && (
+				<Fab component='span' onClick={addMore}>
+					<AddIcon />
+				</Fab>
+			)}
 
 			<ReactQuill
 				theme='snow'
 				className='mt-80'
-				value={value.RightAnswerText}
-				readOnly={true}
-				onChange={(e) => handleChange(e, 'RightAnswerText')}
+				name={`Questions[${index}].RightAnswerText`}
+				value={values.Questions[index].RightAnswerText}
+				onChange={(e) =>
+					setFieldValue(`Questions[${index}].RightAnswerText`, e)
+				}
+				readOnly={isEditPage}
 				placeholder='კომენტარი პასუხის სწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
 			<ReactQuill
 				theme='snow'
-				value={value.WrongAnswerText}
-				readOnly={true}
-				onChange={(e) => handleChange(e, 'WrongAnswerText')}
+				name={`Questions[${index}].WrongAnswerText`}
+				value={values.Questions[index].WrongAnswerText}
+				onChange={(e) =>
+					setFieldValue(`Questions[${index}].WrongAnswerText`, e)
+				}
+				readOnly={isEditPage}
 				placeholder='კომენტარი პასუხის არასწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
@@ -144,6 +150,10 @@ function TestQuestion({ data, index, closeModal, setDeleteQuestion, onClick }) {
 
 export default TestQuestion;
 
+TestQuestion.defaultProps = {
+	isEditPage: true,
+};
+
 const useStyles = makeStyles((theme) => ({
 	EcercisesBorder: {
 		padding: '30px 50px',
@@ -151,5 +161,8 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: '50px',
 		borderRadius: '6px',
 		boxShadow: 'rgb(3 102 214 / 30%) 0px 0px 0px 3px',
+	},
+	TextField: {
+		width: '100%',
 	},
 }));

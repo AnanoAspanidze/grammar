@@ -20,6 +20,16 @@ function AddNewQuestion() {
 									Text: '',
 									IsCorrect: false,
 								},
+								{
+									id: 2,
+									Text: '',
+									IsCorrect: false,
+								},
+								{
+									id: 3,
+									Text: '',
+									IsCorrect: false,
+								},
 							],
 							Text: '',
 							WrongAnswerText: '',

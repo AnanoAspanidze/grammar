@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
-import { makeStyles } from '@material-ui/core/styles';
+import { useFormikContext } from 'formik';
 
-function ChangableQuestion() {
-	const [value, setValue] = useState('');
-	const classes = useStyles();
+function ChangableQuestion({ isEditPage, index }) {
+	const { values, setFieldValue, errors, handleChange } = useFormikContext();
+
 	return (
 		<div>
 			<ReactQuill
+				disabled={isEditPage}
 				theme='snow'
-				value={value}
-				onChange={setValue}
-				placeholder='არასწორი ტექსტი'
+				readOnly={isEditPage}
+				name={`Questions[${index}].Text`}
+				value={values.Questions[index].Text}
+				onChange={(e) => setFieldValue(`Questions[${index}].Text`, e)}
+				placeholder='კითხვა *'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
 			<ReactQuill
 				theme='snow'
-				value={value}
-				onChange={setValue}
+				name={`Questions[${index}].Answers[${0}].Text`}
+				value={values.Questions[index].Answers[0].Text}
+				onChange={(e) =>
+					setFieldValue(`Questions[${index}].Answers[0].Text`, e)
+				}
 				placeholder='სწორი ტექსტი'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
@@ -26,16 +32,24 @@ function ChangableQuestion() {
 			<ReactQuill
 				theme='snow'
 				className='mt-80'
-				value={value}
-				onChange={setValue}
+				name={`Questions[${index}].RightAnswerText`}
+				value={values.Questions[index].RightAnswerText}
+				onChange={(e) =>
+					setFieldValue(`Questions[${index}].RightAnswerText`, e)
+				}
+				readOnly={isEditPage}
 				placeholder='კომენტარი პასუხის სწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
 			<ReactQuill
 				theme='snow'
-				value={value}
-				onChange={setValue}
+				name={`Questions[${index}].WrongAnswerText`}
+				value={values.Questions[index].WrongAnswerText}
+				onChange={(e) =>
+					setFieldValue(`Questions[${index}].WrongAnswerText`, e)
+				}
+				readOnly={isEditPage}
 				placeholder='კომენტარი პასუხის არასწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
@@ -44,13 +58,3 @@ function ChangableQuestion() {
 }
 
 export default ChangableQuestion;
-
-const useStyles = makeStyles((theme) => ({
-	EcercisesBorder: {
-		padding: '30px 50px',
-		marginBottom: '50px',
-		marginBottom: '50px',
-		borderRadius: '6px',
-		boxShadow: 'rgb(3 102 214 / 30%) 0px 0px 0px 3px',
-	},
-}));

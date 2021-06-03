@@ -1,63 +1,98 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ReactQuill from 'react-quill';
+import { useFormikContext } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
 
-function TrueOrFalse() {
-	const [value, setValue] = React.useState('');
-	const [value2, setValue2] = React.useState('');
+function TrueOrFalse({ isEditPage, index }) {
+	const { values, setFieldValue, errors, handleChange } = useFormikContext();
 	const classes = useStyles();
-	const handleChange = (event) => {
-		setValue2(event.target.value);
-	};
+
+	useEffect(() => {
+		setFieldValue(`Questions[${index}].Answers[0].Text`, 'ჭეშმარიტია');
+		setFieldValue(`Questions[${index}].Answers[1].Text`, 'მცდარია');
+	}, []);
 
 	return (
 		<div className={classes.EcercisesBorder}>
 			<ReactQuill
+				disabled={isEditPage}
 				theme='snow'
-				value={value}
-				onChange={setValue}
-				placeholder='კითხვის ტექსტი'
+				readOnly={isEditPage}
+				name={`Questions[${index}].Text`}
+				value={values.Questions[index].Text}
+				onChange={(e) => setFieldValue(`Questions[${index}].Text`, e)}
+				placeholder='კითხვა *'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
-			<FormControl component='fieldset' style={{ marginBottom: '40px' }}>
-				<RadioGroup
-					aria-label='trueOrFalse'
-					name='trueOrFalse1'
-					value={value2}
-					onChange={handleChange}
-				>
-					<FormControlLabel
-						value='true'
-						control={<Radio color='primary' />}
-						label='ჭეშმარიტია'
-					/>
+			<RadioGroup>
+				<div className='flex align-items-center mt-30'>
+					<Radio
+						checked={values.Questions[index].Answers[0].IsCorrect}
+						name={`Questions[${index}].Answers[0].IsCorrect`}
+						onChange={(e) => {
+							const newArr = values.Questions[index].Answers.map((w) => {
+								return { ...w, IsCorrect: false };
+							});
 
-					<FormControlLabel
-						value='false'
-						control={<Radio color='primary' />}
-						label='მცდარია'
+							setFieldValue(`Questions[${index}].Answers`, newArr);
+							setFieldValue(
+								`Questions[${index}].Answers[0].IsCorrect`,
+								!e.target.value
+							);
+						}}
+						inputProps={{ 'aria-label': 'A' }}
 					/>
-				</RadioGroup>
-			</FormControl>
+					<span className='font-18'>
+						{values.Questions[index].Answers[0].Text}
+					</span>
+				</div>
+				<div className='flex align-items-center mb-20 mt-30'>
+					<Radio
+						checked={values.Questions[index].Answers[1].IsCorrect}
+						name={`Questions[${index}].Answers[1].IsCorrect`}
+						onChange={(e) => {
+							const newArr = values.Questions[index].Answers.map((w) => {
+								return { ...w, IsCorrect: false };
+							});
+
+							setFieldValue(`Questions[${index}].Answers`, newArr);
+							setFieldValue(
+								`Questions[${index}].Answers[1].IsCorrect`,
+								!e.target.value
+							);
+						}}
+						inputProps={{ 'aria-label': 'A' }}
+					/>
+					<span className='font-18'>
+						{values.Questions[index].Answers[1].Text}
+					</span>
+				</div>
+			</RadioGroup>
 
 			<ReactQuill
 				theme='snow'
 				className='mt-80'
-				value={value}
-				onChange={setValue}
+				name={`Questions[${index}].RightAnswerText`}
+				value={values.Questions[index].RightAnswerText}
+				onChange={(e) =>
+					setFieldValue(`Questions[${index}].RightAnswerText`, e)
+				}
+				readOnly={isEditPage}
 				placeholder='კომენტარი პასუხის სწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
 			<ReactQuill
 				theme='snow'
-				value={value}
-				onChange={setValue}
+				name={`Questions[${index}].WrongAnswerText`}
+				value={values.Questions[index].WrongAnswerText}
+				onChange={(e) =>
+					setFieldValue(`Questions[${index}].WrongAnswerText`, e)
+				}
+				readOnly={isEditPage}
 				placeholder='კომენტარი პასუხის არასწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>

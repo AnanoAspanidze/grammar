@@ -34,10 +34,8 @@ function SelectComponent({
 				setFieldValue('desc', 'სიტყვის ან სიტყვების არჩევის კითხვის აღწერა');
 			} else if (values['part'] === '6') {
 				setFieldValue('desc', 'ჭეშმარიტია/მცდარია კითხვის აღწერა');
-			} else if (values['part'] === '7') {
-				setFieldValue('desc', 'drag and drop კითხვის აღწერა');
-			} else if (values['part'] === '8') {
-				setFieldValue('desc', 'კროსვორდის კითხვის აღწერა');
+			} else {
+				setFieldValue('desc', '');
 			}
 		}
 	}, [values.part]);
@@ -46,19 +44,19 @@ function SelectComponent({
 		<FormControl variant='outlined' className={classes.formControl}>
 			<InputLabel>{label}</InputLabel>
 			<Select
-				value={values[name]}
+				value={`${values[name]}`}
 				onChange={(event) => {
-					setFieldValue(name, event.target.value);
-
 					if (hasOnchange) {
 						onChange(event.target.value);
+					} else {
+						setFieldValue(name, event.target.value);
 					}
 				}}
 				label={label}
 			>
 				{options &&
 					options.map((option, i) => (
-						<MenuItem key={i} value={option[value]}>
+						<MenuItem key={i} value={option.Id}>
 							{option[text]}
 						</MenuItem>
 					))}
