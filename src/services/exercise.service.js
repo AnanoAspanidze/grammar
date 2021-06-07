@@ -5,6 +5,9 @@ export const exerciseService = {
 	getExercises,
 	exercisedetails,
 	editExercise,
+	editQuestion,
+	deleteQuestion,
+	deleteAnswer,
 	hideExercise,
 	unhideExercise,
 };
@@ -23,7 +26,13 @@ function exercisedetails(id) {
 
 function editExercise(data) {
 	return fetchWrapper
-		.get('/Exercises/editExercise', data)
+		.put('/Exercises/editExercise', data)
+		.then((exercise) => exercise);
+}
+
+function editQuestion(data) {
+	return fetchWrapper
+		.put('/Exercises/editquestion', data)
 		.then((exercise) => exercise);
 }
 
@@ -48,5 +57,17 @@ function hideExercise(id) {
 function unhideExercise(id) {
 	return fetchWrapper
 		.post(`/Exercises/unblockexercise/${id}`)
+		.then((exercise) => exercise);
+}
+
+function deleteQuestion(id) {
+	return fetchWrapper
+		.delete(`/Exercises/deletequestion/${id}`)
+		.then((exercise) => exercise);
+}
+
+function deleteAnswer(id) {
+	return fetchWrapper
+		.delete(`/Exercises/deleteanswer/${id}`)
 		.then((exercise) => exercise);
 }

@@ -12,12 +12,38 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import FormHelperText from '@material-ui/core/FormHelperText';
-
+import { exerciseService } from '../../../services/exercise.service';
 import ExerciseCheckbox from './ExerciseCheckbox';
+import SnackbarComponent from '../reusable/SnackbarComponent';
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 
-function CreateExercise({ data, closeModal }) {
+function CreateExercise({
+	data,
+	questionIndex,
+	closeModal,
+	onChangeParetFormikQuestionn,
+}) {
 	const classes = useStyles();
 	const { values, errors, setFieldValue, isSubmitting } = useFormikContext();
+
+	const [state, setState] = useState({
+		open: false,
+		vertical: 'top',
+		horizontal: 'center',
+		severity: '',
+		error: null,
+	});
+
+	const { open } = state;
+
+	const handleClick = (newState, message) => {
+		setState({ open: true, error: message, ...newState });
+	};
+
+	const handleClose = () => {
+		setState({ ...state, open: false });
+	};
 
 	const [value, setValue] = useState({
 		Answers: [
@@ -51,44 +77,67 @@ function CreateExercise({ data, closeModal }) {
 	}, [value.Answers]);
 
 	const addMore = () => {
-		setValue({
-			...value,
-			Answers: [
-				...value.Answers,
-				{
-					id: value.Answers.length + 1,
-					Text: '',
-					IsCorrect: false,
-				},
-			],
-		});
+		setFieldValue('Answers', [
+			...values.Answers,
+			{
+				Id: 0,
+				Text: '',
+				IsCorrect: false,
+			},
+		]);
 	};
 
-	const handleInputChange = (v, id) => {
-		const x = value.Answers.map((w) => {
-			if (w.id === id) {
-				return { ...w, Text: v };
-			}
+	const deleteAnswer = (id, i) => {
+		if (id !== 0) {
+			exerciseService
+				.deleteAnswer(id)
+				.then((res) => {
+					const t = values.Answers.filter((r) => r.Id !== id);
+					setFieldValue('Answers', t);
+					handleClick(
+						{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
+						res.Message
+					);
+				})
+				.catch((err) => {
+					handleClick(
+						{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
+						err.Message
+					);
+				});
+		} else if (id === 0) {
+			const f = values.Answers.filter((r, j) => {
+				if (r.Id == id && i == j) {
+					return false;
+				}
 
-			return w;
-		});
+				return r;
+			});
 
-		setValue({ Answers: x });
+			setFieldValue('Answers', f);
+		}
 	};
 
-	const handleCheckbox = (id) => {
-		const selectedCheckbox = value.Answers.map((c) => {
-			if (c.id === id && c.IsCorrect === false) {
-				return { ...c, IsCorrect: true };
-			} else if (c.id === id && c.IsCorrect === true)
-				return { ...c, IsCorrect: false };
+	const editQuestion = (data) => {
+		console.log(data);
 
-			return c;
-		});
-
-		console.log(selectedCheckbox);
-
-		setValue({ ...value, Answers: selectedCheckbox });
+		exerciseService
+			.editQuestion(data)
+			.then((res) => {
+				setFieldValue(`Questions[${questionIndex}]`, data);
+				closeModal(false);
+				onChangeParetFormikQuestionn(data);
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
+					res.Message
+				);
+			})
+			.catch((err) => {
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
+					err.Message
+				);
+			});
 	};
 
 	return (
@@ -111,24 +160,40 @@ function CreateExercise({ data, closeModal }) {
 							style={{ height: '200px', marginBottom: '70px' }}
 						/>
 
-						{value.Answers &&
-							value.Answers.map((item, i) => (
+						{values.Answers &&
+							values.Answers.map((item, i) => (
 								<div
 									className='flex align-items-center mb-20 mt-30'
 									key={item.id}
 								>
-									<ExerciseCheckbox
-										placeholder='პასუხი *'
-										name={`${item}`}
+									<Checkbox
 										checked={item.IsCorrect}
-										inputValue={item.Text}
-										handleInputChange={(e) =>
-											handleInputChange(e.target.value, item.id)
+										name={`Answers[${i}].IsCorrect`}
+										color='primary'
+										onChange={(e) =>
+											setFieldValue(`Answers[${i}].IsCorrect`, e.target.checked)
 										}
-										onChange={() => handleCheckbox(item.id)}
+										disabled={false}
 									/>
+									<div className='w-100'>
+										<TextField
+											className={classes.TextField}
+											style={{ width: '100%' }}
+											variant='outlined'
+											name={`Answers[${i}].Text`}
+											value={values.Answers[`${i}`].Text}
+											label='პასუხი *'
+											onChange={(e) =>
+												setFieldValue(`Answers[${i}].Text`, e.target.value)
+											}
+											disabled={false}
+										/>
+									</div>
 
-									<IconButton style={{ marginLeft: '5px' }}>
+									<IconButton
+										onClick={() => deleteAnswer(item.Id, i)}
+										style={{ marginLeft: '5px' }}
+									>
 										<DeleteIcon />
 									</IconButton>
 								</div>
@@ -174,9 +239,17 @@ function CreateExercise({ data, closeModal }) {
 					size='large'
 					color='primary'
 					disabled={isSubmitting}
+					onClick={() => editQuestion(values)}
 				>
 					შეცვლა
 				</Button>
+
+				<SnackbarComponent
+					open={open}
+					message={state.error}
+					severity={state.severity}
+					handleClose={handleClose}
+				/>
 			</DialogActions>
 		</>
 	);

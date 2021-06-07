@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -22,6 +23,7 @@ import { addExerciseValidationSchema } from '../../../helpers/schema';
 
 function Addexecise({ drawerIsOpen }) {
 	const classes = useStyles();
+	let history = useHistory();
 
 	const [parts, setParts] = useState([]);
 	const [selectedPart, setselectedPart] = useState('');
@@ -30,6 +32,8 @@ function Addexecise({ drawerIsOpen }) {
 	const [index, setIndex] = useState('1');
 	const [count, setcount] = useState(1);
 	const [arrayItems, setArrayItems] = useState([1]);
+	const [selectetdFile, setSelectedFile] = useState(null);
+	const [fileBase64String, setFileBase64String] = useState('');
 
 	const [exerciseTypes, setexerciseTypes] = useState(null);
 
@@ -79,9 +83,27 @@ function Addexecise({ drawerIsOpen }) {
 		}
 	}, [selectedPart]);
 
-	function onSubmit(data, action) {
-		console.log(data);
+	useEffect(() => {
+		if (selectetdFile) {
+			encodeFileBase64(selectetdFile);
+		}
+	}, [selectetdFile]);
 
+	const encodeFileBase64 = (file) => {
+		var reader = new FileReader();
+		if (file) {
+			reader.readAsDataURL(file);
+			reader.onload = () => {
+				var Base64 = reader.result;
+				setFileBase64String(Base64);
+			};
+			reader.onerror = (error) => {
+				console.log('error: ', error);
+			};
+		}
+	};
+
+	function onSubmit(data, action) {
 		let modifierAnswer = data.Questions.map((w) => {
 			w.Answers.map((c) => delete c.id);
 			return w;
@@ -96,11 +118,15 @@ function Addexecise({ drawerIsOpen }) {
 			SubCategoryId: data.SubCategoryId,
 			TypeId: data.TypeId,
 			Questions: modifierAnswer,
-			AudioFile: {},
-			VideoLinks: [],
+			AudioFile: {
+				AudioFileData: fileBase64String,
+			},
+			VideoLinks: data.VideoLinks,
 		};
 
-		exerciseService.createExercise(d).then((res) => console.log(res));
+		exerciseService.createExercise(d).then((res) => {
+			history.push('/admin/exercisespage');
+		});
 		action.setSubmitting(false);
 	}
 
@@ -108,8 +134,7 @@ function Addexecise({ drawerIsOpen }) {
 		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Formik
 				initialValues={initialValues}
-				validateOnChange={true}
-				enableReinitialize={true}
+				validateOnChange={false}
 				validationSchema={addExerciseValidationSchema}
 				onSubmit={onSubmit}
 			>
@@ -130,7 +155,8 @@ function Addexecise({ drawerIsOpen }) {
 										hasOnchange={true}
 										onChange={(e) => {
 											setselectedPart(e);
-											handleChange('category');
+											setFieldValue('category', e);
+											// handleChange('category');
 										}}
 										options={parts}
 									/>
@@ -235,10 +261,10 @@ function Addexecise({ drawerIsOpen }) {
 
 									<div>
 										<input
-											accept='image/*'
+											accept='audio/*'
 											className={classes.input}
 											id='contained-button-file'
-											multiple
+											onChange={(e) => setSelectedFile(e.target.files[0])}
 											type='file'
 										/>
 										<label
@@ -249,7 +275,7 @@ function Addexecise({ drawerIsOpen }) {
 												<GraphicEqRoundedIcon />
 											</Fab>
 										</label>
-										აუდიოს ატვირთვა
+										{selectetdFile ? selectetdFile.name : 'აუდიოს ატვირთვა'}
 									</div>
 								</div>
 
@@ -259,10 +285,12 @@ function Addexecise({ drawerIsOpen }) {
 											<div className='mb-10'>
 												<TextFieldComponent
 													placeholder={`youtube ის ლინკი ${item}`}
-													name={`${item}`}
-													value={values['VideoLinks']}
-													onChange={() =>
-														setFieldValue('VideoLinks', { Url: item })
+													name={`VideoLinks[${item - 1}].Url`}
+													onChange={(e) =>
+														setFieldValue(
+															`VideoLinks[${item - 1}].Url`,
+															e.target.value
+														)
 													}
 												/>
 											</div>
@@ -272,6 +300,10 @@ function Addexecise({ drawerIsOpen }) {
 										onClick={() => {
 											setcount(count + 1);
 											setIndex((prev) => `${prev}${parseInt(count) + 1}`);
+											setFieldValue('VideoLinks', [
+												...values.VideoLinks,
+												{ Id: count, Name: '', Url: '' },
+											]);
 										}}
 										variant='contained'
 										color='primary'

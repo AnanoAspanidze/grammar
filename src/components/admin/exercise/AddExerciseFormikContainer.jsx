@@ -2,31 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import CreateExercise from './CreateExercise';
+import { editQuestionSchema } from '../../../helpers/schema';
 
-function AddExerciseFormikContainer({ data, closeModal, setDeleteQuestion }) {
-	const schema = Yup.object().shape({
-		question: Yup.string().required('შეავსეთ ველი'),
-		// SubCategoryId: Yup.string().required('შეავსეთ ველი'),
-	});
-
+function AddExerciseFormikContainer({
+	data,
+	closeModal,
+	onChangeParetFormikQuestionn,
+	questionIndex,
+}) {
 	const [initialValue, setInitialValue] = useState({
-		Answers: [
-			{
-				id: 1,
-				Text: '',
-				IsCorrect: false,
-			},
-			{
-				id: 2,
-				Text: '',
-				IsCorrect: false,
-			},
-			{
-				id: 3,
-				Text: '',
-				IsCorrect: false,
-			},
-		],
+		Answers: [],
 		Text: '',
 		WrongAnswerText: '',
 		RightAnswerText: '',
@@ -49,14 +34,16 @@ function AddExerciseFormikContainer({ data, closeModal, setDeleteQuestion }) {
 			initialValues={initialValue}
 			validateOnChange={true}
 			enableReinitialize={true}
-			validationSchema={schema}
+			// validationSchema={editQuestionSchema}
 			onSubmit={onSubmit}
 		>
 			{({ handleSubmit }) => (
 				<form onSubmit={handleSubmit}>
 					<CreateExercise
 						data={data}
-						setDeleteQuestion={setDeleteQuestion}
+						onChangeParetFormikQuestionn={onChangeParetFormikQuestionn}
+						questionIndex={questionIndex}
+						// setDeleteQuestion={setDeleteQuestion}
 						closeModal={closeModal}
 					/>
 				</form>

@@ -45,6 +45,7 @@ function put(endpoint, body) {
 function _delete(endpoint) {
 	const requestOptions = {
 		method: 'DELETE',
+		headers: { 'Content-Type': 'application/json', ...authHeader() },
 	};
 	return fetch(`${authURL}${endpoint}`, requestOptions).then(handleResponse);
 }

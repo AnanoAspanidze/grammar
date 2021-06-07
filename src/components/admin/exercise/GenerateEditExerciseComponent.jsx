@@ -45,6 +45,7 @@ function GenerateEditExerciseComponent({
 		setArrayItems(arrayOfDigits);
 	}, [index]);
 
+	console.log(values[name]);
 	return (
 		<>
 			<div>
@@ -53,7 +54,7 @@ function GenerateEditExerciseComponent({
 					arrayItems.map((item, i) => (
 						<TestQuestion
 							data={values.Questions[i]}
-							key={item}
+							key={i}
 							isEditPage={isEditPage}
 							onClick={onClick}
 							setDeleteQuestion={setDeleteQuestion}

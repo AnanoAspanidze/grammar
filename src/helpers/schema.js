@@ -43,7 +43,7 @@ export const updateAdminInfoSchema = Yup.object().shape({
 });
 
 export const addExerciseValidationSchema = Yup.object().shape({
-	category: Yup.string().required('შეავსეთ ველი'),
+	CategoryId: Yup.string().required('შეავსეთ ველი'),
 	SubCategoryId: Yup.string().required('შეავსეთ ველი'),
 	Name: Yup.string().required('შეავსეთ ველი'),
 	Description: Yup.string().required('შეავსეთ ველი'),
@@ -60,4 +60,8 @@ export const addExerciseValidationSchema = Yup.object().shape({
 			}
 		}
 	),
+});
+
+export const editQuestionSchema = Yup.object().shape({
+	Text: Yup.string().required('შეავსეთ ველი'),
 });
