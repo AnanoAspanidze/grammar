@@ -43,25 +43,61 @@ export const updateAdminInfoSchema = Yup.object().shape({
 });
 
 export const addExerciseValidationSchema = Yup.object().shape({
-	CategoryId: Yup.string().required('შეავსეთ ველი'),
+	category: Yup.string().required('შეავსეთ ველი'),
 	SubCategoryId: Yup.string().required('შეავსეთ ველი'),
 	Name: Yup.string().required('შეავსეთ ველი'),
-	Description: Yup.string().required('შეავსეთ ველი'),
 	TypeId: Yup.string().required('შეავსეთ ველი'),
 	Instruction: Yup.string().required('შეავსეთ ველი'),
 	IsSummaryExercise: Yup.boolean(),
-	OrderNumber: Yup.string().when(
-		'IsSummaryExercise',
-		(IsSummaryExercise, schema) => {
-			if (IsSummaryExercise) {
-				return Yup.string().notRequired();
-			} else {
-				return Yup.string().required('შეავსეთ ველი');
-			}
+	OrderNumber: Yup.string().when('IsSummaryExercise', (IsSummaryExercise) => {
+		if (IsSummaryExercise) {
+			return Yup.string().notRequired();
+		} else {
+			return Yup.string().required('შეავსეთ ველი');
 		}
+	}),
+	Questions: Yup.array().of(
+		Yup.object().shape({
+			Text: Yup.string().required('შეავსეთ ველი'),
+			Answers: Yup.array().of(
+				Yup.object().shape({
+					Text: Yup.string().required('შეავსეთ ველი'),
+				})
+			),
+		})
+	),
+});
+export const addExerciseValidationSchema2 = Yup.object().shape({
+	CategoryId: Yup.string().required('შეავსეთ ველი'),
+	SubCategoryId: Yup.string().required('შეავსეთ ველი'),
+	Name: Yup.string().required('შეავსეთ ველი'),
+	TypeId: Yup.string().required('შეავსეთ ველი'),
+	Instruction: Yup.string().required('შეავსეთ ველი'),
+	IsSummaryExercise: Yup.boolean(),
+	OrderNumber: Yup.string().when('IsSummaryExercise', (IsSummaryExercise) => {
+		if (IsSummaryExercise) {
+			return Yup.string().notRequired();
+		} else {
+			return Yup.string().required('შეავსეთ ველი');
+		}
+	}),
+	Questions: Yup.array().of(
+		Yup.object().shape({
+			Text: Yup.string().required('შეავსეთ ველი'),
+			Answers: Yup.array().of(
+				Yup.object().shape({
+					Text: Yup.string().required('შეავსეთ ველი'),
+				})
+			),
+		})
 	),
 });
 
 export const editQuestionSchema = Yup.object().shape({
 	Text: Yup.string().required('შეავსეთ ველი'),
+	Answers: Yup.array().of(
+		Yup.object().shape({
+			Text: Yup.string().required('შეავსეთ ველი'),
+		})
+	),
 });

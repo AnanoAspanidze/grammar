@@ -34,21 +34,21 @@ function Profile({ drawerIsOpen }) {
 
 	const { user, clearErrors } = useContext(userContext);
 
-	useEffect(() => {
-		const requestOptions = {
-			method: 'POST',
-			headers: {
-				...authHeader(),
-			},
-		};
+	// useEffect(() => {
+	// 	const requestOptions = {
+	// 		method: 'POST',
+	// 		headers: {
+	// 			...authHeader(),
+	// 		},
+	// 	};
 
-		fetch(
-			`${process.env.REACT_APP_HOST}/Account/refresh-token`,
-			requestOptions
-		).then((res) => {
-			console.log(res);
-		});
-	}, []);
+	// 	fetch(
+	// 		`${process.env.REACT_APP_HOST}/Account/refresh-token`,
+	// 		requestOptions
+	// 	).then((res) => {
+	// 		console.log(res);
+	// 	});
+	// }, []);
 
 	useEffect(() => {
 		if (Object.keys(user).length > 0) {

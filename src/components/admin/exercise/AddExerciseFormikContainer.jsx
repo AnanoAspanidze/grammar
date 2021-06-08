@@ -3,6 +3,8 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import CreateExercise from './CreateExercise';
 import { editQuestionSchema } from '../../../helpers/schema';
+import { exerciseService } from '../../../services/exercise.service';
+import SnackbarComponent from '../reusable/SnackbarComponent';
 
 function AddExerciseFormikContainer({
 	data,
@@ -17,16 +19,47 @@ function AddExerciseFormikContainer({
 		RightAnswerText: '',
 	});
 
+	const [state, setState] = useState({
+		open: false,
+		vertical: 'top',
+		horizontal: 'center',
+		severity: '',
+		error: null,
+	});
+
+	const { open } = state;
+
+	const handleClick = (newState, message) => {
+		setState({ open: true, error: message, ...newState });
+	};
+
+	const handleClose = () => {
+		setState({ ...state, open: false });
+	};
+
 	useEffect(() => {
 		setInitialValue(data);
 	}, []);
 
 	function onSubmit(data, action) {
-		console.log(data);
-
-		// exerciseService.createExercise(d).then((res) => console.log(res));
-
-		// action.setSubmitting(false);
+		exerciseService
+			.editQuestion(data)
+			.then((res) => {
+				action.setFieldValue(`Questions[${questionIndex}]`, data);
+				closeModal(false);
+				onChangeParetFormikQuestionn(data);
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
+					res.Message
+				);
+				action.setSubmitting(false);
+			})
+			.catch((err) => {
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
+					err.Message
+				);
+			});
 	}
 
 	return (
@@ -34,17 +67,22 @@ function AddExerciseFormikContainer({
 			initialValues={initialValue}
 			validateOnChange={true}
 			enableReinitialize={true}
-			// validationSchema={editQuestionSchema}
+			validationSchema={editQuestionSchema}
 			onSubmit={onSubmit}
 		>
-			{({ handleSubmit }) => (
+			{({ handleSubmit, setFieldValue }) => (
 				<form onSubmit={handleSubmit}>
 					<CreateExercise
 						data={data}
-						onChangeParetFormikQuestionn={onChangeParetFormikQuestionn}
 						questionIndex={questionIndex}
-						// setDeleteQuestion={setDeleteQuestion}
 						closeModal={closeModal}
+					/>
+
+					<SnackbarComponent
+						open={open}
+						message={state.error}
+						severity={state.severity}
+						handleClose={handleClose}
 					/>
 				</form>
 			)}

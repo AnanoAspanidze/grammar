@@ -25,7 +25,7 @@ function Signin({ drawerIsOpen }) {
 
 	const initialValues = {
 		Email: 'tediashvili.jemali@gtu.ge',
-		Password: 'Admin123!',
+		Password: '123456',
 	};
 
 	const handleClick = (newState, message) => {

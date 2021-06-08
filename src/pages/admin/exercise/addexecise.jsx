@@ -38,7 +38,6 @@ function Addexecise({ drawerIsOpen }) {
 	const [exerciseTypes, setexerciseTypes] = useState(null);
 
 	const initialValues = {
-		exerciseId: 0,
 		Name: '',
 		Description: '',
 		category: '',
@@ -52,13 +51,7 @@ function Addexecise({ drawerIsOpen }) {
 		AudioFile: {
 			AudioFileData: '',
 		},
-		VideoLinks: [
-			{
-				Id: 0,
-				Name: '',
-				Url: '',
-			},
-		],
+		VideoLinks: [{ Id: 0, Name: '', Url: '' }],
 		Questions: [],
 
 		part: '1',
@@ -111,16 +104,13 @@ function Addexecise({ drawerIsOpen }) {
 
 		let d = {
 			Name: data.Name,
-			OrderNumber: 0,
+			OrderNumber: parseInt(data.OrderNumber),
 			Description: data.Description,
 			Instruction: data.Instruction,
 			IsSummaryExercise: data.IsSummaryExercise,
 			SubCategoryId: data.SubCategoryId,
 			TypeId: data.TypeId,
 			Questions: modifierAnswer,
-			AudioFile: {
-				AudioFileData: fileBase64String,
-			},
 			VideoLinks: data.VideoLinks,
 		};
 
@@ -135,6 +125,7 @@ function Addexecise({ drawerIsOpen }) {
 			<Formik
 				initialValues={initialValues}
 				validateOnChange={false}
+				enableReinitialize={true}
 				validationSchema={addExerciseValidationSchema}
 				onSubmit={onSubmit}
 			>
@@ -156,7 +147,6 @@ function Addexecise({ drawerIsOpen }) {
 										onChange={(e) => {
 											setselectedPart(e);
 											setFieldValue('category', e);
-											// handleChange('category');
 										}}
 										options={parts}
 									/>
@@ -302,7 +292,7 @@ function Addexecise({ drawerIsOpen }) {
 											setIndex((prev) => `${prev}${parseInt(count) + 1}`);
 											setFieldValue('VideoLinks', [
 												...values.VideoLinks,
-												{ Id: count, Name: '', Url: '' },
+												{ Id: 0, Name: '', Url: '' },
 											]);
 										}}
 										variant='contained'

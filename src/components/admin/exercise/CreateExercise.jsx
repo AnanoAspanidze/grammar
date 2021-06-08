@@ -18,12 +18,7 @@ import SnackbarComponent from '../reusable/SnackbarComponent';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 
-function CreateExercise({
-	data,
-	questionIndex,
-	closeModal,
-	onChangeParetFormikQuestionn,
-}) {
+function CreateExercise({ data, closeModal }) {
 	const classes = useStyles();
 	const { values, errors, setFieldValue, isSubmitting } = useFormikContext();
 
@@ -116,28 +111,6 @@ function CreateExercise({
 
 			setFieldValue('Answers', f);
 		}
-	};
-
-	const editQuestion = (data) => {
-		console.log(data);
-
-		exerciseService
-			.editQuestion(data)
-			.then((res) => {
-				setFieldValue(`Questions[${questionIndex}]`, data);
-				closeModal(false);
-				onChangeParetFormikQuestionn(data);
-				handleClick(
-					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
-					res.Message
-				);
-			})
-			.catch((err) => {
-				handleClick(
-					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
-					err.Message
-				);
-			});
 	};
 
 	return (
@@ -239,7 +212,6 @@ function CreateExercise({
 					size='large'
 					color='primary'
 					disabled={isSubmitting}
-					onClick={() => editQuestion(values)}
 				>
 					შეცვლა
 				</Button>

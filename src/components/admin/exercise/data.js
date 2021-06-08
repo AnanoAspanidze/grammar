@@ -1,6 +1,5 @@
 const arr1 = [
 	{
-		exerciseId: 0,
 		Answers: [
 			{
 				id: 1,
@@ -26,7 +25,6 @@ const arr1 = [
 
 const arr3 = [
 	{
-		exerciseId: 0,
 		Answers: [
 			{
 				id: 1,

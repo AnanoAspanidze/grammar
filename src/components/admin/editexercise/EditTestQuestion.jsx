@@ -109,7 +109,7 @@ function EditTestQuestion({ data, index, isEditPage, onEditQuestion }) {
 				/>
 
 				{values.Questions[index].Answers.map((item, i) => (
-					<div className='flex align-items-center mb-20 mt-30' key={item.id}>
+					<div className='flex align-items-center mb-20 mt-30' key={i}>
 						<Checkbox
 							checked={item.IsCorrect}
 							name={`Questions[${index}].Answers[${i}].IsCorrect`}

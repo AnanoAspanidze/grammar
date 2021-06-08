@@ -14,19 +14,20 @@ function AddNewQuestion() {
 					setFieldValue('Questions', [
 						...values.Questions,
 						{
+							exerciseId: 0,
 							Answers: [
 								{
-									id: 1,
+									id: 0,
 									Text: '',
 									IsCorrect: false,
 								},
 								{
-									id: 2,
+									id: 0,
 									Text: '',
 									IsCorrect: false,
 								},
 								{
-									id: 3,
+									id: 0,
 									Text: '',
 									IsCorrect: false,
 								},

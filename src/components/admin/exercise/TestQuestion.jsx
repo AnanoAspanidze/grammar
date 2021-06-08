@@ -35,6 +35,7 @@ function TestQuestion({
 		]);
 	};
 
+	console.log(errors.Questions);
 	return (
 		<div
 			className={classes.EcercisesBorder}
@@ -72,11 +73,17 @@ function TestQuestion({
 				value={values.Questions[index].Text}
 				onChange={(e) => setFieldValue(`Questions[${index}].Text`, e)}
 				placeholder='კითხვა *'
-				style={{ height: '200px', marginBottom: '70px' }}
+				style={{ height: '200px', marginBottom: '55px' }}
 			/>
 
+			{errors.Questions && (
+				<FormHelperText error={true} variant='standard'>
+					{errors.Questions[0].Text}
+				</FormHelperText>
+			)}
+
 			{values.Questions[index].Answers.map((item, i) => (
-				<div className='flex align-items-center mb-20 mt-30' key={item.id}>
+				<div className='flex align-items-center mb-20 mt-30' key={i}>
 					<Checkbox
 						checked={item.IsCorrect}
 						name={`Questions[${index}].Answers[${i}].IsCorrect`}
@@ -107,9 +114,13 @@ function TestQuestion({
 							disabled={isEditPage}
 						/>
 
-						{/* {errors[name] && (
-							<FormHelperText error={true}>{errors[name]}</FormHelperText>
-						)} */}
+						{errors.Questions && errors.Questions[0].Answers && (
+							<FormHelperText error={true} variant='standard'>
+								{i < errors.Questions[0].Answers.length
+									? errors.Questions[0].Answers[i].Text
+									: ''}
+							</FormHelperText>
+						)}
 					</div>
 				</div>
 			))}

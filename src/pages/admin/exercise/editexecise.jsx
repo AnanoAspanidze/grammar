@@ -22,7 +22,7 @@ import SnackbarComponent from '../../../components/admin/reusable/SnackbarCompon
 import AddNewQuestion from '../../../components/admin/exercise/AddNewQuestion';
 import { exerciseService } from '../../../services/exercise.service';
 import { commonService } from '../../../services/common.service';
-import { addExerciseValidationSchema } from '../../../helpers/schema';
+import { addExerciseValidationSchema2 } from '../../../helpers/schema';
 import GenerateEditExerciseComponent2 from '../../../components/admin/exercise/GenerateEditExerciseComponent2';
 import AddExerciseFormikContainer from '../../../components/admin/exercise/AddExerciseFormikContainer';
 
@@ -166,7 +166,7 @@ function Editexecise({ drawerIsOpen, match }) {
 					initialValues={initialValues}
 					enableReinitialize={true}
 					validateOnChange={false}
-					validationSchema={addExerciseValidationSchema}
+					validationSchema={addExerciseValidationSchema2}
 					onSubmit={onSubmit}
 				>
 					{({
@@ -178,7 +178,6 @@ function Editexecise({ drawerIsOpen, match }) {
 						isSubmitting,
 					}) => {
 						if (!subcategory) {
-							console.log(values.SubCategoryId);
 							setSubcategory(values.SubCategoryId);
 						}
 
@@ -218,11 +217,11 @@ function Editexecise({ drawerIsOpen, match }) {
 														name='SubCategoryId'
 														label='საკითხის არჩევა *'
 														text='Name'
-														value={`${values.CategoryId}`}
+														value={`${values.subcategory}`}
 														hasOnchange={true}
 														onChange={(e) => {
 															setselectedPart(e);
-															handleChange('CategoryId');
+															handleChange('SubCategoryId');
 														}}
 														options={issues}
 													/>
@@ -438,7 +437,7 @@ function Editexecise({ drawerIsOpen, match }) {
 															return d;
 														}
 													});
-													console.log(x);
+
 													setFieldValue('Questions', x);
 												}}
 											/>
