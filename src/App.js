@@ -13,6 +13,7 @@ import { getCookie } from './helpers/cookie';
 import PrivateRoute from './components/PrivateRoute';
 
 import Index from './pages/Index';
+import IssuesPage from './pages/issues';
 import Adminpage from './pages/admin';
 import Profile from './pages/admin/profile';
 import Signin from './pages/admin/signin';
@@ -73,6 +74,10 @@ function MyComponent() {
 			</Route>
 
 			<Switch>
+				<Route path='/issues' exact>
+					<IssuesPage />
+				</Route>
+
 				<PrivateRoute
 					component={Adminpage}
 					path='/admin'

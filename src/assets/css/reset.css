@@ -121,13 +121,6 @@ table {
 	border-spacing: 0;
 }
 
-body {
-	font-family: 'Helvetica';
-	color: #353535;
-	font-size: 14px;
-	line-height: 1;
-}
-
 *,
 *::after,
 *::before {
