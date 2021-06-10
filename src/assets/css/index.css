@@ -473,9 +473,6 @@ a.button-video.see-video {
 	left: 0;
 	right: 0;
 	background: rgba(19, 21, 21, 0.6);
-	transition: opacity 500ms;
-	visibility: hidden;
-	opacity: 0;
 }
 
 .overlay:target {
@@ -530,6 +527,7 @@ a.button-video.see-video {
 	border-radius: 15px;
 	width: 46.67px;
 	height: 46.67px;
+	line-height: 45px;
 	color: white;
 }
 

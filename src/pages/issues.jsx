@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { Link } from 'react-router-dom';
 import '../assets/css/variants.css';
@@ -6,9 +6,19 @@ import '../assets/css/variants.css';
 import '../assets/css/buttons.css';
 import '../assets/css/inputs.css';
 import userContext from '../context/user/userContext';
+import { issueService } from '../services/issue.service';
+import VariantsFileIcon from '../assets/images/icons/variants-file.svg';
 
 function IssuesPage() {
 	const { user } = useContext(userContext);
+
+	const [issues, setissues] = useState(null);
+
+	useEffect(() => {
+		issueService.getPublicSubCategories().then((res) => {
+			setissues(res);
+		});
+	}, []);
 
 	return (
 		<>
@@ -151,11 +161,10 @@ function IssuesPage() {
 									</ul>
 								</div>
 								<div className='variants-need-help'>
-									<a href='#' target='_blank'>
-										გჭირდება დახმარება?
-									</a>
+									<Link to='/'>გჭირდება დახმარება?</Link>
 								</div>
 							</div>
+
 							<div className='col-9 p-0'>
 								<div className='variants-bg-fill'>
 									<div className='variants-choose-fields'>
@@ -182,293 +191,51 @@ function IssuesPage() {
 											</label>
 										</div>
 									</div>
+
 									<div className='all-variants-all'>
-										<div className='all-variants-one'>
-											<div className='all-variants-distance'>
-												<div className='all-variants-first'>
-													<p className='variants-issue-name'>არსებითი სახელი</p>
-													<span className='variants-issue-status'>
-														სინტაქსი
-													</span>
-												</div>
-												<div className='all-variants-second'>
-													<img
-														className='variants-file'
-														src='./assets/images/icons/variants-file.svg'
-														alt='variants-file'
-													/>
-													<div className='exercises-left'>
-														<p className='number-of-exercises'>9 სავარჯიშო</p>
-														<div className='percentage-of-exercise'>
-															{/* <img src="./assets/images/icons/variants-radio.svg" alt=""> */}
-															{/* <svg viewBox="0 0 14 14">
-                                              
-                                              <path
-                                                d="M7 1
-                                                  a 6 6 0 0 1 0 12
-                                                  a 6 6 0 0 1 0 -12"
-                                                fill="none"
-                                                stroke="#444";
-                                                stroke-width="1";
-                                                stroke-dasharray="56, 100"
-                                              />
-                                             
-                                            </svg> */}
-															<div className='c100 p56 center small'>
-																{/* <span>.</span> */}
-																<div className='slice'>
-																	<div className='bar' />
-																	<div className='fill' />
+										{issues &&
+											issues.map((issue) => (
+												<div className='all-variants-one' key={issue.Id}>
+													<div className='all-variants-distance'>
+														<div className='all-variants-first'>
+															<p className='variants-issue-name'>
+																{issue.Name}
+															</p>
+															<span className='variants-issue-status'>
+																{issue.Category.Name}
+															</span>
+														</div>
+														<div className='all-variants-second'>
+															<img
+																className='variants-file'
+																src={VariantsFileIcon}
+																alt='variants-file'
+															/>
+															<div className='exercises-left'>
+																<p className='number-of-exercises'>
+																	{issue.ExerciseQuantity} სავარჯიშო
+																</p>
+																<div className='percentage-of-exercise'>
+																	<div className='c100 p56 center small'>
+																		<div className='slice'>
+																			<div className='bar' />
+																			<div className='fill' />
+																		</div>
+																	</div>
+																	<span className='percentage-distance'>
+																		{issue.UserDoneExerciseAnswersQuantity}
+																	</span>
 																</div>
 															</div>
-															<span className='percentage-distance'>56%</span>
+														</div>
+														<div className='all-variants-third'>
+															<button className='open-this-variant'>
+																საკითხის გახსნა
+															</button>
 														</div>
 													</div>
 												</div>
-												<div className='all-variants-third'>
-													<button className='open-this-variant'>
-														საკითხის გახსნა
-													</button>
-												</div>
-											</div>
-										</div>
-										<div className='all-variants-one'>
-											<div className='all-variants-distance'>
-												<div className='all-variants-first'>
-													<p className='variants-issue-name'>რიცხვითი სახელი</p>
-													<span className='variants-issue-status'>
-														სინტაქსი
-													</span>
-												</div>
-												<div className='all-variants-second'>
-													<img
-														className='variants-file'
-														src='./assets/images/icons/variants-file.svg'
-														alt='variants-file'
-													/>
-													<div className='exercises-left'>
-														<p className='number-of-exercises'>9 სავარჯიშო</p>
-														<div className='percentage-of-exercise'>
-															{/* <img src="./assets/images/icons/variants-radio.svg" alt=""> */}
-															<div className='c100 p56 center small'>
-																{/* <span>.</span> */}
-																<div className='slice'>
-																	<div className='bar' />
-																	<div className='fill' />
-																</div>
-															</div>
-															<span className='percentage-distance'>56%</span>
-														</div>
-													</div>
-												</div>
-												<div className='all-variants-third'>
-													<button className='open-this-variant'>
-														საკითხის გახსნა
-													</button>
-												</div>
-											</div>
-										</div>
-										<div className='all-variants-one'>
-											<div className='all-variants-distance'>
-												<div className='all-variants-first'>
-													<p className='variants-issue-name'>ნაცვალსახელი</p>
-													<span className='variants-issue-status'>
-														სინტაქსი
-													</span>
-												</div>
-												<div className='all-variants-second'>
-													<img
-														className='variants-file'
-														src='./assets/images/icons/variants-file.svg'
-														alt='variants-file'
-													/>
-													<div className='exercises-left'>
-														<p className='number-of-exercises'>9 სავარჯიშო</p>
-														<div className='percentage-of-exercise'>
-															{/* <img src="./assets/images/icons/variants-radio.svg" alt=""> */}
-															<div className='c100 p56 center small'>
-																{/* <span>.</span> */}
-																<div className='slice'>
-																	<div className='bar' />
-																	<div className='fill' />
-																</div>
-															</div>
-															<span className='percentage-distance'>56%</span>
-														</div>
-													</div>
-												</div>
-												<div className='all-variants-third'>
-													<button className='open-this-variant'>
-														საკითხის გახსნა
-													</button>
-												</div>
-											</div>
-										</div>
-										<div className='all-variants-one'>
-											<div className='all-variants-distance'>
-												<div className='all-variants-first'>
-													<p className='variants-issue-name'>
-														ზმნა - პირი და რიცხვი
-													</p>
-													<span className='variants-issue-status'>
-														მორფოლოგია
-													</span>
-												</div>
-												<div className='all-variants-second'>
-													<img
-														className='variants-file'
-														src='./assets/images/icons/variants-file.svg'
-														alt='variants-file'
-													/>
-													<div className='exercises-left'>
-														<p className='number-of-exercises'>9 სავარჯიშო</p>
-														<div className='percentage-of-exercise'>
-															{/* <img src="./assets/images/icons/variants-radio.svg" alt=""> */}
-															<span className='percentage-distance'>
-																0 შესრულებული
-															</span>
-														</div>
-													</div>
-												</div>
-												<div className='all-variants-third'>
-													<button className='open-this-variant'>
-														საკითხის გახსნა
-													</button>
-												</div>
-											</div>
-										</div>
-										<div className='all-variants-one'>
-											<div className='all-variants-distance'>
-												<div className='all-variants-first'>
-													<p className='variants-issue-name'>
-														ზმნა - თავისებური ზმნები
-													</p>
-													<span className='variants-issue-status'>
-														სინტაქსი
-													</span>
-												</div>
-												<div className='all-variants-second'>
-													<img
-														className='variants-file'
-														src='./assets/images/icons/variants-file.svg'
-														alt='variants-file'
-													/>
-													<div className='exercises-left'>
-														<p className='number-of-exercises'>9 სავარჯიშო</p>
-														<div className='percentage-of-exercise'>
-															{/* <img src="./assets/images/icons/variants-radio.svg" alt=""> */}
-															<span className='percentage-distance'>
-																0 შესრულებული
-															</span>
-														</div>
-													</div>
-												</div>
-												<div className='all-variants-third'>
-													<button className='open-this-variant'>
-														საკითხის გახსნა
-													</button>
-												</div>
-											</div>
-										</div>
-										<div className='all-variants-one'>
-											<div className='all-variants-distance'>
-												<div className='all-variants-first'>
-													<p className='variants-issue-name'>
-														ზმნა - თავისებური ზმნები
-													</p>
-													<span className='variants-issue-status'>
-														სინტაქსი
-													</span>
-												</div>
-												<div className='all-variants-second'>
-													<img
-														className='variants-file'
-														src='./assets/images/icons/variants-file.svg'
-														alt='variants-file'
-													/>
-													<div className='exercises-left'>
-														<p className='number-of-exercises'>9 სავარჯიშო</p>
-														<div className='percentage-of-exercise'>
-															{/* <img src="./assets/images/icons/variants-radio.svg" alt=""> */}
-															<span className='percentage-distance'>
-																0 შესრულებული
-															</span>
-														</div>
-													</div>
-												</div>
-												<div className='all-variants-third'>
-													<button className='open-this-variant'>
-														საკითხის გახსნა
-													</button>
-												</div>
-											</div>
-										</div>
-										<div className='all-variants-one'>
-											<div className='all-variants-distance'>
-												<div className='all-variants-first'>
-													<p className='variants-issue-name'>
-														ზმნა - თავისებური ზმნები
-													</p>
-													<span className='variants-issue-status'>
-														სინტაქსი
-													</span>
-												</div>
-												<div className='all-variants-second'>
-													<img
-														className='variants-file'
-														src='./assets/images/icons/variants-file.svg'
-														alt='variants-file'
-													/>
-													<div className='exercises-left'>
-														<p className='number-of-exercises'>9 სავარჯიშო</p>
-														<div className='percentage-of-exercise'>
-															{/* <img src="./assets/images/icons/variants-radio.svg" alt=""> */}
-															<span className='percentage-distance'>
-																0 შესრულებული
-															</span>
-														</div>
-													</div>
-												</div>
-												<div className='all-variants-third'>
-													<button className='open-this-variant'>
-														საკითხის გახსნა
-													</button>
-												</div>
-											</div>
-										</div>
-										<div className='all-variants-one'>
-											<div className='all-variants-distance'>
-												<div className='all-variants-first'>
-													<p className='variants-issue-name'>
-														ზმნა - თავისებური ზმნები
-													</p>
-													<span className='variants-issue-status'>
-														სინტაქსი
-													</span>
-												</div>
-												<div className='all-variants-second'>
-													<img
-														className='variants-file'
-														src='./assets/images/icons/variants-file.svg'
-														alt='variants-file'
-													/>
-													<div className='exercises-left'>
-														<p className='number-of-exercises'>9 სავარჯიშო</p>
-														<div className='percentage-of-exercise'>
-															{/* <img src="./assets/images/icons/variants-radio.svg" alt=""> */}
-															<span className='percentage-distance'>
-																0 შესრულებული
-															</span>
-														</div>
-													</div>
-												</div>
-												<div className='all-variants-third'>
-													<button className='open-this-variant'>
-														საკითხის გახსნა
-													</button>
-												</div>
-											</div>
-										</div>
+											))}
 									</div>
 								</div>
 							</div>

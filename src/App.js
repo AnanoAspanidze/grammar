@@ -2,6 +2,8 @@ import React, { useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
+import './assets/css/responsive.css';
+
 // context
 import userContext from './context/user/userContext';
 import drawerContext from './context/drawer/drawerContext';
@@ -9,7 +11,7 @@ import UserState from './context/user/UserState';
 import DrawerState from './context/drawer/DrawerState';
 
 import { getCookie } from './helpers/cookie';
-
+import { ModalProvider } from './context/modal/modalContext';
 import PrivateRoute from './components/PrivateRoute';
 
 import Index from './pages/Index';
@@ -33,9 +35,11 @@ import UserPage from './pages/admin/user/UserPage';
 function App() {
 	return (
 		<UserState>
-			<DrawerState>
-				<MyComponent />
-			</DrawerState>
+			<ModalProvider>
+				<DrawerState>
+					<MyComponent />
+				</DrawerState>
+			</ModalProvider>
 		</UserState>
 	);
 }

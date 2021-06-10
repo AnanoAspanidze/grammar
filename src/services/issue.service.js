@@ -7,6 +7,7 @@ export const issueService = {
 	getIssues,
 	hideIssue,
 	unHideIssue,
+	getPublicSubCategories,
 };
 
 function createIssue(Name, CategoryId) {
@@ -43,4 +44,10 @@ function unHideIssue(id) {
 	return fetchWrapper
 		.post(`/SubCategories/unHideSubCategory/${id}`)
 		.then((part) => part);
+}
+
+function getPublicSubCategories(id) {
+	return fetchWrapper
+		.get('/PublicSubCategories/GetSubCategories')
+		.then((category) => category);
 }

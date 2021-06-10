@@ -2,11 +2,15 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import userContext from '../../../context/user/userContext';
+import { ModalContext } from '../../../context/modal/modalContext';
+
 import { accountService } from '../../../services/user.service';
 import { userSigninSchema } from '../../../helpers/schema';
+import ResetPasswordModal from '../modal/ResetPasswordModal';
 
 function HeaderLogin() {
 	let history = useHistory();
+	const { handleModal } = useContext(ModalContext);
 
 	const { setCurrentUser } = useContext(userContext);
 
@@ -112,7 +116,19 @@ function HeaderLogin() {
 												<p className='error-p'>{errors['Password']}</p>
 											)}
 
-											<p className='recover-password'>პაროლის აღდგენა</p>
+											<p
+												className='recover-password'
+												onClick={() =>
+													handleModal(
+														true,
+														<ResetPasswordModal />,
+														'pop-dessapear8',
+														'popup8'
+													)
+												}
+											>
+												პაროლის აღდგენა
+											</p>
 
 											<button
 												type='submit'
