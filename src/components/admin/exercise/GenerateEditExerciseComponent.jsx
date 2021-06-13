@@ -45,7 +45,6 @@ function GenerateEditExerciseComponent({
 		setArrayItems(arrayOfDigits);
 	}, [index]);
 
-	console.log(values[name]);
 	return (
 		<>
 			<div>

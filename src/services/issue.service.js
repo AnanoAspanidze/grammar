@@ -8,6 +8,7 @@ export const issueService = {
 	hideIssue,
 	unHideIssue,
 	getPublicSubCategories,
+	getExercisesList,
 };
 
 function createIssue(Name, CategoryId) {
@@ -50,4 +51,10 @@ function getPublicSubCategories(id) {
 	return fetchWrapper
 		.get('/PublicSubCategories/GetSubCategories')
 		.then((category) => category);
+}
+
+function getExercisesList() {
+	return fetchWrapper
+		.get('/PublicExercises/getexerciseslist')
+		.then((exerciseList) => exerciseList);
 }

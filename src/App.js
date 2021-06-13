@@ -12,7 +12,7 @@ import { getCookie } from './helpers/cookie';
 import { ModalProvider } from './context/modal/modalContext';
 import PrivateRoute from './components/PrivateRoute';
 
-// import IndexPage from './pages/Index';
+import IndexPage from './pages/Index';
 import IssuesMainApp from './pages/issues';
 import ExercisesMainApp from './pages/exercises';
 import About from './pages/About';
@@ -74,7 +74,7 @@ function MyComponent() {
 
 	return (
 		<Router>
-			{/* <Route path='/' component={IndexPage} drawerIsOpen={isOpen} exact /> */}
+			<Route path='/' component={IndexPage} drawerIsOpen={isOpen} exact />
 
 			<Switch>
 				<Route path='/issues' exact>

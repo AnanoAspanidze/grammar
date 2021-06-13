@@ -67,6 +67,7 @@ export const addExerciseValidationSchema = Yup.object().shape({
 		})
 	),
 });
+
 export const addExerciseValidationSchema2 = Yup.object().shape({
 	CategoryId: Yup.string().required('შეავსეთ ველი'),
 	SubCategoryId: Yup.string().required('შეავსეთ ველი'),

@@ -42,9 +42,9 @@ function TagsQuestions({ isEditPage, index }) {
 				style={{ height: '200px', marginBottom: '60px' }}
 			/>
 
-			{errors.Questions && (
+			{errors.Questions && errors.Questions[index] && (
 				<FormHelperText error={true} variant='standard'>
-					{errors.Questions[0].Text}
+					{errors.Questions[index].Text}
 				</FormHelperText>
 			)}
 
@@ -62,12 +62,15 @@ function TagsQuestions({ isEditPage, index }) {
 						}
 					/>
 
-					{errors.Questions && errors.Questions[index].Answers && (
-						<FormHelperText error={true} variant='standard'>
-							{errors.Questions[index].Answers[i] &&
-								errors.Questions[index].Answers[i].Text}
-						</FormHelperText>
-					)}
+					{errors.Questions &&
+						errors.Questions[index] &&
+						errors.Questions[index].Answers && (
+							<FormHelperText error={true} variant='standard'>
+								{errors.Questions[index].Answers[i]
+									? errors.Questions[index].Answers[i].Text
+									: ''}
+							</FormHelperText>
+						)}
 				</div>
 			))}
 

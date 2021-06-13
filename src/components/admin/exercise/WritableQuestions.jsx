@@ -23,9 +23,6 @@ function WritableQuestions({ isEditPage, index }) {
 		]);
 	};
 
-	console.log(values);
-	console.log(errors);
-
 	return (
 		<div className={classes.EcercisesBorder}>
 			<div>
@@ -43,6 +40,12 @@ function WritableQuestions({ isEditPage, index }) {
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
+			{errors.Questions && errors.Questions[index] && (
+				<FormHelperText error={true} variant='standard'>
+					{errors.Questions[index].Text}
+				</FormHelperText>
+			)}
+
 			{values.Questions[index].Answers.map((item, i) => (
 				<>
 					<div className='flex align-items-center mb-0 mt-30' key={i}>
@@ -58,16 +61,15 @@ function WritableQuestions({ isEditPage, index }) {
 							}
 						/>
 					</div>
-					{Object.keys(errors).length > 0 &&
-						errors.Questions[0].Answers &&
-						errors.Questions[0].Answers[i] && (
-							<div className='mb-30'>
-								<FormHelperText error={true} variant='standard'>
-									{i < errors.Questions[0].Answers.length
-										? errors.Questions[0].Answers[i].Text
-										: ''}
-								</FormHelperText>
-							</div>
+
+					{errors.Questions &&
+						errors.Questions[index] &&
+						errors.Questions[index].Answers && (
+							<FormHelperText error={true} variant='standard'>
+								{errors.Questions[index].Answers[i]
+									? errors.Questions[index].Answers[i].Text
+									: ''}
+							</FormHelperText>
 						)}
 				</>
 			))}

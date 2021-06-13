@@ -305,20 +305,12 @@ ul li.variants-active a {
 	display: flex;
 }
 
-.user-registred .user-registred-no {
-	display: none;
-}
-
 .user-registred-yes2 {
 	display: none;
 }
 
 .user-registred2 .user-registred-yes2 {
 	display: inherit;
-}
-
-.user-registred2 .user-registred-no2 {
-	display: none;
 }
 
 .header-variants-regist {

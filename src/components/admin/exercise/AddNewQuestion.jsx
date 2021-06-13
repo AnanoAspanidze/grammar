@@ -6,45 +6,41 @@ import { useFormikContext } from 'formik';
 function AddNewQuestion() {
 	const { values, setFieldValue } = useFormikContext();
 
-	if (values['part'] != 7 && values['part'] != 8) {
-		return (
-			<Button
-				onClick={() => {
-					setFieldValue('index', values['index'] + 1);
-					setFieldValue('Questions', [
-						...values.Questions,
-						{
-							exerciseId: 0,
-							Answers: [
-								{
-									id: 0,
-									Text: '',
-									IsCorrect: false,
-								},
-								{
-									id: 0,
-									Text: '',
-									IsCorrect: false,
-								},
-								{
-									id: 0,
-									Text: '',
-									IsCorrect: false,
-								},
-							],
-							Text: '',
-							WrongAnswerText: '',
-							RightAnswerText: '',
-						},
-					]);
-				}}
-			>
-				კითხვის დამატება <AddIcon />
-			</Button>
-		);
-	} else {
-		return null;
-	}
+	return (
+		<Button
+			onClick={() => {
+				setFieldValue('index', values['index'] + 1);
+				setFieldValue('Questions', [
+					...values.Questions,
+					{
+						exerciseId: 0,
+						Answers: [
+							{
+								id: 0,
+								Text: '',
+								IsCorrect: false,
+							},
+							{
+								id: 0,
+								Text: '',
+								IsCorrect: false,
+							},
+							{
+								id: 0,
+								Text: '',
+								IsCorrect: false,
+							},
+						],
+						Text: '',
+						WrongAnswerText: '',
+						RightAnswerText: '',
+					},
+				]);
+			}}
+		>
+			კითხვის დამატება <AddIcon />
+		</Button>
+	);
 }
 
 export default AddNewQuestion;

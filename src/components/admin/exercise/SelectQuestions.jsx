@@ -43,6 +43,12 @@ function SelectQuestions({ isEditPage, index }) {
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
+			{errors.Questions && errors.Questions[index] && (
+				<FormHelperText error={true} variant='standard'>
+					{errors.Questions[index].Text}
+				</FormHelperText>
+			)}
+
 			<RadioGroup value={value2}>
 				{values.Questions[index].Answers.map((item, i) => (
 					<>
@@ -76,12 +82,12 @@ function SelectQuestions({ isEditPage, index }) {
 									name={`Questions[${index}].Answers[${i}].Text`}
 								/>
 							</div>
-							{Object.keys(errors).length > 0 &&
-								errors.Questions[0].Answers &&
-								errors.Questions[0].Answers[i] && (
+							{errors.Questions &&
+								errors.Questions[index] &&
+								errors.Questions[index].Answers && (
 									<FormHelperText error={true} variant='standard'>
-										{i < errors.Questions[0].Answers.length
-											? errors.Questions[0].Answers[i].Text
+										{errors.Questions[index].Answers[i]
+											? errors.Questions[index].Answers[i].Text
 											: ''}
 									</FormHelperText>
 								)}

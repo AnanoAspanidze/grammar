@@ -129,7 +129,15 @@ function Addexecise({ drawerIsOpen }) {
 				validationSchema={addExerciseValidationSchema}
 				onSubmit={onSubmit}
 			>
-				{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
+				{({
+					values,
+					errors,
+					handleChange,
+					setFieldValue,
+					handleReset,
+					handleSubmit,
+					setErrors,
+				}) => (
 					<form onSubmit={handleSubmit}>
 						<Typography variant='h5' component='h5' align='center' gutterBottom>
 							სავარჯიშოს დამატება
@@ -195,32 +203,12 @@ function Addexecise({ drawerIsOpen }) {
 										value='Id'
 										label='სავარჯიშოს ტიპი *'
 										options={exerciseTypes}
+										hasOnchange={true}
 										onChange={(e) => {
-											handleChange('TypeId', e);
-											handleChange('Questions', [
-												{
-													Answers: [
-														{
-															id: 1,
-															Text: '',
-															IsCorrect: false,
-														},
-														{
-															id: 2,
-															Text: '',
-															IsCorrect: false,
-														},
-														{
-															id: 3,
-															Text: '',
-															IsCorrect: false,
-														},
-													],
-													Text: '',
-													WrongAnswerText: '',
-													RightAnswerText: '',
-												},
-											]);
+											if (Object.keys(errors).length > 0) {
+												setErrors({});
+											}
+											setFieldValue('TypeId', e);
 										}}
 									/>
 								</div>

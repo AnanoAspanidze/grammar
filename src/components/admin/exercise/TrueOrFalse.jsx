@@ -28,9 +28,9 @@ function TrueOrFalse({ isEditPage, index }) {
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
-			{errors.Questions && (
+			{errors.Questions && errors.Questions[index] && (
 				<FormHelperText error={true} variant='standard'>
-					{errors.Questions[0].Text}
+					{errors.Questions[index].Text}
 				</FormHelperText>
 			)}
 
@@ -81,12 +81,16 @@ function TrueOrFalse({ isEditPage, index }) {
 			</RadioGroup>
 
 			{errors.Questions &&
+				errors.Questions[index] &&
 				errors.Questions[index].Answers &&
-				errors.Questions[index].Answers.map((w) => {
-					<FormHelperText error={true} variant='standard'>
-						{errors.Questions[index].Answers[i] &&
-							errors.Questions[index].Answers[i].Text}
-					</FormHelperText>;
+				errors.Questions[index].Answers.map((w, i) => {
+					if (w && i > 0) {
+						return (
+							<FormHelperText error={true} variant='standard'>
+								{w.Text}
+							</FormHelperText>
+						);
+					}
 				})}
 
 			<ReactQuill

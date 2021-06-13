@@ -35,6 +35,8 @@ function TestQuestion({
 		]);
 	};
 
+	console.log(errors);
+
 	return (
 		<div
 			className={classes.EcercisesBorder}
@@ -75,9 +77,9 @@ function TestQuestion({
 				style={{ height: '200px', marginBottom: '55px' }}
 			/>
 
-			{errors.Questions && (
+			{errors.Questions && errors.Questions[index] && (
 				<FormHelperText error={true} variant='standard'>
-					{errors.Questions[0].Text}
+					{errors.Questions[index].Text}
 				</FormHelperText>
 			)}
 
@@ -114,13 +116,15 @@ function TestQuestion({
 						/>
 					</div>
 
-					{Object.keys(errors).length > 0 && errors.Questions[0].Answers[i] && (
-						<FormHelperText error={true} variant='standard'>
-							{i < errors.Questions[0].Answers.length
-								? errors.Questions[0].Answers[i].Text
-								: ''}
-						</FormHelperText>
-					)}
+					{errors.Questions &&
+						errors.Questions[index] &&
+						errors.Questions[index].Answers && (
+							<FormHelperText error={true} variant='standard'>
+								{errors.Questions[index].Answers[i]
+									? errors.Questions[index].Answers[i].Text
+									: ''}
+							</FormHelperText>
+						)}
 				</div>
 			))}
 

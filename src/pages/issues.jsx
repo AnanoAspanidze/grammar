@@ -1,25 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import '../assets/css/variants.css';
 import '../assets/css/responsive.css';
 import '../assets/css/buttons.css';
 import '../assets/css/inputs.css';
+import ApppageHead from '../components/AppHead';
 import userContext from '../context/user/userContext';
 import { issueService } from '../services/issue.service';
 import VariantsFileIcon from '../assets/images/icons/variants-file.svg';
-<<<<<<< Updated upstream
-import VariantsLogo from '../assets/images/icons/logo.svg';
-import VariantsLogo414 from '../assets/images/icons/logo-414.svg';
-import VariantsLogin from '../assets/images/icons/login.svg';
-import VariantsBurgerIcon from '../assets/images/icons/burger-icon.svg';
-import VariantsLogout from '../assets/images/icons/Logout-variants.svg';
-=======
-import ApppageHead from '../components/AppHead';
->>>>>>> Stashed changes
+import Header2 from '../components/client/header/Header2';
 
 function IssuesPage() {
-	const { user } = useContext(userContext);
+	const { user, isAuthenticated, logOutUser } = useContext(userContext);
+
+	let history = useHistory();
 
 	const [issues, setissues] = useState(null);
 
@@ -35,117 +30,39 @@ function IssuesPage() {
 
 			<div>
 				<div className='variants-header'>
-					<nav className='navbar navbar-expand-md navbar-light'>
-						<div className='container container-variants'>
-							<a className='navbar-brand'>
-								<img
-									className='hide3'
-									src={VariantsLogo}
-									alt='logo'
-								/>
-								<img
-									className='appear3'
-									src={VariantsLogo414}
-									alt='logo414'
-								/>
-							</a>
-							<div className='navbar-icons'>
-								<a className='login appear'>
-									<img src={VariantsLogin} alt='login' />
-								</a>
-								<a href='#popup5' onclick='navAppear();'>
-									<button
-										className='navbar-toggler'
-										type='button'
-										data-bs-toggle='collapse'
-										data-bs-target='#navb  arsExample04'
-										aria-controls='navbarsExample04'
-										aria-expanded='false'
-										aria-label='Toggle navigation'
-									>
-										<span className='navbar-toggler-icon'>
-											<img src={VariantsBurgerIcon} alt='burger-icon' />
-										</span>
-									</button>
-								</a>
-							</div>
-							<div className='col-9 navbar-content'>
-								<div className='header-variants-input-search'>
-									<input
-										type='search'
-										name='search'
-										placeholder='მოძებნე საკითხი ან სავარჯიშო'
-									/>
-								</div>
-								<div className='col-4 user-registred'>
-									<div className='header-variants-item user-registred-yes'>
-										<div className='col-9 header-variants-input-user'>
-											<div className='header-variants-input-user-text'>
-												<p>თკ</p>
-											</div>
-											<div className='header-variants-input-user-fields'>
-												<p className='variants-user-name'>თამთა კერესელიძე</p>
-												<span className='variants-user-status'>მოსწავლე</span>
-											</div>
-										</div>
-
-										{/* <div className='header-variants-input-user-fields'>
-											<p className='variants-user-name'>
-												{user.Name}
-												{'  '}
-												{user.family_name}
-											</p>
-											<span className='variants-user-status'>{user.role}</span>
-										</div> */}
-										<div className='header-variants-login-icon'>
-											<a href='#'>
-												<img
-													src={VariantsLogout}
-													alt='Logout-variants'
-												/>
-											</a>
-										</div>
-									</div>
-									<div className='header-variants-item user-registred-no'>
-										<div className='col-9 header-variants-input-user'>
-											<a href='#' className='header-variants-regist'>
-												რეგისტრაცია
-											</a>
-											<a href='#' className='header-variants-login'>
-												შესვლა
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</nav>
+					<Header2 />
 				</div>
 				<section className='variants-content'>
 					<div className='container-fluid'>
 						<div className='row'>
 							<div className='col-3 variants-user'>
 								<div className='user-registred2'>
-									<div className='variants-user-content user-registred-yes2'>
-										<p className='variants-user-title'>თამთა კერესელიძე</p>
-										<p className='variants-user-point'>
-											<span> 56</span>/250 ქულა
-										</p>
-										<button className='variants-user-button'>
-											ჩემი პროფილი
-										</button>
-									</div>
-									<div className='variants-user-content user-registred-no2'>
-										<p className='variants-user-title2'>
-											სავარჯიშოების გასაკეთებლად გაიარე ავტორიზაცია
-										</p>
-										<button className='variants-user-button-longin'>
-											შესვლა
-										</button>
-										<button className='variants-user-button-regist'>
-											რეგისტრაცია
-										</button>
-									</div>
+									{isAuthenticated ? (
+										<div className='variants-user-content user-registred-yes2'>
+											<p className='variants-user-title'>
+												{user.Name} {user.Surname}
+											</p>
+											{/* <p className='variants-user-point'>
+												<span> 56</span>
+												/250 ქულა
+											</p> */}
+											<button className='variants-user-button'>
+												ჩემი პროფილი
+											</button>
+										</div>
+									) : (
+										<div className='variants-user-content user-registred-no2'>
+											<p className='variants-user-title2'>
+												სავარჯიშოების გასაკეთებლად გაიარე ავტორიზაცია
+											</p>
+											<button className='variants-user-button-longin'>
+												შესვლა
+											</button>
+											<button className='variants-user-button-regist'>
+												რეგისტრაცია
+											</button>
+										</div>
+									)}
 								</div>
 								<div className='variants-navbar'>
 									<ul>
@@ -240,7 +157,10 @@ function IssuesPage() {
 															</div>
 														</div>
 														<div className='all-variants-third'>
-															<button className='open-this-variant'>
+															<button
+																className='open-this-variant'
+																onClick={() => history.push('/exercises')}
+															>
 																საკითხის გახსნა
 															</button>
 														</div>
