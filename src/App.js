@@ -2,8 +2,6 @@ import React, { useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
-import './assets/css/responsive.css';
-
 // context
 import userContext from './context/user/userContext';
 import drawerContext from './context/drawer/drawerContext';
@@ -14,8 +12,11 @@ import { getCookie } from './helpers/cookie';
 import { ModalProvider } from './context/modal/modalContext';
 import PrivateRoute from './components/PrivateRoute';
 
-import Index from './pages/Index';
-import IssuesPage from './pages/issues';
+// import IndexPage from './pages/Index';
+import IssuesMainApp from './pages/issues';
+import ExercisesMainApp from './pages/exercises';
+import About from './pages/About';
+
 import Adminpage from './pages/admin';
 import Profile from './pages/admin/profile';
 import Signin from './pages/admin/signin';
@@ -73,13 +74,18 @@ function MyComponent() {
 
 	return (
 		<Router>
-			<Route path='/' exact>
-				<Index />
-			</Route>
+			{/* <Route path='/' component={IndexPage} drawerIsOpen={isOpen} exact /> */}
 
 			<Switch>
 				<Route path='/issues' exact>
-					<IssuesPage />
+					<IssuesMainApp />
+				</Route>
+				<Route path='/exercises' exact>
+					<ExercisesMainApp />
+				</Route>
+
+				<Route path='/about' exact>
+					<About />
 				</Route>
 
 				<PrivateRoute

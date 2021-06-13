@@ -25,7 +25,7 @@ function Header() {
 							<img src={login} alt='login' />
 						</a>
 
-						<a href='#popup5'>
+						<Link to='/'>
 							<button
 								className='navbar-toggler'
 								type='button'
@@ -39,7 +39,7 @@ function Header() {
 									<img src={burgericon} alt='burger' />
 								</span>
 							</button>
-						</a>
+						</Link>
 					</div>
 
 					<div
@@ -91,11 +91,7 @@ function Header() {
 						</div>
 						<div id='popup2' className='overlay'>
 							<div className='popup small-video-popup' id='pop-dessapear2'>
-								<a
-									className='close'
-									id='pause-button2'
-									href='javascript:void(0);'
-								>
+								<a className='close' id='pause-button2'>
 									×
 								</a>
 								<iframe

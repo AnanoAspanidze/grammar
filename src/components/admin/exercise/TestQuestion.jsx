@@ -35,7 +35,6 @@ function TestQuestion({
 		]);
 	};
 
-	console.log(errors.Questions);
 	return (
 		<div
 			className={classes.EcercisesBorder}
@@ -83,22 +82,22 @@ function TestQuestion({
 			)}
 
 			{values.Questions[index].Answers.map((item, i) => (
-				<div className='flex align-items-center mb-20 mt-30' key={i}>
-					<Checkbox
-						checked={item.IsCorrect}
-						name={`Questions[${index}].Answers[${i}].IsCorrect`}
-						value={values.Questions[index].Answers[i].IsCorrect}
-						onChange={(e) =>
-							setFieldValue(
-								`Questions[${index}].Answers[${i}].IsCorrect`,
-								e.target.checked
-							)
-						}
-						color='primary'
-						disabled={isEditPage}
-					/>
+				<div className='mb-20 mt-30' key={i}>
+					<div className='flex align-items-center'>
+						<Checkbox
+							checked={item.IsCorrect}
+							name={`Questions[${index}].Answers[${i}].IsCorrect`}
+							value={values.Questions[index].Answers[i].IsCorrect}
+							onChange={(e) =>
+								setFieldValue(
+									`Questions[${index}].Answers[${i}].IsCorrect`,
+									e.target.checked
+								)
+							}
+							color='primary'
+							disabled={isEditPage}
+						/>
 
-					<div className='w-100'>
 						<TextField
 							className={classes.TextField}
 							variant='outlined'
@@ -113,15 +112,15 @@ function TestQuestion({
 							label='პასუხი *'
 							disabled={isEditPage}
 						/>
-
-						{errors.Questions && errors.Questions[0].Answers && (
-							<FormHelperText error={true} variant='standard'>
-								{i < errors.Questions[0].Answers.length
-									? errors.Questions[0].Answers[i].Text
-									: ''}
-							</FormHelperText>
-						)}
 					</div>
+
+					{Object.keys(errors).length > 0 && errors.Questions[0].Answers[i] && (
+						<FormHelperText error={true} variant='standard'>
+							{i < errors.Questions[0].Answers.length
+								? errors.Questions[0].Answers[i].Text
+								: ''}
+						</FormHelperText>
+					)}
 				</div>
 			))}
 

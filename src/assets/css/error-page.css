@@ -1,0 +1,189 @@
+.error-page-content {
+    background-image: url('../../images/error-page/404-bg.svg');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.error-page-stiker {
+    margin: 159px auto 0;
+}
+
+.error-page-title {
+    font-family: 'FiraGo';
+    font-size: 44px;
+    line-height: 52.8px;
+    margin: 0 auto 52px;
+    text-align: center;
+    color: #333333;
+}
+
+.error-page-title span {
+    font-family: 'FiraGo ExtraBold';
+}
+
+.error-page-text {
+    font-family: 'FiraGo Book';
+    font-size: 16px;
+    line-height: 27.2px;
+    text-align: center;
+    margin: 0 auto 92px;
+    width: 63%;
+}
+
+.error-page-button {
+    display: flex;
+    justify-content: center;
+    font-family: 'FiraGo Bold';
+    font-size: 16px;
+    line-height: 16px;
+    color: #333333;
+    margin: 0 auto 176px;
+    padding: 32px 109.5px;
+    border: 3px solid #333333;
+    border-radius: 20px;
+    background-color: transparent;
+}
+
+.error-page-button:hover {
+    color: #00CC6F;
+    border: 3px solid #00CC6F;
+}
+
+.error-page-button:focus {
+    background: #F2FCF8;
+    color: #00CC6F;
+    border: 4px solid #00CC6F;
+}
+
+.error-container-fluid {
+    padding: 0!important;
+}
+
+@media only screen and (max-width: 1440.98px) {
+    .error-page-stiker {
+        width: 270px;
+    }
+    .error-page-stiker {
+        margin: 120px auto 0;
+    }
+    .error-page-content {
+        background-position: 0 -80px;
+    }
+    .error-page-text {
+        width: 674px;
+    }
+}
+
+@media only screen and (max-width: 991.98px) {
+    .error-page-stiker {
+        margin: 120px auto 0;
+    }
+    .error-page-content {
+        background-position: 0 -80px;
+    }
+    .error-page-text {
+        margin: 0 auto 84px;
+    }
+    .error-page-button {
+        margin: 0 auto 111px;
+    }
+}
+
+@media only screen and (max-width: 768.98px) {
+    .error-page-content {
+        background-position: 0 -90px;
+    }
+    .error-page-title {
+        font-size: 38px;
+        line-height: 45.6px;
+    }
+    .error-page-stiker {
+        width: 200px;
+        margin: 120px auto 0;
+    }
+    .error-page-text {
+        width: 81%;
+        margin: 0 auto 72px;
+    }
+    .error-page-button {
+        margin: 0 auto 257px;
+    }
+}
+
+@media only screen and (max-width: 600.98px) {
+    .error-page-content {
+        background-position: 0 -130px;
+    }
+    .error-page-title {
+        font-family: 'FiraGo';
+        font-size: 31px;
+        line-height: 45.6px;
+    }
+    .error-page-stiker {
+        width: 200px;
+        margin: 120px auto 0;
+    }
+    .error-page-text {
+        width: 81%;
+        /* margin: 0 auto 90px; */
+    }
+    .error-page-button {
+        /* margin: 0 auto 100px; */
+        padding: 24px 55px;
+    }
+}
+
+@media only screen and (max-width: 414.98px) {
+    .error-page-content {
+        background-position: 0 -165px;
+    }
+    .error-page-title {
+        font-size: 27px;
+        line-height: 45.6px;
+        margin: 0 auto 32px;
+    }
+    .error-page-stiker {
+        width: 150px;
+        margin: 109px auto 0;
+    }
+    .error-page-text {
+        font-size: 14px;
+        line-height: 23.8px;
+        width: 100%;
+        margin: 0 auto 90px;
+    }
+    .error-page-button {
+        width: 100%;
+        font-size: 14px;
+        margin: 0 auto 100px;
+        padding: 24px 48px;
+    }
+}
+
+@media only screen and (max-width: 320.98px) {
+    .error-page-content {
+        background-position: 0 -115px;
+    }
+    .error-page-title {
+        font-size: 24px;
+        line-height: 20px;
+        margin: 0 auto 28px;
+    }
+    .error-page-stiker {
+        width: 100px;
+        margin: 79px auto 0;
+    }
+    .error-page-text {
+        font-size: 14px;
+        line-height: 23.8px;
+        width: 100%;
+        margin: 0 auto 36px;
+    }
+    .error-page-button {
+        width: 100%;
+        font-size: 14px;
+        margin: 0 auto 44px;
+        padding: 18px 40.5px;
+    }
+}

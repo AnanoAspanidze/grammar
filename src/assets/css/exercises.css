@@ -1,0 +1,140 @@
+html, .exercises-body {
+    height: 100%;
+}
+
+.exercises-body {
+    overflow: hidden;
+}
+
+.exercises-choose-fields {
+    margin-bottom: 48px;
+}
+
+.all-exercises-first p {
+    font-size: 16px;
+    font-feature-settings: 'case' on;
+    padding-right: 12px;
+}
+.all-exercises-first {
+    margin-bottom: 20px;
+}
+.all-exercises-first .slice {
+    background-color: #F8F7F2;
+}
+.all-exercises-first .c100 {
+    background-color: #F8F7F2;
+}
+.exercises-issue-status {
+    font-size: 12px;
+}
+
+.exercises-head-pr {
+    display: -webkit-box;
+}
+
+.exercises-grammar-fields {
+    display: flex;
+    justify-content: space-between;
+}
+
+.exercises-head-right {
+    margin-top: 4px;
+}
+
+.exercises-head-right p {
+    color: #4B6858;
+    font-size: 14px;
+    line-height: 16px;
+    font-family: 'FiraGo Bold';
+}
+
+.exercises-head-right i {
+    padding-left: 8px;
+}
+
+.exercises-white-box {
+    background-color: white;
+    border-radius: 20px;
+    height: 172px;
+    margin-bottom: 36px;
+}
+
+.exercises-wb-pad {
+    padding: 28px 24px;
+    height: 172px;
+    display: flex;
+    flex-direction: column;
+}
+.exercises-grammar-pagination {
+    font-family: 'FiraGo';
+    font-size: 12px;
+    line-height: 18px;
+    color: #4B6858;
+    padding-bottom: 8px;
+}
+.exercises-grammar-title {
+    font-family: 'FiraGo Medium';
+    font-size: 14px;
+    line-height: 21px;
+    color:#333333;
+    padding-bottom: 8px;
+}
+.exercises-grammar-item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+}
+.exercises-grammar-item span {
+    font-family: 'FiraGo Book';
+    font-size: 12px;
+    line-height: 18px;
+    color: #707070;
+    align-self: center;
+}
+.exercises-grammar-item a img{
+    display: inline-block;
+    margin: auto;
+    /* vertical-align: middle; */
+    /* background-color: #F6F7F7;
+    border-radius: 20px;
+    padding: 10px; */
+}
+.exercises-grammar-item a {
+    background-color: #F6F7F7;
+    border-radius: 50%;
+    padding: 10px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+  flex-direction: column;
+}
+.exercises-grammar-item img{
+    display: block;
+    margin: auto;
+}
+.exercises-number-up{
+    font-family: 'FiraGo Bold';
+    font-size: 32px;
+    line-height: 38.4px;
+    letter-spacing: 0.2px;
+    font-weight: 700;
+    color: #4B6858;
+    margin-top: auto;
+}
+.exercises-work{
+    font-family: 'FiraGo';
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: #4B6858;
+    font-weight: bold;
+    margin-bottom: auto;
+}
+.exercises-wb-pad-more{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.all-exercises-all{
+    overflow-y: scroll;
+    height: calc(100% - 314px);
+}

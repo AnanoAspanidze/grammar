@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useContext } from 'react';
-
 import { Link } from 'react-router-dom';
+
 import '../assets/css/variants.css';
-// import '../assets/css/sign-in.css';
+import '../assets/css/responsive.css';
 import '../assets/css/buttons.css';
 import '../assets/css/inputs.css';
 import userContext from '../context/user/userContext';
 import { issueService } from '../services/issue.service';
 import VariantsFileIcon from '../assets/images/icons/variants-file.svg';
+<<<<<<< Updated upstream
 import VariantsLogo from '../assets/images/icons/logo.svg';
 import VariantsLogo414 from '../assets/images/icons/logo-414.svg';
 import VariantsLogin from '../assets/images/icons/login.svg';
 import VariantsBurgerIcon from '../assets/images/icons/burger-icon.svg';
 import VariantsLogout from '../assets/images/icons/Logout-variants.svg';
+=======
+import ApppageHead from '../components/AppHead';
+>>>>>>> Stashed changes
 
 function IssuesPage() {
 	const { user } = useContext(userContext);
@@ -27,6 +31,8 @@ function IssuesPage() {
 
 	return (
 		<>
+			<ApppageHead />
+
 			<div>
 				<div className='variants-header'>
 					<nav className='navbar navbar-expand-md navbar-light'>
@@ -144,24 +150,24 @@ function IssuesPage() {
 								<div className='variants-navbar'>
 									<ul>
 										<li className='variants-active'>
-											<a href='variants.html'>
+											<Link to='issues'>
 												<i className='fas fa-bookmark' /> საკითხები
-											</a>
+											</Link>
 										</li>
 										<li>
-											<a href='exercises.html'>
+											<Link to='exercises'>
 												<i className='fas fa-file-alt' /> სავარჯიშოები
-											</a>
+											</Link>
 										</li>
 										<li>
-											<a href='#'>
+											<Link to='/'>
 												<i className='fas fa-chart-pie' /> სტატისტიკა
-											</a>
+											</Link>
 										</li>
 										<li>
-											<a href='#'>
+											<Link to='/'>
 												<i className='fas fa-user' /> ჩემი პროფილი
-											</a>
+											</Link>
 										</li>
 									</ul>
 								</div>

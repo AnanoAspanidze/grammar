@@ -5,9 +5,16 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import TextFieldComponent from '../reusable/TextFieldComponent';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 function TagsQuestions({ isEditPage, index }) {
-	const { values, setFieldValue, errors, handleChange } = useFormikContext();
+	const {
+		values,
+		setFieldValue,
+		setFieldError,
+		errors,
+		handleChange,
+	} = useFormikContext();
 
 	const classes = useStyles();
 
@@ -32,11 +39,17 @@ function TagsQuestions({ isEditPage, index }) {
 				value={values.Questions[index].Text}
 				onChange={(e) => setFieldValue(`Questions[${index}].Text`, e)}
 				placeholder='კითხვა *'
-				style={{ height: '200px', marginBottom: '70px' }}
+				style={{ height: '200px', marginBottom: '60px' }}
 			/>
 
+			{errors.Questions && (
+				<FormHelperText error={true} variant='standard'>
+					{errors.Questions[0].Text}
+				</FormHelperText>
+			)}
+
 			{values.Questions[index].Answers.map((item, i) => (
-				<div className='flex align-items-center mb-20 mt-30'>
+				<div className='mb-20 mt-30' key={i}>
 					<TextFieldComponent
 						placeholder='სიტყვა'
 						name={`Questions[${index}].Answers[${i}].Text`}
@@ -48,6 +61,13 @@ function TagsQuestions({ isEditPage, index }) {
 							)
 						}
 					/>
+
+					{errors.Questions && errors.Questions[index].Answers && (
+						<FormHelperText error={true} variant='standard'>
+							{errors.Questions[index].Answers[i] &&
+								errors.Questions[index].Answers[i].Text}
+						</FormHelperText>
+					)}
 				</div>
 			))}
 

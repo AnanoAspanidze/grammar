@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 function SelectQuestions({ isEditPage, index }) {
 	const { values, setFieldValue, errors, handleChange } = useFormikContext();
@@ -45,34 +46,45 @@ function SelectQuestions({ isEditPage, index }) {
 			<RadioGroup value={value2}>
 				{values.Questions[index].Answers.map((item, i) => (
 					<>
-						<div className='flex align-items-center mb-20 mt-30'>
-							<Radio
-								checked={values.Questions[index].Answers[i].IsCorrect}
-								name={`Questions[${index}].Answers[${i}].IsCorrect`}
-								onChange={(e) => {
-									const newArr = values.Questions[index].Answers.map((w) => {
-										return { ...w, IsCorrect: false };
-									});
+						<div className='mb-20 mt-30'>
+							<div className='w-100 flex align-items-center'>
+								<Radio
+									checked={values.Questions[index].Answers[i].IsCorrect}
+									name={`Questions[${index}].Answers[${i}].IsCorrect`}
+									onChange={(e) => {
+										const newArr = values.Questions[index].Answers.map((w) => {
+											return { ...w, IsCorrect: false };
+										});
 
-									setFieldValue(`Questions[${index}].Answers`, newArr);
-									setFieldValue(
-										`Questions[${index}].Answers[${i}].IsCorrect`,
-										!e.target.value
-									);
-								}}
-								inputProps={{ 'aria-label': 'A' }}
-							/>
+										setFieldValue(`Questions[${index}].Answers`, newArr);
+										setFieldValue(
+											`Questions[${index}].Answers[${i}].IsCorrect`,
+											!e.target.value
+										);
+									}}
+									inputProps={{ 'aria-label': 'A' }}
+								/>
 
-							<TextFieldComponent
-								onChange={(e) =>
-									setFieldValue(
-										`Questions[${index}].Answers[${i}].Text`,
-										e.target.value
-									)
-								}
-								placeholder='პასუხი'
-								name={`Questions[${index}].Answers[${i}].Text`}
-							/>
+								<TextFieldComponent
+									onChange={(e) =>
+										setFieldValue(
+											`Questions[${index}].Answers[${i}].Text`,
+											e.target.value
+										)
+									}
+									placeholder='პასუხი'
+									name={`Questions[${index}].Answers[${i}].Text`}
+								/>
+							</div>
+							{Object.keys(errors).length > 0 &&
+								errors.Questions[0].Answers &&
+								errors.Questions[0].Answers[i] && (
+									<FormHelperText error={true} variant='standard'>
+										{i < errors.Questions[0].Answers.length
+											? errors.Questions[0].Answers[i].Text
+											: ''}
+									</FormHelperText>
+								)}
 						</div>
 					</>
 				))}

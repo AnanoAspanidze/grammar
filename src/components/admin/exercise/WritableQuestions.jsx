@@ -5,6 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import TextFieldComponent from '../reusable/TextFieldComponent';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 function WritableQuestions({ isEditPage, index }) {
 	const { values, setFieldValue, errors, handleChange } = useFormikContext();
@@ -21,6 +22,9 @@ function WritableQuestions({ isEditPage, index }) {
 			},
 		]);
 	};
+
+	console.log(values);
+	console.log(errors);
 
 	return (
 		<div className={classes.EcercisesBorder}>
@@ -40,19 +44,32 @@ function WritableQuestions({ isEditPage, index }) {
 			/>
 
 			{values.Questions[index].Answers.map((item, i) => (
-				<div className='flex align-items-center mb-20 mt-30'>
-					<TextFieldComponent
-						placeholder='სწორი პასუხი'
-						name={`Questions[${index}].Answers[${i}].Text`}
-						value={values.Questions[index].Answers[i].Text}
-						onChange={(e) =>
-							setFieldValue(
-								`Questions[${index}].Answers[${i}].Text`,
-								e.target.value
-							)
-						}
-					/>
-				</div>
+				<>
+					<div className='flex align-items-center mb-0 mt-30' key={i}>
+						<TextFieldComponent
+							placeholder='სწორი პასუხი'
+							name={`Questions[${index}].Answers[${i}].Text`}
+							value={values.Questions[index].Answers[i].Text}
+							onChange={(e) =>
+								setFieldValue(
+									`Questions[${index}].Answers[${i}].Text`,
+									e.target.value
+								)
+							}
+						/>
+					</div>
+					{Object.keys(errors).length > 0 &&
+						errors.Questions[0].Answers &&
+						errors.Questions[0].Answers[i] && (
+							<div className='mb-30'>
+								<FormHelperText error={true} variant='standard'>
+									{i < errors.Questions[0].Answers.length
+										? errors.Questions[0].Answers[i].Text
+										: ''}
+								</FormHelperText>
+							</div>
+						)}
+				</>
 			))}
 
 			{!isEditPage && (

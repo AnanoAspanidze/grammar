@@ -4,6 +4,7 @@ import { useFormikContext } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 function TrueOrFalse({ isEditPage, index }) {
 	const { values, setFieldValue, errors, handleChange } = useFormikContext();
@@ -27,6 +28,12 @@ function TrueOrFalse({ isEditPage, index }) {
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
+			{errors.Questions && (
+				<FormHelperText error={true} variant='standard'>
+					{errors.Questions[0].Text}
+				</FormHelperText>
+			)}
+
 			<RadioGroup>
 				<div className='flex align-items-center mt-30'>
 					<Radio
@@ -49,6 +56,7 @@ function TrueOrFalse({ isEditPage, index }) {
 						{values.Questions[index].Answers[0].Text}
 					</span>
 				</div>
+
 				<div className='flex align-items-center mb-20 mt-30'>
 					<Radio
 						checked={values.Questions[index].Answers[1].IsCorrect}
@@ -71,6 +79,15 @@ function TrueOrFalse({ isEditPage, index }) {
 					</span>
 				</div>
 			</RadioGroup>
+
+			{errors.Questions &&
+				errors.Questions[index].Answers &&
+				errors.Questions[index].Answers.map((w) => {
+					<FormHelperText error={true} variant='standard'>
+						{errors.Questions[index].Answers[i] &&
+							errors.Questions[index].Answers[i].Text}
+					</FormHelperText>;
+				})}
 
 			<ReactQuill
 				theme='snow'
