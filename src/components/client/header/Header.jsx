@@ -2,7 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Logo from '../../../assets/images/icons/logo.svg';
+import logo414 from '../../../assets/images/icons/logo-414.svg';
+import login from '../../../assets/images/icons/login.svg';
+import burgericon from '../../../assets/images/icons/burger-icon.svg';
+import playicon from '../../../assets/images/icons/Play.svg';
+import mouseicon from '../../../assets/images/icons/mouse-icon.svg';
 import HeaderLogin from './HeaderLogin';
+
 
 function Header() {
 	return (
@@ -11,12 +17,12 @@ function Header() {
 				<div className='container container-two'>
 					<Link className='navbar-brand'>
 						<img className=' hide3' src={Logo} alt='logo' />
-						<img className='appear3' src='/images/icons/logo-414.svg' alt='' />
+						<img className='appear3' src={logo414} alt='logo-414' />
 					</Link>
 
 					<div className='navbar-icons'>
 						<a href='#popup7' className='login appear'>
-							<img src='/images/icons/login.svg' alt='' />
+							<img src={login} alt='login' />
 						</a>
 
 						<a href='#popup5'>
@@ -30,7 +36,7 @@ function Header() {
 								aria-label='Toggle navigation'
 							>
 								<span className='navbar-toggler-icon'>
-									<img src='/images/icons/burger-icon.svg' alt='' />
+									<img src={burgericon} alt='burger' />
 								</span>
 							</button>
 						</a>
@@ -74,7 +80,7 @@ function Header() {
 						<div className='instruction-cont-item'>
 							<a href='#popup2'>
 								<img
-									src='/images/icons/Play.svg'
+									src={playicon}
 									className='play-video'
 									alt='playvideo'
 								/>
@@ -108,7 +114,7 @@ function Header() {
 			</div>
 
 			<div className='mouse-icon hide'>
-				{/* <img src="/images/icons/mouse-icon.svg" alt="mouse-icon"> */}
+				{/* <img src={mouseicon} alt="mouse-icon"> */}
 				<div id='mouse-icon'>
 					<lottie-player src='./Mouse-scroller.json' loop autoPlay />
 				</div>

@@ -8,6 +8,11 @@ import '../assets/css/inputs.css';
 import userContext from '../context/user/userContext';
 import { issueService } from '../services/issue.service';
 import VariantsFileIcon from '../assets/images/icons/variants-file.svg';
+import VariantsLogo from '../assets/images/icons/logo.svg';
+import VariantsLogo414 from '../assets/images/icons/logo-414.svg';
+import VariantsLogin from '../assets/images/icons/login.svg';
+import VariantsBurgerIcon from '../assets/images/icons/burger-icon.svg';
+import VariantsLogout from '../assets/images/icons/Logout-variants.svg';
 
 function IssuesPage() {
 	const { user } = useContext(userContext);
@@ -29,18 +34,18 @@ function IssuesPage() {
 							<a className='navbar-brand'>
 								<img
 									className='hide3'
-									src='./assets/images/icons/logo.svg'
+									src={VariantsLogo}
 									alt='logo'
 								/>
 								<img
 									className='appear3'
-									src='./assets/images/icons/logo-414.svg'
-									alt=''
+									src={VariantsLogo414}
+									alt='logo414'
 								/>
 							</a>
 							<div className='navbar-icons'>
 								<a className='login appear'>
-									<img src='./assets/images/icons/login.svg' alt='' />
+									<img src={VariantsLogin} alt='login' />
 								</a>
 								<a href='#popup5' onclick='navAppear();'>
 									<button
@@ -53,7 +58,7 @@ function IssuesPage() {
 										aria-label='Toggle navigation'
 									>
 										<span className='navbar-toggler-icon'>
-											<img src='./assets/images/icons/burger-icon.svg' alt='' />
+											<img src={VariantsBurgerIcon} alt='burger-icon' />
 										</span>
 									</button>
 								</a>
@@ -89,7 +94,7 @@ function IssuesPage() {
 										<div className='header-variants-login-icon'>
 											<a href='#'>
 												<img
-													src='./assets/images/icons/Logout-variants.svg'
+													src={VariantsLogout}
 													alt='Logout-variants'
 												/>
 											</a>

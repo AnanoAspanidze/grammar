@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SmileImg from '../../../assets/images/forgot-password/forgot-password-smile.svg';
+import angelImg from '../../../assets/images/forgot-password/angel.svg';
 
 function ResetPasswordModal() {
 	return (
@@ -28,7 +29,7 @@ function ResetPasswordModal() {
 					</form>
 				</div>
 				<div className='second-forgot-pass' id='second-forgot-pass'>
-					<img src='./assets/images/forgot-password/angel.svg' alt='img' />
+					<img src={angelImg} alt='img' />
 					<div className='second-forgot-pass-content'>
 						<h3 className='second-forgot-pass-title'>
 							ესეც ასე, შეამოწმე ელ-ფოსტა.
