@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
-import '../assets/css/exercises.css';
-import '../assets/css/responsive.css';
 import ApppageHead from '../components/AppHead';
 import { issueService } from '../services/issue.service';
 import userContext from '../context/user/userContext';
@@ -21,6 +20,10 @@ function ExercisesPage() {
 	return (
 		<>
 			<ApppageHead />
+			<Helmet>
+				<link rel='stylesheet' href='/exercises.css' />
+				<link rel='stylesheet' href='/variants.css' />
+			</Helmet>
 			<Header2 />
 			<section className='variants-content'>
 				<div className='container-fluid'>

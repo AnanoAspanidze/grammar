@@ -29,7 +29,6 @@ function ChangableQuestion({ isEditPage, index }) {
 					{errors.Questions[index].Text}
 				</FormHelperText>
 			)}
-
 			<div className='mb-30'>
 				<ReactQuill
 					theme='snow'
@@ -43,15 +42,13 @@ function ChangableQuestion({ isEditPage, index }) {
 				/>
 			</div>
 
-			{errors.Questions &&
-				errors.Questions[index] &&
-				errors.Questions[index].Answers && (
-					<FormHelperText error={true} variant='standard'>
-						{errors.Questions[index].Answers[index]
-							? errors.Questions[index].Answers[index].Text
-							: ''}
-					</FormHelperText>
-				)}
+			{errors.Questions && errors.Questions[index] && (
+				<FormHelperText error={true} variant='standard'>
+					{errors.Questions[index].Answers[0]
+						? errors.Questions[index].Answers[0].Text
+						: ''}
+				</FormHelperText>
+			)}
 
 			<ReactQuill
 				theme='snow'
@@ -65,7 +62,6 @@ function ChangableQuestion({ isEditPage, index }) {
 				placeholder='კომენტარი პასუხის სწორად გაცემის შემთხვევაში'
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
-
 			<ReactQuill
 				theme='snow'
 				name={`Questions[${index}].WrongAnswerText`}

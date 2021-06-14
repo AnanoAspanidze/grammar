@@ -16,13 +16,10 @@ function Header2() {
 			<div className='container container-variants'>
 				<Link to='/' className='navbar-brand'>
 					<img className='hide3' src={VariantsLogo} alt='logo' />
-					<img className='appear3' src={VariantsLogo414} alt='logo414' />
+					{/* <img className='appear3' src={VariantsLogo414} alt='logo414' /> */}
 				</Link>
 				<div className='navbar-icons'>
-					<a className='login appear'>
-						<img src={VariantsLogin} alt='login' />
-					</a>
-					<a href='#popup5' onclick='navAppear();'>
+					<a href='#popup5'>
 						<button
 							className='navbar-toggler'
 							type='button'

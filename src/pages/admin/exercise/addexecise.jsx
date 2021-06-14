@@ -177,6 +177,7 @@ function Addexecise({ drawerIsOpen }) {
 										color='primary'
 										value={values['IsSummaryExercise']}
 										onChange={(e) => {
+											console.log('render.....');
 											setFieldValue(
 												'IsSummaryExercise',
 												!values['IsSummaryExercise']

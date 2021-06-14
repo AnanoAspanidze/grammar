@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import '../assets/css/about-project.css';
-import '../assets/css/responsive.css';
+// import '../assets/css/responsive.css';
 import ApppageHead from '../components/AppHead';
 import Footer from '../components/client/footer/Footer';
 import VideoModal from '../components/client/modal/VideoModal';

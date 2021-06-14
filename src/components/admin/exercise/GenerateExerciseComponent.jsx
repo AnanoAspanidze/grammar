@@ -44,7 +44,10 @@ function GenerateExerciseComponent({ name, isEditPage }) {
 			setFieldValue('Questions', arr1);
 		}
 
-		if (values.TypeId === 3 || values.TypeId === 4 || values.TypeId === 5) {
+		if (values.TypeId === 3 || values.TypeId === 4) {
+			setFieldValue('Questions', arr3);
+		}
+		if (values.TypeId === 5) {
 			setFieldValue('Questions', arr3);
 		}
 	}, [values.TypeId]);

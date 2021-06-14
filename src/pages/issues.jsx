@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
-import '../assets/css/variants.css';
-import '../assets/css/responsive.css';
-import '../assets/css/buttons.css';
-import '../assets/css/inputs.css';
 import ApppageHead from '../components/AppHead';
 import userContext from '../context/user/userContext';
 import { issueService } from '../services/issue.service';
@@ -27,6 +24,9 @@ function IssuesPage() {
 	return (
 		<>
 			<ApppageHead />
+			<Helmet>
+				<link rel='stylesheet' href='/variants.css' />
+			</Helmet>
 
 			<div>
 				<div className='variants-header'>

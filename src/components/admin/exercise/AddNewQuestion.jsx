@@ -10,32 +10,52 @@ function AddNewQuestion() {
 		<Button
 			onClick={() => {
 				setFieldValue('index', values['index'] + 1);
-				setFieldValue('Questions', [
-					...values.Questions,
-					{
-						exerciseId: 0,
-						Answers: [
-							{
-								id: 0,
-								Text: '',
-								IsCorrect: false,
-							},
-							{
-								id: 0,
-								Text: '',
-								IsCorrect: false,
-							},
-							{
-								id: 0,
-								Text: '',
-								IsCorrect: false,
-							},
-						],
-						Text: '',
-						WrongAnswerText: '',
-						RightAnswerText: '',
-					},
-				]);
+
+				if (values.TypeId === 5) {
+					setFieldValue('Questions', [
+						...values.Questions,
+						{
+							exerciseId: 0,
+							Answers: [
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+							],
+							Text: '',
+							WrongAnswerText: '',
+							RightAnswerText: '',
+						},
+					]);
+				} else {
+					setFieldValue('Questions', [
+						...values.Questions,
+						{
+							exerciseId: 0,
+							Answers: [
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+							],
+							Text: '',
+							WrongAnswerText: '',
+							RightAnswerText: '',
+						},
+					]);
+				}
 			}}
 		>
 			კითხვის დამატება <AddIcon />
