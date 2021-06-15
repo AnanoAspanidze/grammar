@@ -45,6 +45,28 @@ function AddNewQuestion() {
 							RightAnswerText: '',
 						},
 					]);
+				} else if (values.TypeId === 6) {
+					setFieldValue('Questions', [
+						...values.Questions,
+						{
+							exerciseId: 0,
+							Answers: [
+								{
+									id: 0,
+									Text: 'ჭეშმარიტია',
+									IsCorrect: false,
+								},
+								{
+									id: 0,
+									Text: 'მცდარია',
+									IsCorrect: false,
+								},
+							],
+							Text: '',
+							WrongAnswerText: '',
+							RightAnswerText: '',
+						},
+					]);
 				} else {
 					setFieldValue('Questions', [
 						...values.Questions,

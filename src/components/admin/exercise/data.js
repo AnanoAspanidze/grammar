@@ -43,14 +43,12 @@ const arr2 = [
 		Answers: [
 			{
 				id: 1,
-				Text: '',
-				label: 'ჭეშმარიტია',
+				Text: 'ჭეშმარიტია',
 				IsCorrect: false,
 			},
 			{
 				id: 2,
-				Text: '',
-				label: 'მცდარია',
+				Text: 'მცდარია',
 				IsCorrect: false,
 			},
 		],

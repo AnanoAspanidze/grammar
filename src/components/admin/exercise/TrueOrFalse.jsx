@@ -55,6 +55,8 @@ function TrueOrFalse({ isEditPage, data, onEditQuestion, index }) {
 			});
 	};
 
+	console.log(values.Questions[index]);
+
 	return (
 		<div className={classes.EcercisesBorder} style={{ position: 'relative' }}>
 			{isEditPage && (
@@ -96,8 +98,7 @@ function TrueOrFalse({ isEditPage, data, onEditQuestion, index }) {
 				<div className='flex align-items-center mt-30'>
 					<Radio
 						checked={
-							values.Questions[index] &&
-							values.Questions[index].Answers[0].IsCorrect
+							values.Questions && values.Questions[index].Answers[0].IsCorrect
 						}
 						disabled={isEditPage ? true : false}
 						name={`Questions[${index}].Answers[0].IsCorrect`}
@@ -111,21 +112,13 @@ function TrueOrFalse({ isEditPage, data, onEditQuestion, index }) {
 								`Questions[${index}].Answers[0].IsCorrect`,
 								!e.target.value
 							);
-							setFieldValue(
-								`Questions[${index}].Answers[0].Text`,
-								`${!e.target.value}`
-							);
-							setFieldValue(
-								`Questions[${index}].Answers[1].Text`,
-								`${!e.target.value}`
-							);
 						}}
 						inputProps={{ 'aria-label': 'A' }}
 					/>
 					<span className='font-18'>
-						{isEditPage
-							? 'ჭეშმარიტია'
-							: values.Questions[index].Answers[0].label}
+						{values.Questions[index] && !isEditPage
+							? values.Questions[index].Answers[0].Text
+							: 'ჭეშმარიტია'}
 					</span>
 				</div>
 
@@ -151,16 +144,18 @@ function TrueOrFalse({ isEditPage, data, onEditQuestion, index }) {
 						inputProps={{ 'aria-label': 'A' }}
 					/>
 					<span className='font-18'>
-						{isEditPage ? 'მცდარია' : values.Questions[index].Answers[1].label}
+						{values.Questions[index] && !isEditPage
+							? values.Questions[index].Answers[1].Text
+							: 'მცდარია'}
 					</span>
 				</div>
 			</RadioGroup>
 
-			{errors.Questions && errors.Questions[index].Answers && (
+			{/* {errors.Questions && errors.Questions[index].Answers && (
 				<FormHelperText error={true} variant='standard'>
 					შეავსეთ ველი
 				</FormHelperText>
-			)}
+			)} */}
 
 			<ReactQuill
 				theme='snow'
