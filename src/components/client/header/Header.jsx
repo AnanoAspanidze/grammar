@@ -8,11 +8,11 @@ import burgericon from '../../../assets/images/icons/burger-icon.svg';
 import playicon from '../../../assets/images/icons/Play.svg';
 import mouseicon from '../../../assets/images/icons/mouse-icon.svg';
 import HeaderLogin from './HeaderLogin';
-
+import IntroImg from '../../../assets/images/homepage/header-background.svg';
 
 function Header() {
 	return (
-		<div className='header'>
+		<div className='header' style={{ backgroundImage: `url(${IntroImg})` }}>
 			<nav className='navbar navbar-expand-md navbar-light'>
 				<div className='container container-two'>
 					<Link className='navbar-brand'>
@@ -79,11 +79,7 @@ function Header() {
 					<div className='instruction-cont video-image-one'>
 						<div className='instruction-cont-item'>
 							<a href='#popup2'>
-								<img
-									src={playicon}
-									className='play-video'
-									alt='playvideo'
-								/>
+								<img src={playicon} className='play-video' alt='playvideo' />
 							</a>
 							<p>
 								<span>რესურსის გამოყენების</span> <br /> ინსტრუქცია

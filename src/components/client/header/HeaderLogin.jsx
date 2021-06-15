@@ -7,6 +7,7 @@ import { ModalContext } from '../../../context/modal/modalContext';
 import { accountService } from '../../../services/user.service';
 import { userSigninSchema } from '../../../helpers/schema';
 import ResetPasswordModal from '../modal/ResetPasswordModal';
+import AuthImg from '../../../assets/images/homepage/auth-bg.svg';
 
 function HeaderLogin() {
 	let history = useHistory();
@@ -79,7 +80,10 @@ function HeaderLogin() {
 								</div>
 
 								<div className='col-7 hide'>
-									<div className='header-auth'>
+									<div
+										className='header-auth'
+										style={{ backgroundImage: `url(${AuthImg})` }}
+									>
 										<div className='registration-form'>
 											<h4 className='registration-header-title'>ავტორიზაცია</h4>
 											<div
