@@ -28,6 +28,23 @@ function AddNewQuestion() {
 							RightAnswerText: '',
 						},
 					]);
+				} else if (values.TypeId === 4) {
+					setFieldValue('Questions', [
+						...values.Questions,
+						{
+							exerciseId: 0,
+							Answers: [
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+							],
+							Text: '',
+							WrongAnswerText: '',
+							RightAnswerText: '',
+						},
+					]);
 				} else {
 					setFieldValue('Questions', [
 						...values.Questions,
