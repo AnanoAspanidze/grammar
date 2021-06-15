@@ -14,7 +14,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 function TestQuestion({
 	data,
-	myvalue,
 	closeModal,
 	index,
 	setDeleteQuestion,
@@ -22,7 +21,13 @@ function TestQuestion({
 	onClick,
 }) {
 	const classes = useStyles();
-	const { values, setFieldValue, errors, handleChange } = useFormikContext();
+	const {
+		values,
+		setFieldValue,
+		setFieldError,
+		errors,
+		submitCount,
+	} = useFormikContext();
 
 	const addMore = () => {
 		setFieldValue(`Questions[${index}].Answers`, [
@@ -34,8 +39,6 @@ function TestQuestion({
 			},
 		]);
 	};
-
-	console.log(errors);
 
 	return (
 		<div

@@ -85,6 +85,7 @@ export const addExerciseValidationSchema2 = Yup.object().shape({
 	Questions: Yup.array().of(
 		Yup.object().shape({
 			Text: Yup.string().required('შეავსეთ ველი'),
+
 			Answers: Yup.array().of(
 				Yup.object().shape({
 					Text: Yup.string().required('შეავსეთ ველი'),

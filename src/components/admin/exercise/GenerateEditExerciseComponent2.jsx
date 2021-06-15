@@ -10,6 +10,7 @@ import ChangableQuestion from '../../../components/admin/exercise/ChangableQuest
 import TagsQuestions from '../../../components/admin/exercise/TagsQuestions';
 import TrueOrFalse from '../../../components/admin/exercise/TrueOrFalse';
 import { arr1, arr3 } from './data';
+import { exerciseService } from '../../../services/exercise.service';
 
 function GenerateEditExerciseComponent2({
 	name,
@@ -95,57 +96,87 @@ function GenerateEditExerciseComponent2({
 						))}
 
 					{values[name] === 2 &&
-						arrayItems &&
-						arrayItems.map((item, i) => (
+						values.Questions.map((item, i) => (
 							<SelectQuestions
 								key={i}
 								isEditPage={isEditPage}
 								index={i}
-								key={item}
+								data={item}
+								key={item.Id}
+								closeModal={closeModal}
+								onSuccessSnackbar={onSuccessSnackbar}
+								onFailSnackbar={onFailSnackbar}
+								onEditQuestion={(bool, i, index) =>
+									onEditQuestion(bool, i, index)
+								}
 							/>
 						))}
 
 					{values[name] === 3 &&
-						arrayItems &&
-						arrayItems.map((item, i) => (
+						values.Questions.map((item, i) => (
 							<WritableQuestions
 								key={i}
 								isEditPage={isEditPage}
 								index={i}
-								key={item}
+								data={item}
+								key={item.Id}
+								closeModal={closeModal}
+								onSuccessSnackbar={onSuccessSnackbar}
+								onFailSnackbar={onFailSnackbar}
+								onEditQuestion={(bool, i, index) =>
+									onEditQuestion(bool, i, index)
+								}
 							/>
 						))}
 
 					{values[name] === 4 &&
-						arrayItems &&
-						arrayItems.map((item, i) => (
+						values.Questions.map((item, i) => (
 							<ChangableQuestion
 								key={i}
 								isEditPage={isEditPage}
 								index={i}
-								key={item}
+								data={item}
+								key={item.Id}
+								closeModal={closeModal}
+								onSuccessSnackbar={onSuccessSnackbar}
+								onFailSnackbar={onFailSnackbar}
+								onEditQuestion={(bool, i, index) =>
+									onEditQuestion(bool, i, index)
+								}
 							/>
 						))}
 
 					{values[name] === 5 &&
-						arrayItems &&
-						arrayItems.map((item, i) => (
+						values.Questions.map((item, i) => (
 							<TagsQuestions
 								key={i}
 								isEditPage={isEditPage}
 								index={i}
-								key={item}
+								data={item}
+								key={item.Id}
+								closeModal={closeModal}
+								onSuccessSnackbar={onSuccessSnackbar}
+								onFailSnackbar={onFailSnackbar}
+								onEditQuestion={(bool, i, index) =>
+									onEditQuestion(bool, i, index)
+								}
 							/>
 						))}
 
 					{values[name] === 6 &&
-						arrayItems &&
-						arrayItems.map((item, i) => (
+						values.Questions.map((item, i) => (
 							<TrueOrFalse
 								key={i}
 								isEditPage={isEditPage}
 								index={i}
-								key={item}
+								data={item}
+								key={item.Id}
+								closeModal={closeModal}
+								onSuccessSnackbar={onSuccessSnackbar}
+								onFailSnackbar={onFailSnackbar}
+								onEditQuestion={(bool, i, index) =>
+									onEditQuestion(bool, i, index)
+								}
 							/>
 						))}
 				</div>

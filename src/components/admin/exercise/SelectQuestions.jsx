@@ -9,12 +9,24 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { exerciseService } from '../../../services/exercise.service';
 
-function SelectQuestions({ isEditPage, index }) {
+function SelectQuestions({ isEditPage, index, data, onEditQuestion }) {
 	const { values, setFieldValue, errors, handleChange } = useFormikContext();
 
+	const [loading, setLoading] = useState(false);
 	const [value2, setValue2] = useState('');
 	const classes = useStyles();
+	const [state, setState] = useState({
+		open: false,
+		vertical: 'top',
+		horizontal: 'center',
+		severity: '',
+		error: null,
+	});
 
 	const addMore = () => {
 		setFieldValue(`Questions[${index}].Answers`, [
@@ -27,13 +39,63 @@ function SelectQuestions({ isEditPage, index }) {
 		]);
 	};
 
+	const handleClick = (newState, message) => {
+		setState({ open: true, error: message, ...newState });
+	};
+
+	const handleClose = () => {
+		setState({ ...state, open: false });
+	};
+
+	const deleteQuestion = () => {
+		setLoading(true);
+		exerciseService
+			.deleteQuestion(data.Id)
+			.then((res) => {
+				const q = values.Questions.filter((r) => r.Id !== data.Id);
+
+				setFieldValue('Questions', q);
+
+				setLoading(false);
+
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
+					res.Message
+				);
+			})
+			.catch((err) => {
+				setLoading(false);
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
+					err.Message
+				);
+			});
+	};
+
 	return (
-		<div className={classes.EcercisesBorder}>
+		<div className={classes.EcercisesBorder} style={{ position: 'relative' }}>
+			{isEditPage && (
+				<>
+					<IconButton
+						onClick={() => onEditQuestion(true, values.Questions[index], index)}
+						style={{ position: 'absolute', right: '70px', top: '11px' }}
+					>
+						<EditIcon />
+					</IconButton>
+
+					<IconButton
+						onClick={deleteQuestion}
+						style={{ position: 'absolute', right: '10px', top: '11px' }}
+					>
+						<DeleteIcon />
+					</IconButton>
+				</>
+			)}
+
 			<div>
 				იმ ადგილას, სადაც გინდათ, რომ გამოჩნდეს ასარჩევი, ჩაწერეთ #select
 			</div>
 			<ReactQuill
-				disabled={isEditPage}
 				theme='snow'
 				readOnly={isEditPage}
 				name={`Questions[${index}].Text`}
@@ -55,7 +117,8 @@ function SelectQuestions({ isEditPage, index }) {
 						<div className='mb-20 mt-30'>
 							<div className='w-100 flex align-items-center'>
 								<Radio
-									checked={values.Questions[index].Answers[i].IsCorrect}
+									disabled={isEditPage}
+									checked={item.IsCorrect}
 									name={`Questions[${index}].Answers[${i}].IsCorrect`}
 									onChange={(e) => {
 										const newArr = values.Questions[index].Answers.map((w) => {
@@ -72,13 +135,15 @@ function SelectQuestions({ isEditPage, index }) {
 								/>
 
 								<TextFieldComponent
+									disabled={isEditPage}
 									onChange={(e) =>
 										setFieldValue(
 											`Questions[${index}].Answers[${i}].Text`,
 											e.target.value
 										)
 									}
-									placeholder='პასუხი'
+									value={item.Text}
+									placeholder={isEditPage ? '' : 'პასუხი'}
 									name={`Questions[${index}].Answers[${i}].Text`}
 								/>
 							</div>
@@ -134,7 +199,7 @@ export default SelectQuestions;
 
 const useStyles = makeStyles((theme) => ({
 	EcercisesBorder: {
-		padding: '30px 50px',
+		padding: '50px',
 		marginBottom: '50px',
 		borderRadius: '6px',
 		marginBottom: '50px',

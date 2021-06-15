@@ -6,9 +6,21 @@ import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import TextFieldComponent from '../reusable/TextFieldComponent';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { exerciseService } from '../../../services/exercise.service';
 
-function WritableQuestions({ isEditPage, index }) {
+function WritableQuestions({ isEditPage, index, data, onEditQuestion }) {
 	const { values, setFieldValue, errors, handleChange } = useFormikContext();
+	const [loading, setLoading] = useState(false);
+	const [state, setState] = useState({
+		open: false,
+		vertical: 'top',
+		horizontal: 'center',
+		severity: '',
+		error: null,
+	});
 
 	const classes = useStyles();
 
@@ -23,14 +35,64 @@ function WritableQuestions({ isEditPage, index }) {
 		]);
 	};
 
+	const handleClick = (newState, message) => {
+		setState({ open: true, error: message, ...newState });
+	};
+
+	const handleClose = () => {
+		setState({ ...state, open: false });
+	};
+
+	const deleteQuestion = () => {
+		setLoading(true);
+		exerciseService
+			.deleteQuestion(data.Id)
+			.then((res) => {
+				const q = values.Questions.filter((r) => r.Id !== data.Id);
+
+				setFieldValue('Questions', q);
+
+				setLoading(false);
+
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
+					res.Message
+				);
+			})
+			.catch((err) => {
+				setLoading(false);
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
+					err.Message
+				);
+			});
+	};
+
 	return (
-		<div className={classes.EcercisesBorder}>
+		<div className={classes.EcercisesBorder} style={{ position: 'relative' }}>
+			{isEditPage && (
+				<>
+					<IconButton
+						onClick={() => onEditQuestion(true, values.Questions[index], index)}
+						style={{ position: 'absolute', right: '70px', top: '11px' }}
+					>
+						<EditIcon />
+					</IconButton>
+
+					<IconButton
+						onClick={deleteQuestion}
+						style={{ position: 'absolute', right: '10px', top: '11px' }}
+					>
+						<DeleteIcon />
+					</IconButton>
+				</>
+			)}
+
 			<div>
 				იმ ადგილას, სადაც გინდათ, რომ გამოჩნდეს ჩასაწერი, ჩაწერეთ #input
 			</div>
 
 			<ReactQuill
-				disabled={isEditPage}
 				theme='snow'
 				readOnly={isEditPage}
 				name={`Questions[${index}].Text`}
@@ -50,6 +112,7 @@ function WritableQuestions({ isEditPage, index }) {
 				<>
 					<div className='flex align-items-center mb-0 mt-30' key={i}>
 						<TextFieldComponent
+							disabled={isEditPage}
 							placeholder='სწორი პასუხი'
 							name={`Questions[${index}].Answers[${i}].Text`}
 							value={values.Questions[index].Answers[i].Text}
@@ -112,7 +175,7 @@ export default WritableQuestions;
 
 const useStyles = makeStyles((theme) => ({
 	EcercisesBorder: {
-		padding: '30px 50px',
+		padding: '50px',
 		marginBottom: '50px',
 		marginBottom: '50px',
 		borderRadius: '6px',

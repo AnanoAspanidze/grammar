@@ -1,22 +1,80 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import { useFormikContext } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { exerciseService } from '../../../services/exercise.service';
 
-function TrueOrFalse({ isEditPage, index }) {
+function TrueOrFalse({ isEditPage, data, onEditQuestion, index }) {
 	const { values, setFieldValue, errors, handleChange } = useFormikContext();
 	const classes = useStyles();
+	const [loading, setLoading] = useState(false);
+	const [state, setState] = useState({
+		open: false,
+		vertical: 'top',
+		horizontal: 'center',
+		severity: '',
+		error: null,
+	});
 
-	useEffect(() => {
-		setFieldValue(`Questions[${index}].Answers[0].Text`, 'ჭეშმარიტია');
-		setFieldValue(`Questions[${index}].Answers[1].Text`, 'მცდარია');
-	}, []);
+	const handleClick = (newState, message) => {
+		setState({ open: true, error: message, ...newState });
+	};
+
+	const handleClose = () => {
+		setState({ ...state, open: false });
+	};
+
+	const deleteQuestion = () => {
+		setLoading(true);
+		exerciseService
+			.deleteQuestion(data.Id)
+			.then((res) => {
+				const q = values.Questions.filter((r) => r.Id !== data.Id);
+
+				setFieldValue('Questions', q);
+
+				setLoading(false);
+
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
+					res.Message
+				);
+			})
+			.catch((err) => {
+				setLoading(false);
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
+					err.Message
+				);
+			});
+	};
 
 	return (
-		<div className={classes.EcercisesBorder}>
+		<div className={classes.EcercisesBorder} style={{ position: 'relative' }}>
+			{isEditPage && (
+				<>
+					<IconButton
+						onClick={() => onEditQuestion(true, values.Questions[index], index)}
+						style={{ position: 'absolute', right: '70px', top: '11px' }}
+					>
+						<EditIcon />
+					</IconButton>
+
+					<IconButton
+						onClick={deleteQuestion}
+						style={{ position: 'absolute', right: '10px', top: '11px' }}
+					>
+						<DeleteIcon />
+					</IconButton>
+				</>
+			)}
+
 			<ReactQuill
 				disabled={isEditPage}
 				theme='snow'
@@ -37,7 +95,11 @@ function TrueOrFalse({ isEditPage, index }) {
 			<RadioGroup>
 				<div className='flex align-items-center mt-30'>
 					<Radio
-						checked={values.Questions[index].Answers[0].IsCorrect}
+						checked={
+							values.Questions[index] &&
+							values.Questions[index].Answers[0].IsCorrect
+						}
+						disabled={isEditPage ? true : false}
 						name={`Questions[${index}].Answers[0].IsCorrect`}
 						onChange={(e) => {
 							const newArr = values.Questions[index].Answers.map((w) => {
@@ -49,17 +111,31 @@ function TrueOrFalse({ isEditPage, index }) {
 								`Questions[${index}].Answers[0].IsCorrect`,
 								!e.target.value
 							);
+							setFieldValue(
+								`Questions[${index}].Answers[0].Text`,
+								`${!e.target.value}`
+							);
+							setFieldValue(
+								`Questions[${index}].Answers[1].Text`,
+								`${!e.target.value}`
+							);
 						}}
 						inputProps={{ 'aria-label': 'A' }}
 					/>
 					<span className='font-18'>
-						{values.Questions[index].Answers[0].Text}
+						{isEditPage
+							? 'ჭეშმარიტია'
+							: values.Questions[index].Answers[0].label}
 					</span>
 				</div>
 
 				<div className='flex align-items-center mb-20 mt-30'>
 					<Radio
-						checked={values.Questions[index].Answers[1].IsCorrect}
+						checked={
+							values.Questions[index] &&
+							values.Questions[index].Answers[1].IsCorrect
+						}
+						disabled={isEditPage ? true : false}
 						name={`Questions[${index}].Answers[1].IsCorrect`}
 						onChange={(e) => {
 							const newArr = values.Questions[index].Answers.map((w) => {
@@ -75,23 +151,16 @@ function TrueOrFalse({ isEditPage, index }) {
 						inputProps={{ 'aria-label': 'A' }}
 					/>
 					<span className='font-18'>
-						{values.Questions[index].Answers[1].Text}
+						{isEditPage ? 'მცდარია' : values.Questions[index].Answers[1].label}
 					</span>
 				</div>
 			</RadioGroup>
 
-			{errors.Questions &&
-				errors.Questions[index] &&
-				errors.Questions[index].Answers &&
-				errors.Questions[index].Answers.map((w, i) => {
-					if (w && i > 0) {
-						return (
-							<FormHelperText error={true} variant='standard'>
-								{w.Text}
-							</FormHelperText>
-						);
-					}
-				})}
+			{errors.Questions && errors.Questions[index].Answers && (
+				<FormHelperText error={true} variant='standard'>
+					შეავსეთ ველი
+				</FormHelperText>
+			)}
 
 			<ReactQuill
 				theme='snow'
@@ -125,7 +194,7 @@ export default TrueOrFalse;
 
 const useStyles = makeStyles((theme) => ({
 	EcercisesBorder: {
-		padding: '30px 50px',
+		padding: '70px 50px',
 		marginBottom: '50px',
 		marginBottom: '50px',
 		borderRadius: '6px',

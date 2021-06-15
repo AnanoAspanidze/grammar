@@ -7,7 +7,7 @@ import WritableQuestions from '../../../components/admin/exercise/WritableQuesti
 import ChangableQuestion from '../../../components/admin/exercise/ChangableQuestion';
 import TagsQuestions from '../../../components/admin/exercise/TagsQuestions';
 import TrueOrFalse from '../../../components/admin/exercise/TrueOrFalse';
-import { arr1, arr3 } from './data';
+import { arr1, arr2, arr3 } from './data';
 
 function GenerateExerciseComponent({ name, isEditPage }) {
 	const [index, setIndex] = useState('1');
@@ -49,6 +49,9 @@ function GenerateExerciseComponent({ name, isEditPage }) {
 		}
 		if (values.TypeId === 5) {
 			setFieldValue('Questions', arr3);
+		}
+		if (values.TypeId === 6) {
+			setFieldValue('Questions', arr2);
 		}
 	}, [values.TypeId]);
 

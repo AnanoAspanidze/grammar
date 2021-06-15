@@ -178,7 +178,7 @@ function Editexecise({ drawerIsOpen, match }) {
 						isSubmitting,
 					}) => {
 						if (!subcategory) {
-							setSubcategory(values.SubCategoryId);
+							setSubcategory(values.CategoryId);
 						}
 
 						if (isFull) {
@@ -217,7 +217,7 @@ function Editexecise({ drawerIsOpen, match }) {
 														name='SubCategoryId'
 														label='საკითხის არჩევა *'
 														text='Name'
-														value={`${values.subcategory}`}
+														value={values.subcategory}
 														hasOnchange={true}
 														onChange={(e) => {
 															setselectedPart(e);

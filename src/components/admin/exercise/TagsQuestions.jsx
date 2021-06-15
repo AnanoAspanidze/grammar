@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormikContext } from 'formik';
 import ReactQuill from 'react-quill';
 import AddIcon from '@material-ui/icons/Add';
@@ -6,8 +6,12 @@ import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import TextFieldComponent from '../reusable/TextFieldComponent';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { exerciseService } from '../../../services/exercise.service';
 
-function TagsQuestions({ isEditPage, index }) {
+function TagsQuestions({ isEditPage, data, index, onEditQuestion }) {
 	const {
 		values,
 		setFieldValue,
@@ -15,6 +19,15 @@ function TagsQuestions({ isEditPage, index }) {
 		errors,
 		handleChange,
 	} = useFormikContext();
+
+	const [loading, setLoading] = useState(false);
+	const [state, setState] = useState({
+		open: false,
+		vertical: 'top',
+		horizontal: 'center',
+		severity: '',
+		error: null,
+	});
 
 	const classes = useStyles();
 
@@ -29,8 +42,59 @@ function TagsQuestions({ isEditPage, index }) {
 		]);
 	};
 
+	const handleClick = (newState, message) => {
+		setState({ open: true, error: message, ...newState });
+	};
+
+	const handleClose = () => {
+		setState({ ...state, open: false });
+	};
+
+	const deleteQuestion = () => {
+		setLoading(true);
+		exerciseService
+			.deleteQuestion(data.Id)
+			.then((res) => {
+				const q = values.Questions.filter((r) => r.Id !== data.Id);
+
+				setFieldValue('Questions', q);
+
+				setLoading(false);
+
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
+					res.Message
+				);
+			})
+			.catch((err) => {
+				setLoading(false);
+				handleClick(
+					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
+					err.Message
+				);
+			});
+	};
+
 	return (
-		<div className={classes.EcercisesBorder}>
+		<div className={classes.EcercisesBorder} style={{ position: 'relative' }}>
+			{isEditPage && (
+				<>
+					<IconButton
+						onClick={() => onEditQuestion(true, values.Questions[index], index)}
+						style={{ position: 'absolute', right: '70px', top: '11px' }}
+					>
+						<EditIcon />
+					</IconButton>
+
+					<IconButton
+						onClick={deleteQuestion}
+						style={{ position: 'absolute', right: '10px', top: '11px' }}
+					>
+						<DeleteIcon />
+					</IconButton>
+				</>
+			)}
+
 			<ReactQuill
 				disabled={isEditPage}
 				theme='snow'
@@ -51,6 +115,7 @@ function TagsQuestions({ isEditPage, index }) {
 			{values.Questions[index].Answers.map((item, i) => (
 				<div className='mb-20 mt-30' key={i}>
 					<TextFieldComponent
+						disabled={isEditPage}
 						placeholder='სიტყვა'
 						name={`Questions[${index}].Answers[${i}].Text`}
 						value={values.Questions[index].Answers[i].Text}
@@ -112,7 +177,7 @@ export default TagsQuestions;
 
 const useStyles = makeStyles((theme) => ({
 	EcercisesBorder: {
-		padding: '30px 50px',
+		padding: '70px 50px',
 		marginBottom: '50px',
 		marginBottom: '50px',
 		borderRadius: '6px',
