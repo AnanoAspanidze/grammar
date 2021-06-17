@@ -213,6 +213,9 @@ ul,
 li {
 	list-style: none;
 }
+legend {
+	float: initial !important;
+}
 blockquote,
 q {
 	quotes: none;

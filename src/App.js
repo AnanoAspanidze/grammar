@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
-import './assets/css/reset.css';
+// import './assets/css/reset.css';
 // context
 import userContext from './context/user/userContext';
 import drawerContext from './context/drawer/drawerContext';

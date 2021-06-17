@@ -126,7 +126,7 @@ a.button-video.see-video {
 }
 
 .header-auth {
-	background-image: url('../src/assets/images/homepage/auth-bg.svg');
+	background-image: url('../images/homepage/auth-bg.svg');
 	height: 716.6px;
 	width: 735.6px;
 	padding: 9px 0 0 118px;
@@ -427,7 +427,7 @@ a.button-video.see-video {
 }
 
 .instruction-bg {
-	background-image: url('../src/assets/images/homepage/instruction-bg.svg');
+	background-image: url('../images/homepage/instruction-bg.svg');
 	background-position: center;
 	background-size: cover;
 	width: 1330px;
@@ -613,7 +613,7 @@ button:focus:not(:focus-visible) {
 /* popup */
 
 .instruction-cont.video-image {
-	background-image: url('../src/assets/images/homepage/video-image.png');
+	background-image: url('../images/homepage/video-image.png');
 	background-size: 100% 100%;
 	display: flex;
 	justify-content: center;
