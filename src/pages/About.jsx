@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
-import '../assets/css/about-project.css';
-// import '../assets/css/responsive.css';
 import ApppageHead from '../components/AppHead';
 import Footer from '../components/client/footer/Footer';
 import VideoModal from '../components/client/modal/VideoModal';
@@ -20,7 +19,9 @@ function About() {
 	return (
 		<>
 			<ApppageHead />
-
+			<Helmet>
+				<link rel='stylesheet' href='/about-project.css' />
+			</Helmet>
 			<div class='about-header'>
 				<nav className='navbar navbar-expand-md navbar-light'>
 					<div className='container container-two'>

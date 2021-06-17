@@ -15,7 +15,6 @@ function AddNewQuestion() {
 					setFieldValue('Questions', [
 						...values.Questions,
 						{
-							exerciseId: 0,
 							Answers: [
 								{
 									id: 0,
@@ -32,7 +31,22 @@ function AddNewQuestion() {
 					setFieldValue('Questions', [
 						...values.Questions,
 						{
-							exerciseId: 0,
+							Answers: [
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+							],
+							Text: '',
+							WrongAnswerText: '',
+							RightAnswerText: '',
+						},
+					]);
+				} else if (values.TypeId === 3) {
+					setFieldValue('Questions', [
+						...values.Questions,
+						{
 							Answers: [
 								{
 									id: 0,
@@ -49,7 +63,6 @@ function AddNewQuestion() {
 					setFieldValue('Questions', [
 						...values.Questions,
 						{
-							exerciseId: 0,
 							Answers: [
 								{
 									id: 0,
@@ -67,11 +80,31 @@ function AddNewQuestion() {
 							RightAnswerText: '',
 						},
 					]);
+				} else if (values.TypeId === 1) {
+					setFieldValue('Questions', [
+						...values.Questions,
+						{
+							Answers: [
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+							],
+							Text: '',
+							WrongAnswerText: '',
+							RightAnswerText: '',
+						},
+					]);
 				} else {
 					setFieldValue('Questions', [
 						...values.Questions,
 						{
-							exerciseId: 0,
 							Answers: [
 								{
 									id: 0,

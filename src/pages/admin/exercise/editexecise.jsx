@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Formik } from 'formik';
+import ReactQuill from 'react-quill';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -278,13 +279,13 @@ function Editexecise({ drawerIsOpen, match }) {
 												</div>
 
 												<div className='mb-30'>
-													<TextareaAutosize
+													<ReactQuill
+														theme='snow'
 														name='Description'
-														className={classes.Textarea}
 														value={values.Description}
-														aria-label='empty textarea'
-														placeholder='გრამატიკის წესები'
-														onChange={handleChange}
+														onChange={(e) => setFieldValue('Description', e)}
+														placeholder='თეორიული განმარტება'
+														style={{ height: '200px', marginBottom: '55px' }}
 													/>
 													{errors.Description && (
 														<div className='mb-20'>

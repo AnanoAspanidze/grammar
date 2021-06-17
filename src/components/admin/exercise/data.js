@@ -22,6 +22,25 @@ const arr1 = [
 		RightAnswerText: '',
 	},
 ];
+const arr4 = [
+	{
+		Answers: [
+			{
+				id: 1,
+				Text: '',
+				IsCorrect: false,
+			},
+			{
+				id: 2,
+				Text: '',
+				IsCorrect: false,
+			},
+		],
+		Text: '',
+		WrongAnswerText: '',
+		RightAnswerText: '',
+	},
+];
 
 const arr3 = [
 	{
@@ -58,4 +77,4 @@ const arr2 = [
 	},
 ];
 
-export { arr1, arr2, arr3 };
+export { arr1, arr2, arr3, arr4 };

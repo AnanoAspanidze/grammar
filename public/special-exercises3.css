@@ -1,0 +1,158 @@
+.exercises-wb-pad-active {
+    border: 2.5px solid #4B6858;
+    border-radius: 20px;
+}
+
+.spec-exer-head button {
+    font-family: 'FiraGo';
+    padding: 16px 20px;
+    background: #F6F7F7;
+    border-radius: 12px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    color: #4B6858;
+}
+
+.spec-exer-head button i {
+    padding-right: 8px;
+}
+
+.spec-exer-head-ex3 {
+    font-family: 'FiraGO';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    color: #333333;
+    margin: auto 0;
+}
+
+.spec-exer-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 76px;
+}
+
+.spec-ask-question {
+    font-family: 'FiraGO';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    letter-spacing: 0.2px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.to-strong {
+    font-family: 'FiraGO Bold';
+}
+
+.spec-exer-fields {
+    height: 100%;
+    padding: 0 38px 44px 23px;
+}
+
+.exer-choose-cor-answer {
+    font-family: 'FiraGO';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: #707070;
+}
+
+.spec-exer-questions {
+    margin-bottom: 80px;
+}
+
+.exer-answers-box {
+    margin-bottom: 24px;
+}
+
+.exer-answers-box button {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    font-family: 'FiraGO';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.2px;
+    color: #333333;
+    padding: 28px 32px;
+    border: 2px solid #E7E8E8;
+    box-sizing: border-box;
+    border-radius: 16px;
+}
+
+.exer-check-button {
+    width: 100%;
+    height: auto;
+    padding: 24px;
+    background: #4B6858;
+    border-radius: 16px;
+    color: #FFFFFF;
+    font-family: 'FiraGO';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.exer-choosed-answer {
+    background: #EDF0EE;
+    border: 2px solid #4B6858;
+    box-sizing: border-box;
+    border-radius: 16px;
+}
+
+.check-button {
+    margin-top: 43px;
+}
+
+.exer-answers-all {
+    margin-bottom: 67px;
+}
+
+.counted-boxes {
+    font-family: 'FiraGO';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.2px;
+    color: #333333;
+    opacity: 0.7;
+    margin-right: 31px;
+}
+
+.exer-all-check-boxes {
+    height: 5px;
+    background: #D0D0D0;
+    border-radius: 12px;
+    margin: auto 0;
+}
+
+.check-count-boxes {
+    display: flex;
+}
+
+.all-count-boxes {
+    width: 100%;
+}
+
+.all-count-boxes .answer-box-forms {
+    display: flex;
+    flex-direction: column;
+}
+.exer-check-box-correct{
+    background: #00C851;
+}
+.exer-check-box-current{
+    background: #4B6858;
+}

@@ -7,40 +7,31 @@ import WritableQuestions from '../../../components/admin/exercise/WritableQuesti
 import ChangableQuestion from '../../../components/admin/exercise/ChangableQuestion';
 import TagsQuestions from '../../../components/admin/exercise/TagsQuestions';
 import TrueOrFalse from '../../../components/admin/exercise/TrueOrFalse';
-import { arr1, arr2, arr3 } from './data';
+import { arr1, arr2, arr3, arr4 } from './data';
 
 function GenerateExerciseComponent({ name, isEditPage }) {
-	const [index, setIndex] = useState('1');
-	const [count, setcount] = useState(1);
 	const [arrayItems, setArrayItems] = useState([1]);
+	const [isMount, setIsmount] = useState(false);
 
 	const { values, setFieldValue } = useFormikContext();
 
 	useEffect(() => {
 		setFieldValue('index', 1);
+		setIsmount(true);
 	}, [values.part]);
 
 	useEffect(() => {
-		setcount(values.index);
+		if (isMount) {
+			setArrayItems((prev) => [...prev, prev[prev.length - 1] + 1]);
+		}
 	}, [values.index]);
 
 	useEffect(() => {
-		if (count > 1) {
-			setIndex((prev) => `${prev}${parseInt(count)}`);
+		if (values.TypeId === 1) {
+			setFieldValue('Questions', arr4);
 		}
 
-		if (count === 1) {
-			setIndex(1);
-		}
-	}, [count]);
-
-	useEffect(() => {
-		const arrayOfDigits = Array.from(String(index), Number);
-		setArrayItems(arrayOfDigits);
-	}, [index]);
-
-	useEffect(() => {
-		if (values.TypeId === 1 || values.TypeId === 2) {
+		if (values.TypeId === 2) {
 			setFieldValue('Questions', arr1);
 		}
 

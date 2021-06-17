@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import ReactQuill from 'react-quill';
 import { Formik } from 'formik';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -114,10 +115,16 @@ function Addexecise({ drawerIsOpen }) {
 			VideoLinks: data.VideoLinks,
 		};
 
-		exerciseService.createExercise(d).then((res) => {
-			history.push('/admin/exercisespage');
-		});
-		action.setSubmitting(false);
+		exerciseService
+			.createExercise(d)
+			.then((res) => {
+				history.push('/admin/exercisespage');
+				action.setSubmitting(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				action.setSubmitting(false);
+			});
 	}
 
 	return (
@@ -221,13 +228,15 @@ function Addexecise({ drawerIsOpen }) {
 								</div>
 
 								<div className='mb-30'>
-									<TextareaAutosize
+									<ReactQuill
+										theme='snow'
 										name='Description'
-										className={classes.Textarea}
-										aria-label='empty textarea'
-										placeholder='გრამატიკის წესები'
-										onChange={handleChange}
+										value={values.Description}
+										onChange={(e) => setFieldValue('Description', e)}
+										placeholder='თეორიული განმარტება'
+										style={{ height: '200px', marginBottom: '55px' }}
 									/>
+
 									{errors.Description && (
 										<div className='mb-20'>
 											<FormHelperText error={true} variant='standard'>
@@ -291,6 +300,7 @@ function Addexecise({ drawerIsOpen }) {
 								<div className='mb-30'>
 									<TextareaAutosize
 										name='Instruction'
+										placeholder='სავარჯიშოს პირობა'
 										className={classes.Textarea}
 										value={values.desc}
 										onChange={handleChange}

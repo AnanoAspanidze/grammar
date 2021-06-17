@@ -10,6 +10,7 @@ export const exerciseService = {
 	deleteAnswer,
 	hideExercise,
 	unhideExercise,
+	getExerciseDetails,
 };
 
 function createExercise(data) {
@@ -69,5 +70,11 @@ function deleteQuestion(id) {
 function deleteAnswer(id) {
 	return fetchWrapper
 		.delete(`/Exercises/deleteanswer/${id}`)
+		.then((exercise) => exercise);
+}
+
+function getExerciseDetails(id) {
+	return fetchWrapper
+		.get(`/PublicExercises/getexercisedetails/exerciseId?exerciseId=${id}`)
 		.then((exercise) => exercise);
 }

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import userContext from '../../../context/user/userContext';
 import VariantsLogo from '../../../assets/images/icons/logo.svg';
@@ -7,8 +7,11 @@ import VariantsLogo414 from '../../../assets/images/icons/logo-414.svg';
 import VariantsLogin from '../../../assets/images/icons/login.svg';
 import VariantsBurgerIcon from '../../../assets/images/icons/burger-icon.svg';
 import VariantsLogout from '../../../assets/images/icons/Logout-variants.svg';
+import ReturnIcon from '../../../assets/images/icons/Arrow - Left.svg';
 
-function Header2() {
+function Header2({ isExercisePage }) {
+	const history = useHistory();
+
 	const { user, isAuthenticated, logOutUser } = useContext(userContext);
 
 	return (
@@ -18,6 +21,7 @@ function Header2() {
 					<img className='hide3' src={VariantsLogo} alt='logo' />
 					{/* <img className='appear3' src={VariantsLogo414} alt='logo414' /> */}
 				</Link>
+
 				<div className='navbar-icons'>
 					<a href='#popup5'>
 						<button
@@ -36,13 +40,24 @@ function Header2() {
 					</a>
 				</div>
 				<div className='col-9 navbar-content'>
-					<div className='header-variants-input-search'>
-						<input
-							type='search'
-							name='search'
-							placeholder='მოძებნე საკითხი ან სავარჯიშო'
-						/>
-					</div>
+					{isExercisePage ? (
+						<div class='adverb-return-back'>
+							<span
+								className='flex align-items-center cursor-pointer'
+								onClick={() => history.goBack()}
+							>
+								<img src={ReturnIcon} alt='return back' /> უკან დაბრუნება
+							</span>
+						</div>
+					) : (
+						<div className='header-variants-input-search'>
+							<input
+								type='search'
+								name='search'
+								placeholder='მოძებნე საკითხი ან სავარჯიშო'
+							/>
+						</div>
+					)}
 					<div className='col-4 user-registred'>
 						{isAuthenticated ? (
 							<div className='header-variants-item user-registred-yes'>

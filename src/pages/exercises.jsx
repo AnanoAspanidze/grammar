@@ -159,7 +159,7 @@ function ExercisesPage() {
 																			</h4>
 																			<div className='exercises-grammar-item'>
 																				<span>8/10</span>
-																				<Link to='exercises'>
+																				<Link to={`/exercise/${ex.Id}`}>
 																					<img
 																						src={playIcon}
 																						alt='arrow-right'

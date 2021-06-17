@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
+import './assets/css/reset.css';
 // context
 import userContext from './context/user/userContext';
 import drawerContext from './context/drawer/drawerContext';
@@ -15,6 +16,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Landing from './pages/Landing';
 import IssuesMainApp from './pages/issues';
 import ExercisesMainApp from './pages/exercises';
+import ExercisePage from './pages/exercise';
 import About from './pages/About';
 
 import Adminpage from './pages/admin';
@@ -87,6 +89,12 @@ function MyComponent() {
 				<Route path='/about' exact>
 					<About />
 				</Route>
+				<Route
+					path='/exercise/:exerciseId'
+					component={ExercisePage}
+					drawerIsOpen={isOpen}
+					exact
+				/>
 
 				<PrivateRoute
 					component={Adminpage}
@@ -141,14 +149,14 @@ function MyComponent() {
 
 				<PrivateRoute
 					component={Addexecise}
-					path='/exercise/addexecise'
+					path='/admin/exercise/addexecise'
 					drawerIsOpen={isOpen}
 					exact
 				/>
 
 				<PrivateRoute
 					component={Editexecise}
-					path='/exercise/editexecise/:exerciseId'
+					path='/admin/editexecise/:exerciseId'
 					drawerIsOpen={isOpen}
 					exact
 				/>

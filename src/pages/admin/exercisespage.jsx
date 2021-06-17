@@ -151,7 +151,7 @@ function Exercises({ drawerIsOpen }) {
 	return (
 		<AppBarComponnent isOpen={drawerIsOpen}>
 			<Toolbar
-				btnHref='/exercise/addexecise'
+				btnHref='/admin/exercise/addexecise'
 				btnTitle='სავარჯიშოს დამატება'
 				searchFieldPlacehoolder='search'
 				value={searchValue}
@@ -227,7 +227,7 @@ function Exercises({ drawerIsOpen }) {
 											/>
 										</TableCell>
 										<TableCell align='left'>
-											<Link to={`/exercise/editexecise/${row.Id}`}>
+											<Link to={`/admin/editexecise/${row.Id}`}>
 												<IconButton>
 													<EditIcon />
 												</IconButton>

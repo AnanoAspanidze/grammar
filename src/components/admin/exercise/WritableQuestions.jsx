@@ -110,7 +110,7 @@ function WritableQuestions({ isEditPage, index, data, onEditQuestion }) {
 
 			{values.Questions[index].Answers.map((item, i) => (
 				<>
-					<div className='flex align-items-center mb-0 mt-30' key={i}>
+					<div className='mt-30 mb-20' key={i}>
 						<TextFieldComponent
 							disabled={isEditPage}
 							placeholder='სწორი პასუხი'
@@ -123,17 +123,18 @@ function WritableQuestions({ isEditPage, index, data, onEditQuestion }) {
 								)
 							}
 						/>
+						{errors.Questions &&
+							errors.Questions[index] &&
+							errors.Questions[index].Answers && (
+								<div className='mb-20'>
+									<FormHelperText error={true} variant='standard'>
+										{errors.Questions[index].Answers[i]
+											? errors.Questions[index].Answers[i].Text
+											: ''}
+									</FormHelperText>
+								</div>
+							)}
 					</div>
-
-					{errors.Questions &&
-						errors.Questions[index] &&
-						errors.Questions[index].Answers && (
-							<FormHelperText error={true} variant='standard'>
-								{errors.Questions[index].Answers[i]
-									? errors.Questions[index].Answers[i].Text
-									: ''}
-							</FormHelperText>
-						)}
 				</>
 			))}
 
