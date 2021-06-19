@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 
 import ApppageHead from '../components/AppHead';
 import Footer from '../components/client/footer/Footer';
@@ -15,13 +14,13 @@ import AboutCloud from '../assets/images/about-project/about-cloud.svg';
 import AboutPause from '../assets/images/about-project/about-pause.svg';
 import Logo2 from '../assets/images/icons/logo-414.svg';
 
+// import '../assets/css/about-project.css';
+
 function About() {
 	return (
 		<>
 			<ApppageHead />
-			<Helmet>
-				<link rel='stylesheet' href='/about-project.css' />
-			</Helmet>
+
 			<div class='about-header'>
 				<nav className='navbar navbar-expand-md navbar-light'>
 					<div className='container container-two'>

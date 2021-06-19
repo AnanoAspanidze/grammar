@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Doughnut } from 'react-chartjs-2';
-import { Link } from 'react-router-dom';
+
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -22,7 +22,6 @@ import TableComponent from '../../../components/admin/tables/TableComponent';
 import TableHeadComponent from '../../../components/admin/tables/TableHeadComponent';
 
 import { accountService } from '../../../services/user.service';
-import Userspage from '../userspage';
 
 function UserPage({ drawerIsOpen, match }) {
 	const classes = useStyles();

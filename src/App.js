@@ -16,6 +16,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Landing from './pages/Landing';
 import IssuesMainApp from './pages/issues';
 import ExercisesMainApp from './pages/exercises';
+import ExerciseDetailsPage from './pages/exercisedetails';
 import ExercisePage from './pages/exercise';
 import About from './pages/About';
 
@@ -89,6 +90,12 @@ function MyComponent() {
 				<Route path='/about' exact>
 					<About />
 				</Route>
+				<Route
+					path='/exercisedetails/:exerciseId'
+					component={ExerciseDetailsPage}
+					drawerIsOpen={isOpen}
+					exact
+				/>
 				<Route
 					path='/exercise/:exerciseId'
 					component={ExercisePage}

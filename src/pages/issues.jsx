@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 
 import ApppageHead from '../components/AppHead';
 import userContext from '../context/user/userContext';
 import { issueService } from '../services/issue.service';
 import VariantsFileIcon from '../assets/images/icons/variants-file.svg';
 import Header2 from '../components/client/header/Header2';
+// import '../assets/css/variants.css';
 
 function IssuesPage() {
 	const { user, isAuthenticated, logOutUser } = useContext(userContext);
@@ -24,9 +24,6 @@ function IssuesPage() {
 	return (
 		<>
 			<ApppageHead />
-			<Helmet>
-				<link rel='stylesheet' href='/variants.css' />
-			</Helmet>
 
 			<div>
 				<div className='variants-header'>

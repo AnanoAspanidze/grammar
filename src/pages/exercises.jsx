@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 
 import ApppageHead from '../components/AppHead';
 import { issueService } from '../services/issue.service';
@@ -20,10 +19,7 @@ function ExercisesPage() {
 	return (
 		<>
 			<ApppageHead />
-			<Helmet>
-				<link rel='stylesheet' href='/exercises.css' />
-				<link rel='stylesheet' href='/variants.css' />
-			</Helmet>
+
 			<Header2 />
 			<section className='variants-content'>
 				<div className='container-fluid'>
@@ -159,7 +155,7 @@ function ExercisesPage() {
 																			</h4>
 																			<div className='exercises-grammar-item'>
 																				<span>8/10</span>
-																				<Link to={`/exercise/${ex.Id}`}>
+																				<Link to={`/exercisedetails/${ex.Id}`}>
 																					<img
 																						src={playIcon}
 																						alt='arrow-right'

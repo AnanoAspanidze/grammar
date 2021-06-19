@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import userContext from '../../../context/user/userContext';
@@ -13,6 +13,17 @@ function Header2({ isExercisePage }) {
 	const history = useHistory();
 
 	const { user, isAuthenticated, logOutUser } = useContext(userContext);
+
+	const [shortName, setshortName] = useState('');
+
+	useEffect(() => {
+		if (user.Name) {
+			const splitedName = user.Name.substring(0, 1);
+			const splitedLastname = user.Surname.substring(0, 1);
+
+			setshortName(`${splitedName}${splitedLastname}`);
+		}
+	}, [user]);
 
 	return (
 		<nav className='navbar navbar-expand-md navbar-light'>
@@ -61,13 +72,19 @@ function Header2({ isExercisePage }) {
 					<div className='col-4 user-registred'>
 						{isAuthenticated ? (
 							<div className='header-variants-item user-registred-yes'>
-								<div className='header-variants-input-user-fields'>
-									<p className='variants-user-name'>
-										{user.Name}
-										{'  '}
-										{user.Surname}
-									</p>
-									<span className='variants-user-status'>{user.role}</span>
+								<div class='col-9 header-variants-input-user'>
+									<div class='header-variants-input-user-text'>
+										<p>{shortName}</p>
+									</div>
+
+									<div className='header-variants-input-user-fields'>
+										<p className='variants-user-name'>
+											{user.Name}
+											{'  '}
+											{user.Surname}
+										</p>
+										<span className='variants-user-status'>{user.role}</span>
+									</div>
 								</div>
 								<div className='header-variants-login-icon'>
 									<img
