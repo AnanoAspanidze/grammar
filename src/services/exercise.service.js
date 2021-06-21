@@ -11,6 +11,10 @@ export const exerciseService = {
 	hideExercise,
 	unhideExercise,
 	getExerciseDetails,
+	getExerciseQuestions,
+	removeSingleExercise,
+	removeAllExercises,
+	checkQuestion,
 };
 
 function createExercise(data) {
@@ -76,5 +80,28 @@ function deleteAnswer(id) {
 function getExerciseDetails(id) {
 	return fetchWrapper
 		.get(`/PublicExercises/getexercisedetails/exerciseId?exerciseId=${id}`)
+		.then((exercise) => exercise);
+}
+
+function getExerciseQuestions(id) {
+	return fetchWrapper
+		.get(`/PublicExercises/getexercisemodel/exerciseId/?exerciseId=${id}`)
+		.then((exercise) => exercise);
+}
+function checkQuestion(data) {
+	return fetchWrapper
+		.post('/PublicExercises/checkQuestion', data)
+		.then((exercise) => exercise);
+}
+
+function removeSingleExercise(id) {
+	return fetchWrapper
+		.get('/PublicExercises/removesingleexercise', id)
+		.then((exercise) => exercise);
+}
+
+function removeAllExercises() {
+	return fetchWrapper
+		.get('/PublicExercises/removeallexercises')
 		.then((exercise) => exercise);
 }

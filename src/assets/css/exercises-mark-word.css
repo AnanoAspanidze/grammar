@@ -1,0 +1,20 @@
+.spec-exer--mark-word {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+}
+.spec-exer--mark-word span {
+    padding: 14px 16px;
+    background-color: #F6F7F7;
+    color: #333333;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+.mark-word-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+.mark-word-subtitle {
+    display: block;
+    margin-bottom: 15px;
+}

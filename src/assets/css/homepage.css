@@ -771,3 +771,8 @@ button:focus:not(:focus-visible) {
 .appear3 {
 	display: none;
 }
+/* chatbot style */
+.chatbox-index {
+	top: 58rem !important;
+	right: 74px !important;
+}

@@ -1,7 +1,6 @@
-.exercises-wb-pad-active {
+/* .exercises-wb-pad-active {
     border: 2.5px solid #4B6858;
-    border-radius: 20px;
-}
+} */
 
 .spec-exer-head button {
     font-family: 'FiraGo';
@@ -90,7 +89,7 @@
     border-radius: 16px;
 }
 
-.exer-check-button {
+/* .exer-check-button {
     width: 100%;
     height: auto;
     padding: 24px;
@@ -102,7 +101,7 @@
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
-}
+} */
 
 .exer-choosed-answer {
     background: #EDF0EE;
@@ -111,9 +110,9 @@
     border-radius: 16px;
 }
 
-.check-button {
+/* .check-button {
     margin-top: 43px;
-}
+} */
 
 .exer-answers-all {
     margin-bottom: 67px;
@@ -155,4 +154,88 @@
 }
 .exer-check-box-current{
     background: #4B6858;
+}
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    ;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: transparent;
+    /* background: rgba(112, 112, 112, .4); */
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+    /* background: #555;  */
+}
+.special-exercises-return-button img {
+    padding: 15px;
+    background-color: grey;
+    border-radius: 15px;
+}
+.special-exercises-return-button {
+    display: block;
+    margin: auto 0;
+}
+.counted-boxes {
+    display: block;
+    margin: auto 25px auto auto;
+}
+.exer-check-button {
+    width: 100%;
+    height: auto;
+    padding: 24px;
+    background: transparent;
+    border-radius: 16px;
+    color: grey;
+    font-family: "FiraGO";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    border: 2px solid grey;
+}
+.exer-check-button-active {
+    background-color: green;
+    color: white;
+    border: none;
+}
+.exer-wrong-answer button{
+    background: #FEF4F6;
+    border: 2px solid #EB2347;
+        color: black;
+}
+
+.ganmarteba {
+    display: none;
+    margin: auto 0;
+    margin-left: 20px;
+    
+}
+.input-popup-bg15{
+    background-image:none!important;
+    background-color: white;
+    border-radius: 44px;
+}
+.description-text{
+    padding: 102px 109px;
+}
+#pop-dessapear15{
+    width: 960px;
+    height: 765px;
 }

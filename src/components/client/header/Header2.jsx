@@ -52,7 +52,7 @@ function Header2({ isExercisePage }) {
 				</div>
 				<div className='col-9 navbar-content'>
 					{isExercisePage ? (
-						<div class='adverb-return-back'>
+						<div className='adverb-return-back'>
 							<span
 								className='flex align-items-center cursor-pointer'
 								onClick={() => history.goBack()}
@@ -72,8 +72,8 @@ function Header2({ isExercisePage }) {
 					<div className='col-4 user-registred'>
 						{isAuthenticated ? (
 							<div className='header-variants-item user-registred-yes'>
-								<div class='col-9 header-variants-input-user'>
-									<div class='header-variants-input-user-text'>
+								<div className='col-9 header-variants-input-user'>
+									<div className='header-variants-input-user-text'>
 										<p>{shortName}</p>
 									</div>
 

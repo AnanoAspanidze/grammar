@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { exerciseService } from '../../../../services/exercise.service';
 import ArrowIcon from '../../../../assets/images/icons/Arrow - Grey.svg';
 import { Defaults } from '../../../../helpers/defaults';
 
-function TestExercise({
+function MultiTestExercise({
 	question,
 	numberOfQuestions,
 	exerciseId,
@@ -18,7 +18,7 @@ function TestExercise({
 
 	const [correctAnswerId, setCorrectAnswerId] = useState(null);
 	const [iscorrect, setIsCorrect] = useState(null);
-	const [selectedAnswer, setSelectedAnswer] = useState(null);
+	const [selectedAnswer, setSelectedAnswer] = useState([]);
 
 	const [questionData, setquestionData] = useState(null);
 
@@ -33,9 +33,18 @@ function TestExercise({
 		}
 	}, []);
 
-	const selectQuestion = (id, isCorrect) => {
+	const selectQuestion = (name, id) => {
 		if (haveToChecked) {
-			setSelectedAnswer({ id, isCorrect });
+			if (selectedAnswer.includes(id)) {
+				let it = selectedAnswer;
+				let items = selectedAnswer.indexOf(id);
+				if (items >= 0) {
+					it.splice(items, 1);
+				}
+				setSelectedAnswer(it);
+			} else {
+				setSelectedAnswer([...selectedAnswer, id]);
+			}
 		}
 	};
 
@@ -48,8 +57,8 @@ function TestExercise({
 				QuestionId: question.Id,
 				answersId: [selectedAnswer.id],
 				AnswerText: '',
-				CategoryId: question.Category.Id,
-				SubCategoryId: question.SubCategory.Id,
+				CategoryId: 1,
+				SubCategoryId: 4,
 			};
 
 			exerciseService
@@ -83,11 +92,11 @@ function TestExercise({
 					პროექტორის რეჟიმი
 				</button>
 			</div>
+
 			<div className='spec-exer-questions'>
 				<div dangerouslySetInnerHTML={{ __html: question.Text }} />
 				<span className='exer-choose-cor-answer'>{question.Instruction}</span>
 			</div>
-
 			<div className='exer-answers-all'>
 				<div className='row'>
 					{questionData &&
@@ -100,10 +109,19 @@ function TestExercise({
 									correctAnswer={correctAnswerId}
 									iscorrect={iscorrect}
 								>
-									<button
-										id={q.Id}
-										onClick={() => selectQuestion(q.Id, q.IsCorrect)}
-									>
+									<button id={q.Id}>
+										<div className='squaredOne'>
+											<input
+												type='checkbox'
+												id='squaredOne'
+												value={`squaredOne${q.Id}`}
+												checked={selectedAnswer.includes(q.Id)}
+												onChange={() =>
+													selectQuestion(`squaredOne${q.Id}`, q.Id)
+												}
+											/>
+											<label htmlFor='squaredOne' className='squaredOne2' />
+										</div>{' '}
 										{q.Text}
 									</button>
 								</ButtonParent>
@@ -143,9 +161,13 @@ function TestExercise({
 	);
 }
 
-export default TestExercise;
+export default MultiTestExercise;
 
 const ButtonParent = styled.div`
+	.squaredOne {
+		margin-right: 5px;
+	}
+
 	${({ questionId, selectedAnswer }) =>
 		questionId === selectedAnswer &&
 		`

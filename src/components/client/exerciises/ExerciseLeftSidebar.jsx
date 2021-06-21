@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import playIcon from '../../../assets/images/icons/Arrow - Right 2.svg';
 
 function ExerciseLeftSidebar({ data }) {
+	console.log(data);
 	return (
 		<>
 			{data.SubExercises.map((ex) => (
@@ -27,7 +28,7 @@ function ExerciseLeftSidebar({ data }) {
 								<span>
 									{ex.UserAnsweredQuestionsQuantity}/{ex.QuestionsQuantity}
 								</span>
-								<Link to={`/exercise`}>
+								<Link to={`/exercise/${ex.Id}`}>
 									<img src={playIcon} alt='arrow-right' />
 								</Link>
 							</div>

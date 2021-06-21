@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import ApppageHead from '../components/AppHead';
 import Header2 from '../components/client/header/Header2';
@@ -10,6 +10,7 @@ import ExerciseLeftSidebar from '../components/client/exerciises/ExerciseLeftSid
 
 function ExerciseDetailsPage({ match }) {
 	const [exercise, setExercise] = useState(null);
+	let { exerciseId } = useParams();
 
 	useEffect(() => {
 		exerciseService
@@ -44,13 +45,8 @@ function ExerciseDetailsPage({ match }) {
 													<p className='adverb-fields-title'>{exercise.Name}</p>
 												</div>
 												<div className='start-exercises'>
-													<a href='#'>
-														<button
-															className='flex align-items-center'
-															onClick={() =>
-																(window.location.href = '/exercise/105')
-															}
-														>
+													<Link to={`/exercise/${exerciseId}`}>
+														<button className='flex align-items-center'>
 															<img
 																src={playIcon}
 																style={{ marginRight: '10px' }}
@@ -58,7 +54,7 @@ function ExerciseDetailsPage({ match }) {
 															/>
 															სავარჯიშოს დაწყება
 														</button>
-													</a>
+													</Link>
 												</div>
 											</div>
 

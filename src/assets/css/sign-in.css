@@ -512,19 +512,19 @@ summary.radios {
 	text-align: initial;
 }
 
-input[type='radio'] {
+.radios input[type='radio'] {
 	counter-increment: radios;
 	appearance: none;
 	display: none;
 	vertical-align: middle;
 }
 
-input[type='radio']:checked {
+.radios input[type='radio']:checked {
 	display: inline;
 	appearance: none;
 }
 
-input[type='radio']:after {
+.radios input[type='radio']:after {
 	content: attr(title);
 	display: inline;
 	font-size: 1rem;
@@ -627,7 +627,7 @@ ul.list label {
 
 /* chechbox */
 
-input[type='checkbox'] {
+.squaredOne input[type='checkbox'] {
 	visibility: hidden;
 }
 .checkbox-input {

@@ -10,7 +10,6 @@ import UserState from './context/user/UserState';
 import DrawerState from './context/drawer/DrawerState';
 
 import { getCookie } from './helpers/cookie';
-import { ModalProvider } from './context/modal/modalContext';
 import PrivateRoute from './components/PrivateRoute';
 
 import Landing from './pages/Landing';
@@ -19,6 +18,7 @@ import ExercisesMainApp from './pages/exercises';
 import ExerciseDetailsPage from './pages/exercisedetails';
 import ExercisePage from './pages/exercise';
 import About from './pages/About';
+// import NotFoundPage from './pages/NotFoundPage';
 
 import Adminpage from './pages/admin';
 import Profile from './pages/admin/profile';
@@ -36,14 +36,18 @@ import Editexecise from './pages/admin/exercise/editexecise';
 import Userspage from './pages/admin/userspage';
 import UserPage from './pages/admin/user/UserPage';
 
+import ResetPasswordModal from './components/client/modal/ResetPasswordModal';
+import DefinitionModal from './components/client/modal/DefinitionModal';
+import { Defaults } from './helpers/defaults';
+
 function App() {
 	return (
 		<UserState>
-			<ModalProvider>
-				<DrawerState>
-					<MyComponent />
-				</DrawerState>
-			</ModalProvider>
+			<DrawerState>
+				<MyComponent />
+			</DrawerState>
+			<ResetPasswordModal ref={(ref) => (Defaults.ResetPassword = ref)} />
+			<DefinitionModal ref={(ref) => (Defaults.Definition = ref)} />
 		</UserState>
 	);
 }
