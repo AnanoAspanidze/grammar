@@ -16,9 +16,7 @@ function useQuery() {
 function ExercisePage({ match }) {
 	let { exerciseId } = useParams();
 	const history = useHistory();
-	const location = useLocation();
 	let query = useQuery();
-	const params = new URLSearchParams();
 
 	// const [exercise, setExercise] = useState(null);
 	const [questionsData, setQuestionData] = useState(null);

@@ -16,69 +16,91 @@ function MultiTestExercise({
 	const [definitionModal, setDefinitionModal] = useState(false);
 	const [haveToChecked, setHaveToChecked] = useState(true);
 
-	const [correctAnswerId, setCorrectAnswerId] = useState(null);
+	const [correctAnswerId, setCorrectAnswerId] = useState('');
 	const [iscorrect, setIsCorrect] = useState(null);
-	const [selectedAnswer, setSelectedAnswer] = useState([]);
 
 	const [questionData, setquestionData] = useState(null);
+
+	const [checkboxes, setCheckboxes] = useState(null);
 
 	useEffect(() => {
 		if (question) {
 			setquestionData(question);
-			question.Answers.filter((q, i) => {
+			question.Answers.map((q, i) => {
 				if (q.IsCorrect) {
-					setCorrectAnswerId(q.Id);
+					setCorrectAnswerId((prev) => [...prev, q.Id]);
+					return q;
 				}
+
+				return q;
 			});
 		}
 	}, []);
 
-	const selectQuestion = (name, id) => {
-		if (haveToChecked) {
-			if (selectedAnswer.includes(id)) {
-				let it = selectedAnswer;
-				let items = selectedAnswer.indexOf(id);
-				if (items >= 0) {
-					it.splice(items, 1);
+	useEffect(() => {
+		if (question) {
+			const questionsArray = question.Answers.map((q, i) => {
+				if (q.IsCorrect) {
+					return { ...q, IsCorrect: false };
 				}
-				setSelectedAnswer(it);
-			} else {
-				setSelectedAnswer([...selectedAnswer, id]);
-			}
+				return q;
+			});
+
+			setCheckboxes(questionsArray);
+		}
+	}, []);
+
+	const selectQuestion = (e, id) => {
+		console.log(e.checked);
+		if (haveToChecked) {
+			const modifier = checkboxes.map((q) => {
+				if (q.Id == id) {
+					return { ...q, IsCorrect: e.checked };
+				}
+				return q;
+			});
+
+			setCheckboxes(modifier);
 		}
 	};
 
 	const checkQuestion = () => {
-		if (selectedAnswer) {
-			setLoading(true);
+		setLoading(true);
 
-			let data = {
-				ExerciseId: exerciseId,
-				QuestionId: question.Id,
-				answersId: [selectedAnswer.id],
-				AnswerText: '',
-				CategoryId: 1,
-				SubCategoryId: 4,
-			};
+		let array = [];
 
-			exerciseService
-				.checkQuestion(data)
-				.then((res) => {
-					setHaveToChecked(false);
-					setLoading(false);
-					setDefinitionModal(true);
+		checkboxes.filter((q) => {
+			if (q.IsCorrect) {
+				array.push(q.Id);
+			}
+		});
 
-					if (res.IsCorrect) {
-						setIsCorrect(true);
-					} else {
-						setIsCorrect(false);
-					}
-				})
-				.catch((err) => {
-					console.log(err);
-					setLoading(false);
-				});
-		}
+		let data = {
+			ExerciseId: exerciseId,
+			QuestionId: question.Id,
+			answersId: array,
+			AnswerText: '',
+			CategoryId: 1,
+			SubCategoryId: 4,
+		};
+
+		exerciseService
+			.checkQuestion(data)
+			.then((res) => {
+				setHaveToChecked(false);
+				setLoading(false);
+				setDefinitionModal(true);
+
+				if (res.IsCorrect) {
+					setIsCorrect(true);
+				} else {
+					setIsCorrect(false);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				setLoading(false);
+			});
 	};
 
 	return (
@@ -99,29 +121,24 @@ function MultiTestExercise({
 			</div>
 			<div className='exer-answers-all'>
 				<div className='row'>
-					{questionData &&
-						questionData.Answers.map((q, i) => (
+					{checkboxes &&
+						checkboxes.map((q, i) => (
 							<div className='col-6' key={i}>
 								<ButtonParent
 									className='exer-answers-box'
 									questionId={q.Id}
-									selectedAnswer={selectedAnswer && selectedAnswer.id}
+									// selectedAnswer={selectedAnswer && selectedAnswer.id}
 									correctAnswer={correctAnswerId}
 									iscorrect={iscorrect}
 								>
 									<button id={q.Id}>
-										<div className='squaredOne'>
+										<CheckboxWrapper>
 											<input
 												type='checkbox'
-												id='squaredOne'
-												value={`squaredOne${q.Id}`}
-												checked={selectedAnswer.includes(q.Id)}
-												onChange={() =>
-													selectQuestion(`squaredOne${q.Id}`, q.Id)
-												}
+												onChange={(e) => selectQuestion(e.target, q.Id)}
 											/>
-											<label htmlFor='squaredOne' className='squaredOne2' />
-										</div>{' '}
+										</CheckboxWrapper>
+
 										{q.Text}
 									</button>
 								</ButtonParent>
@@ -206,4 +223,41 @@ const ButtonParent = styled.div`
 			border: 2px solid #239F61;
 		}
     `}
+`;
+
+const CheckboxWrapper = styled.label`
+	display: inline-flex;
+	cursor: pointer;
+	position: relative;
+	margin-right: 10px;
+	input {
+		height: 16px;
+		width: 16px;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		-o-appearance: none;
+		appearance: none;
+		background: transparent;
+		border: 2px solid #4b6858;
+		border-radius: 6px;
+		outline: none;
+		transition-duration: 0.3s;
+		cursor: pointer;
+		position: relative;
+		margin-left: 0;
+		transition: all 0.3s;
+
+		&:checked::before {
+			content: '';
+			-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
+			filter: alpha(opacity=0);
+			position: absolute;
+			width: 8px;
+			height: 8px;
+			background: #4b6858;
+			border-radius: 2px;
+			top: 2px;
+			left: 2px;
+		}
+	}
 `;
