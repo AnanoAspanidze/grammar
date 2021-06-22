@@ -189,7 +189,7 @@ a.about-nav-link.active {
 }
 
 .video-background {
-	background-image: url(../images/about-project/video-image.svg);
+	background-image: url(../src/assets/images/about-project/video-image.svg);
 	background-size: 100% 100%;
 	display: flex;
 	justify-content: center;
@@ -534,7 +534,7 @@ a.about-nav-link.active {
 }
 
 .resources-used-bg {
-	background-image: url('../images/about-project/resources-used-bg.svg');
+	background-image: url('../src/assets/images/about-project/resources-used-bg.svg');
 	background-position: center;
 	background-repeat: no-repeat;
 	padding: 76px 0;
@@ -553,7 +553,7 @@ a.about-nav-link.active {
 
 @media only screen and (max-width: 1520px) {
 	.resources-used-bg {
-		background-image: url('../images/about-project/resources-small-bg.svg');
+		background-image: url('../src/assets/images/about-project/resources-small-bg.svg');
 		height: 538px;
 	}
 	.video-icon-text .about-project-text2 {
@@ -901,7 +901,7 @@ a.about-nav-link.active {
 
 @media only screen and (max-width: 414.9px) {
 	.about-header {
-		background-image: url('../images/about-project/header-bg-414.svg');
+		background-image: url('../src/assets/images/about-project/header-bg-414.svg');
 		background-repeat: no-repeat;
 		background-position: right bottom;
 	}

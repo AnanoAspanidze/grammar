@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import '../assets/css/special-exercises3.css';
-import '../assets/css/special-exercises3-result.css';
+// import '../assets/css/special-exercises3.css';
+// import '../assets/css/special-exercises3-result.css';
 import Header2 from '../components/client/header/Header2';
 // import ExerciseLeftSidebar from '../components/client/exerciises/ExerciseLeftSidebar';
 import TestExercise from '../components/client/exerciises/types/TestExercise';

@@ -101,6 +101,28 @@ function AddNewQuestion() {
 							RightAnswerText: '',
 						},
 					]);
+
+				} else if (values.TypeId === 2) {
+					setFieldValue('Questions', [
+						...values.Questions,
+						{
+							Answers: [
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+								{
+									id: 0,
+									Text: '',
+									IsCorrect: false,
+								},
+							],
+							Text: '',
+							WrongAnswerText: '',
+							RightAnswerText: '',
+						},
+					]);
 				} else {
 					setFieldValue('Questions', [
 						...values.Questions,

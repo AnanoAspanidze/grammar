@@ -18,6 +18,7 @@ function MultiTestExercise({
 
 	const [correctAnswerId, setCorrectAnswerId] = useState('');
 	const [iscorrect, setIsCorrect] = useState(null);
+	const [selectedAnswer, setSelectedAnswer] = useState(true);
 
 	const [questionData, setquestionData] = useState(null);
 
@@ -65,42 +66,46 @@ function MultiTestExercise({
 	};
 
 	const checkQuestion = () => {
-		setLoading(true);
 
-		let array = [];
-
-		checkboxes.filter((q) => {
-			if (q.IsCorrect) {
-				array.push(q.Id);
-			}
-		});
-
-		let data = {
-			ExerciseId: exerciseId,
-			QuestionId: question.Id,
-			answersId: array,
-			AnswerText: '',
-			CategoryId: 1,
-			SubCategoryId: 4,
-		};
-
-		exerciseService
-			.checkQuestion(data)
-			.then((res) => {
-				setHaveToChecked(false);
-				setLoading(false);
-				setDefinitionModal(true);
-
-				if (res.IsCorrect) {
-					setIsCorrect(true);
-				} else {
-					setIsCorrect(false);
+		if (selectedAnswer) {
+			setLoading(true);
+	
+			let array = [];
+	
+			checkboxes.filter((q) => {
+				if (q.IsCorrect) {
+					array.push(q.Id);
 				}
-			})
-			.catch((err) => {
-				console.log(err);
-				setLoading(false);
 			});
+	
+			let data = {
+				ExerciseId: exerciseId,
+				QuestionId: question.Id,
+				answersId: array,
+				AnswerText: '',
+				CategoryId: 1,
+				SubCategoryId: 4,
+			};
+	
+			exerciseService
+				.checkQuestion(data)
+				.then((res) => {
+					setHaveToChecked(false);
+					setLoading(false);
+					setDefinitionModal(true);
+	
+					if (res.IsCorrect) {
+						setIsCorrect(true);
+					} else {
+						setIsCorrect(false);
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					setLoading(false);
+				});
+
+		}
 	};
 
 	return (
@@ -127,9 +132,12 @@ function MultiTestExercise({
 								<ButtonParent
 									className='exer-answers-box'
 									questionId={q.Id}
-									// selectedAnswer={selectedAnswer && selectedAnswer.id}
-									correctAnswer={correctAnswerId}
+									questionIsCorrect={q.IsCorrect}
+									correctAnswer={iscorrect && correctAnswerId.includes(q.Id)}
 									iscorrect={iscorrect}
+									greenColor={(iscorrect && q.IsCorrect && correctAnswerId.includes(q.Id)) || (iscorrect === false && q.IsCorrect && correctAnswerId.includes(q.Id))}
+									halpGreenColor={iscorrect === false && q.IsCorrect === false && correctAnswerId.includes(q.Id)}
+									redColor={iscorrect === false && (q.IsCorrect === true || q.IsCorrect === false) && correctAnswerId.includes(q.Id) === false}
 								>
 									<button id={q.Id}>
 										<CheckboxWrapper>
@@ -185,8 +193,8 @@ const ButtonParent = styled.div`
 		margin-right: 5px;
 	}
 
-	${({ questionId, selectedAnswer }) =>
-		questionId === selectedAnswer &&
+	${({ questionId, greenColor, correctAnswer, selectedAnswer }) =>
+		greenColor &&
 		`
 		button {
 			background: #EDF0EE;
@@ -194,9 +202,8 @@ const ButtonParent = styled.div`
 		}
     `}
 
-	${({ iscorrect, questionId, selectedAnswer }) =>
-		iscorrect === false &&
-		questionId === selectedAnswer &&
+	${({ iscorrect, redColor, questionId, correctAnswer, selectedAnswer }) =>
+		redColor &&
 		`
 		button {
 		background: #FEF4F6;
@@ -204,13 +211,12 @@ const ButtonParent = styled.div`
 		}
     `}
 	
-	${({ iscorrect, correctAnswer, questionId }) =>
-		iscorrect === false &&
-		correctAnswer === questionId &&
+	${({ iscorrect, halpGreenColor, correctAnswer, questionId }) =>
+		halpGreenColor &&
 		`
 		button {
 			background: #F4FAF7;
-			border: 2px solid #239F61;
+			border: transparent;
 		}
     `}
 	
