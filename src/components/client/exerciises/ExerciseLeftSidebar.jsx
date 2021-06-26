@@ -3,21 +3,20 @@ import { Link } from 'react-router-dom';
 
 import playIcon from '../../../assets/images/icons/Arrow - Right 2.svg';
 
-function ExerciseLeftSidebar({ data }) {
-	console.log(data);
+function ExerciseLeftSidebar({ data, match }) {
 	return (
 		<>
 			{data.SubExercises.map((ex) => (
 				<div className='exercises-grammar-box' key={ex.Id}>
 					<div
 						className='exercises-grey-box'
-						// style={{
-						// 	border: `${
-						// 		exercise.Id == match.params.exerciseId
-						// 			? '2.5px solid #4B6858'
-						// 			: '2.5px solid transparent'
-						// 	}`,
-						// }}
+						style={{
+							border: `${
+								ex.Id == match
+									? '2.5px solid #4B6858'
+									: '2.5px solid transparent'
+							}`,
+						}}
 					>
 						<div className='exercises-wb-pad'>
 							<p className='exercises-grammar-pagination'>
@@ -28,7 +27,7 @@ function ExerciseLeftSidebar({ data }) {
 								<span>
 									{ex.UserAnsweredQuestionsQuantity}/{ex.QuestionsQuantity}
 								</span>
-								<Link to={`/exercise/${ex.Id}`}>
+								<Link to={`/exercise/${ex.Id}?step=0`}>
 									<img src={playIcon} alt='arrow-right' />
 								</Link>
 							</div>

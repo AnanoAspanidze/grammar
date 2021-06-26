@@ -15,6 +15,7 @@ export const exerciseService = {
 	removeSingleExercise,
 	removeAllExercises,
 	checkQuestion,
+	getexerciseresult,
 };
 
 function createExercise(data) {
@@ -85,7 +86,7 @@ function getExerciseDetails(id) {
 
 function getExerciseQuestions(id) {
 	return fetchWrapper
-		.get(`/PublicExercises/getexercisemodel/exerciseId/?exerciseId=${id}`)
+		.get(`/PublicExercises/getexercisemodel/exerciseId?exerciseId=${id}`)
 		.then((exercise) => exercise);
 }
 function checkQuestion(data) {
@@ -103,5 +104,13 @@ function removeSingleExercise(id) {
 function removeAllExercises() {
 	return fetchWrapper
 		.get('/PublicExercises/removeallexercises')
+		.then((exercise) => exercise);
+}
+
+function getexerciseresult(id, subcategoryId) {
+	return fetchWrapper
+		.get(
+			`/PublicExercises/getexerciseresult?ExerciseId=${id}&SubCategoryId=${subcategoryId}`
+		)
 		.then((exercise) => exercise);
 }

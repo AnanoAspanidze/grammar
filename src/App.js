@@ -17,6 +17,7 @@ import IssuesMainApp from './pages/issues';
 import ExercisesMainApp from './pages/exercises';
 import ExerciseDetailsPage from './pages/exercisedetails';
 import ExercisePage from './pages/exercise';
+import CompletedPage from './pages/result';
 import About from './pages/About';
 // import NotFoundPage from './pages/NotFoundPage';
 
@@ -103,6 +104,12 @@ function MyComponent() {
 				<Route
 					path='/exercise/:exerciseId'
 					component={ExercisePage}
+					drawerIsOpen={isOpen}
+					exact
+				/>
+				<Route
+					path='/result'
+					component={CompletedPage}
 					drawerIsOpen={isOpen}
 					exact
 				/>

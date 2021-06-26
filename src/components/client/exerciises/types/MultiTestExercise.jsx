@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+
 import { exerciseService } from '../../../../services/exercise.service';
 import ArrowIcon from '../../../../assets/images/icons/Arrow - Grey.svg';
 import { Defaults } from '../../../../helpers/defaults';
+
+function useQuery() {
+	return new URLSearchParams(useLocation().search);
+}
 
 function MultiTestExercise({
 	question,
 	numberOfQuestions,
 	exerciseId,
 	index,
-	onNext,
-	onPrev,
+	DoneQuestion,
+	IsDone,
 }) {
+	const history = useHistory();
+	let query = useQuery();
+
 	const [loading, setLoading] = useState(false);
 	const [definitionModal, setDefinitionModal] = useState(false);
 	const [haveToChecked, setHaveToChecked] = useState(true);
@@ -51,8 +60,41 @@ function MultiTestExercise({
 		}
 	}, []);
 
+	useEffect(() => {
+		if (IsDone && DoneQuestion) {
+			setHaveToChecked(false);
+			setDefinitionModal(true);
+
+			if (DoneQuestion.IsDoneQuestionCorrect) {
+				setCorrectAnswerId(DoneQuestion.DoneAnswerId);
+
+				// setSelectedAnswer({
+				// 	id: DoneQuestion.DoneAnswerId.id,
+				// 	isCorrect: true,
+				// });
+
+				setIsCorrect(true);
+			} else {
+				const x = question.Answers.find((w) => w.IsCorrect === true);
+
+				console.log(x);
+
+				// setCorrectAnswerId({
+				// 	id: x.Id,
+				// 	isCorrect: false,
+				// });
+
+				// setSelectedAnswer({
+				// 	id: DoneQuestion.DoneAnswerId[0],
+				// 	isCorrect: false,
+				// });
+
+				setIsCorrect(false);
+			}
+		}
+	}, [DoneQuestion]);
+
 	const selectQuestion = (e, id) => {
-		console.log(e.checked);
 		if (haveToChecked) {
 			const modifier = checkboxes.map((q) => {
 				if (q.Id == id) {
@@ -66,18 +108,17 @@ function MultiTestExercise({
 	};
 
 	const checkQuestion = () => {
-
 		if (selectedAnswer) {
 			setLoading(true);
-	
+
 			let array = [];
-	
+
 			checkboxes.filter((q) => {
 				if (q.IsCorrect) {
 					array.push(q.Id);
 				}
 			});
-	
+
 			let data = {
 				ExerciseId: exerciseId,
 				QuestionId: question.Id,
@@ -86,14 +127,14 @@ function MultiTestExercise({
 				CategoryId: 1,
 				SubCategoryId: 4,
 			};
-	
+
 			exerciseService
 				.checkQuestion(data)
 				.then((res) => {
 					setHaveToChecked(false);
 					setLoading(false);
 					setDefinitionModal(true);
-	
+
 					if (res.IsCorrect) {
 						setIsCorrect(true);
 					} else {
@@ -104,7 +145,22 @@ function MultiTestExercise({
 					console.log(err);
 					setLoading(false);
 				});
+		}
+	};
 
+	const onNext = (i) => {
+		if (numberOfQuestions - 1 > i) {
+			let routerNum = parseInt(query.get('step'));
+			history.push({ search: `step=${++routerNum}` });
+		} else {
+			window.location.href = `/result?exerciseId=${exerciseId}&subcategoryId=${question.SubCategory.Id}`;
+		}
+	};
+	const onPrev = (i) => {
+		if (parseInt(query.get('step')) === 0) {
+			history.push(`/exercisedetails/${exerciseId}`);
+		} else {
+			history.push({ search: `step=${--i}` });
 		}
 	};
 
@@ -133,18 +189,47 @@ function MultiTestExercise({
 									className='exer-answers-box'
 									questionId={q.Id}
 									questionIsCorrect={q.IsCorrect}
-									correctAnswer={iscorrect && correctAnswerId.includes(q.Id)}
+									correctAnswer={
+										iscorrect &&
+										correctAnswerId &&
+										correctAnswerId.includes(q.Id)
+									}
 									iscorrect={iscorrect}
-									greenColor={(iscorrect && q.IsCorrect && correctAnswerId.includes(q.Id)) || (iscorrect === false && q.IsCorrect && correctAnswerId.includes(q.Id))}
-									halpGreenColor={iscorrect === false && q.IsCorrect === false && correctAnswerId.includes(q.Id)}
-									redColor={iscorrect === false && (q.IsCorrect === true || q.IsCorrect === false) && correctAnswerId.includes(q.Id) === false}
+									greenColor={
+										(iscorrect &&
+											correctAnswerId &&
+											correctAnswerId.includes(q.Id)) ||
+										(iscorrect === false &&
+											q.IsCorrect &&
+											correctAnswerId &&
+											correctAnswerId.includes(q.Id))
+									}
+									halpGreenColor={
+										iscorrect === false &&
+										q.IsCorrect === false &&
+										correctAnswerId &&
+										correctAnswerId.includes(q.Id)
+									}
+									redColor={
+										iscorrect === false &&
+										(q.IsCorrect === true || q.IsCorrect === false) &&
+										correctAnswerId.includes(q.Id) === false
+									}
 								>
 									<button id={q.Id}>
 										<CheckboxWrapper>
-											<input
-												type='checkbox'
-												onChange={(e) => selectQuestion(e.target, q.Id)}
-											/>
+											{IsDone ? (
+												<input
+													type='checkbox'
+													checked={IsDone && correctAnswerId.includes(q.Id)}
+													onChange={(e) => selectQuestion(e.target, q.Id)}
+												/>
+											) : (
+												<input
+													type='checkbox'
+													onChange={(e) => selectQuestion(e.target, q.Id)}
+												/>
+											)}
 										</CheckboxWrapper>
 
 										{q.Text}
@@ -156,21 +241,24 @@ function MultiTestExercise({
 			</div>
 
 			<div className='check-count-boxes'>
-				<div className='special-exercises-return-button' onClick={onPrev}>
+				<div
+					className='special-exercises-return-button'
+					onClick={() => onPrev(index)}
+				>
 					<img src={ArrowIcon} alt='' />
 				</div>
 
-				<div className='ganmarteba'>
+				{/* <div className='ganmarteba'>
 					{definitionModal && (
 						<p onClick={() => Defaults.Definition.show()}>მაჩვენე განმარტება</p>
 					)}
-				</div>
+				</div> */}
 
 				<p className='counted-boxes'>{`${index + 1} / ${numberOfQuestions}`}</p>
 
 				{!haveToChecked ? (
 					<div className='check-button'>
-						<button onClick={onNext} className='next-exercise'>
+						<button onClick={() => onNext(index)} className='next-exercise'>
 							შემდეგი
 						</button>
 					</div>

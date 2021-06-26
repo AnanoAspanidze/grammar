@@ -1,234 +1,235 @@
-.adverb-return-back a, .adverb-return-back i {
-    color: #4B6858;
+.adverb-return-back a,
+.adverb-return-back i {
+	color: #4b6858;
 }
 
 .adverb-return-back i {
-    margin-right: 8px;
+	margin-right: 8px;
 }
 
 .adverb-return-back {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .adverb-return-back a {
-    font-family: 'FiraGo Medium';
-    font-size: 14px;
-    line-height: 16px;
-    margin: auto;
+	font-family: 'FiraGo Medium';
+	font-size: 14px;
+	line-height: 16px;
+	margin: auto;
 }
 
 .adverb-content {
-    padding-top: 59px;
+	padding-top: 59px;
 }
 
 .adverb-choose-fields {
-    padding-bottom: 41px;
-    border-bottom: 2px solid #F8F7F2;
-    margin-bottom: 4px;
+	padding-bottom: 41px;
+	border-bottom: 2px solid #f8f7f2;
+	margin-bottom: 4px;
 }
 
 .exercises-grey-box {
-    background-color: #F6F7F7;
-    border-radius: 20px;
-    height: 172px;
-    margin-bottom: 16px;
+	background-color: #f6f7f7;
+	border-radius: 20px;
+	height: 172px;
+	margin-bottom: 16px;
 }
 .exercises-grey-box:hover {
-    border: 2.5px solid #4B6858
+	border: 2.5px solid #4b6858;
 }
 .exercises-active {
-    border: 2.5px solid #4B6858
+	border: 2.5px solid #4b6858;
 }
 .exercises-adverb-item a i {
-    color: white;
-    font-size: 12px;
+	color: white;
+	font-size: 12px;
 }
 
 .exercises-adverb-item a {
-    background-color: #4B6858;
-    border-radius: 50%;
-    padding: 10px 12px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    flex-direction: column;
+	background-color: #4b6858;
+	border-radius: 50%;
+	padding: 10px 12px;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	flex-direction: column;
 }
 .exercises-adverb-item a:hover {
-    box-shadow: 1.5px 1.5px 0px #314F3E;
-    position: relative;
-    left: -1px;
-    top: -1px;
+	box-shadow: 1.5px 1.5px 0px #314f3e;
+	position: relative;
+	left: -1px;
+	top: -1px;
 }
 .exercises-adverb-item {
-    display: flex;
-    justify-content: space-between;
-    margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	margin-top: auto;
 }
 
 .exercises-adverb-item span {
-    font-family: 'FiraGo Book';
-    font-size: 12px;
-    line-height: 18px;
-    color: #707070;
-    align-self: center;
+	font-family: 'FiraGo Book';
+	font-size: 12px;
+	line-height: 18px;
+	color: #707070;
+	align-self: center;
 }
 
 .adverb-exercises-content {
-    width: 18%;
-    height: 100%;
-    padding: 0;
-    margin-left: auto;
-    margin-right: 44px;
-    display: grid;
-    height: calc(100vh - 165px);
-    overflow-y: scroll;
+	width: 18%;
+	height: 100%;
+	padding: 0;
+	margin-left: auto;
+	margin-right: 44px;
+	display: grid;
+	height: calc(100vh - 165px);
+	overflow-y: scroll;
 }
 
 .adverb-fields {
-    height: 100%;
-    padding: 0 44px 44px;
+	height: 100%;
+	padding: 0 44px 44px;
 }
 
 .adverb-fields-description {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .adverb-fields-text {
-    font-family: 'FiraGo Light';
-    font-size: 14px;
-    line-height: 21px;
-    color: #707070;
-    padding-bottom: 16px;
+	font-family: 'FiraGo Light';
+	font-size: 14px;
+	line-height: 21px;
+	color: #707070;
+	padding-bottom: 16px;
 }
 
 .adverb-fields-title {
-    font-family: 'FiraGo Bold';
-    font-size: 28px;
-    line-height: 33.6px;
-    color: #333333;
-    font-feature-settings: 'case' on;
+	font-family: 'FiraGo Bold';
+	font-size: 28px;
+	line-height: 33.6px;
+	color: #333333;
+	font-feature-settings: 'case' on;
 }
 
-.start-exercises button, .start-exercises button i {
-    color: white;
-    background-color: transparent;
+.start-exercises button,
+.start-exercises button i {
+	color: white;
+	background-color: transparent;
 }
 
 .start-exercises button {
-    font-family: 'FiraGo Book';
-    font-size: 14px;
-    line-height: 21px;
-    background-color: #4B6858;
-    border-radius: 16px;
-    padding: 24px 38px;
+	font-family: 'FiraGo Book';
+	font-size: 14px;
+	line-height: 21px;
+	background-color: #4b6858;
+	border-radius: 16px;
+	padding: 24px 38px;
 }
 .start-exercises button:hover {
-    background-color: #4B6858;
-    box-shadow: 5px 5px 0px #314F3E;
-    position: relative;
-    left: -1px;
-    top: -1px;
-    color: white;
+	background-color: #4b6858;
+	box-shadow: 5px 5px 0px #314f3e;
+	position: relative;
+	left: -1px;
+	top: -1px;
+	color: white;
 }
 
 .start-exercises button i {
-    font-size: 14px;
-    margin-right: 16px;
+	font-size: 14px;
+	margin-right: 16px;
 }
 
 .adverb-row {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 
 .adverb-row .video-content img {
-    float: right;
+	float: right;
 }
 
 .adverb-row .adv-row-first {
-    width: 69%;
+	width: 69%;
 }
 
 .exercise-rules-p {
-    font-size: 14px;
-    margin-bottom: 20px;
-    letter-spacing: 0.2px;
-    color: #707070;
-    align-self: stretch;
-    font-weight: normal;
-    line-height: 23.8px;
-    margin-bottom: 24px;
+	font-size: 14px;
+	margin-bottom: 20px;
+	letter-spacing: 0.2px;
+	color: #707070;
+	align-self: stretch;
+	font-weight: normal;
+	line-height: 23.8px;
+	margin-bottom: 24px;
 }
 .video-content {
-    margin-top: 48px;
+	margin-top: 48px;
 }
 .video-content iframe {
-    
-    margin-bottom: 24.5px;
-    width: 100%;
-    height: 150.5px;
-    border-radius: 20px;
+	margin-bottom: 24.5px;
+	width: 100%;
+	height: 150.5px;
+	border-radius: 20px;
 }
 
 .exercise-rules-h3 {
-    font-style: normal;
-    font-family: 'FiraGo';
-    font-size: 16px;
-    letter-spacing: 0.2px;
-    color: #333333;
-    align-self: center;
-    margin-bottom: 28px;
+	font-style: normal;
+	font-family: 'FiraGo';
+	font-size: 16px;
+	letter-spacing: 0.2px;
+	color: #333333;
+	align-self: center;
+	margin-bottom: 28px;
 }
 .adverb-volume {
-    position: relative;
-    top: 2rem;
-    left: 29rem;
-    width: 124px;
-    height: 42px;
+	position: relative;
+	top: 2rem;
+	left: 29rem;
+	width: 124px;
+	height: 42px;
 }
 .adverb-volume button {
-    font-family: 'FiraGo';
-    font-size: 12px;
-    line-height: 18px;
-    padding: 12px 20px;
-    background: #FFF6F3;
-    border-radius: 10px;
-    color: #FB5012;
-    width: 124px;
-    height: 42px;
+	font-family: 'FiraGo';
+	font-size: 12px;
+	line-height: 18px;
+	padding: 12px 20px;
+	background: #fff6f3;
+	border-radius: 10px;
+	color: #fb5012;
+	width: 124px;
+	height: 42px;
 }
 .adverb-volume button i {
-    font-size: 14px;
-    padding-right: 10px;
-    color: #FB5012;
+	font-size: 14px;
+	padding-right: 10px;
+	color: #fb5012;
 }
 .chatbox {
-    position: fixed;
-    right: 63px;
-    bottom: 67px;
-    z-index: 9;
+	position: fixed;
+	right: 63px;
+	bottom: 67px;
+	z-index: 9;
 }
 .chatbox-button {
-    width: 71px;
-    height: 71px;
-    background-color: #4B6858;
-    border-radius: 22px;
-    box-shadow: 12px 12px 16px rgba(33, 54, 42, 0.1);
+	width: 71px;
+	height: 71px;
+	background-color: #4b6858;
+	border-radius: 22px;
+	box-shadow: 12px 12px 16px rgba(33, 54, 42, 0.1);
 }
 .chatbox-button i {
-    color: #ffffff;
-    font-size: 23px;
+	color: #ffffff;
+	font-size: 23px;
 }
 @media only screen and (max-height: 700px) {
-    .adverb-row {
-        overflow-y: auto;
-        height: 100%;
-        max-height: 370px;
-    }
-    .adverb-volume {
-        top: 2rem;
-        left: 32.2rem;
-    }
+	.adverb-row {
+		overflow-y: auto;
+		height: 100%;
+		max-height: 370px;
+	}
+	.adverb-volume {
+		top: 2rem;
+		left: 32.2rem;
+	}
 }

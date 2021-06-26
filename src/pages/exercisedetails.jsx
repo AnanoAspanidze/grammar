@@ -45,7 +45,7 @@ function ExerciseDetailsPage({ match }) {
 													<p className='adverb-fields-title'>{exercise.Name}</p>
 												</div>
 												<div className='start-exercises'>
-													<Link to={`/exercise/${exerciseId}`}>
+													<Link to={`/exercise/${exerciseId}?step=0`}>
 														<button className='flex align-items-center'>
 															<img
 																src={playIcon}

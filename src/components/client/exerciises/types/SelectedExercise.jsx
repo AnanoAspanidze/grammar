@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components/macro';
+import React, { useState, useEffect } from 'react'
 import { useHistory, useLocation, useParams } from 'react-router-dom';
+import styled from 'styled-components/macro';
 import { exerciseService } from '../../../../services/exercise.service';
 import ArrowIcon from '../../../../assets/images/icons/Arrow - Grey.svg';
 import { Defaults } from '../../../../helpers/defaults';
@@ -9,25 +9,47 @@ function useQuery() {
 	return new URLSearchParams(useLocation().search);
 }
 
-function TestExercise({
+function SelectedExercise({
 	question,
 	numberOfQuestions,
 	exerciseId,
-	DoneQuestion,
+    DoneQuestion,
 	IsDone,
 	index,
 }) {
-	const history = useHistory();
+    const history = useHistory();
 	let query = useQuery();
-
+    
 	const [loading, setLoading] = useState(false);
 	const [definitionModal, setDefinitionModal] = useState(false);
 	const [haveToChecked, setHaveToChecked] = useState(true);
-
+    
 	const [correctAnswerId, setCorrectAnswerId] = useState(null);
 	const [iscorrect, setIsCorrect] = useState(null);
-	const [selectedAnswer, setSelectedAnswer] = useState(null);
+	const [selectedAnswer, setSelectedAnswer] = useState('none');
 	const [questionData, setquestionData] = useState(null);
+    const [explanation, setExplanation] = useState('')
+	const [text, setText] = useState(null);
+	const [modifierText, setModifierText] = useState();
+
+
+    useEffect(() => {
+        const parser = new DOMParser();
+		const xmlString = question.Text;
+		const doc1 = parser.parseFromString(xmlString, "application/xml");
+		
+		setText(doc1.documentElement.textContent)
+
+    }, [])
+
+	useEffect(() => {
+		if(text) {
+			const textes = text.trim().split('#select');
+			setModifierText(textes)
+		}
+	}, [text])
+
+
 
 	useEffect(() => {
 		if (question) {
@@ -40,46 +62,32 @@ function TestExercise({
 		}
 	}, []);
 
+
+    const selectQuestion = (e) => {
+		setSelectedAnswer(parseInt(e));
+	};
+
+
 	useEffect(() => {
 		if (IsDone && DoneQuestion) {
 			setHaveToChecked(false);
 			setDefinitionModal(true);
 
 			if (DoneQuestion.IsDoneQuestionCorrect) {
-				setCorrectAnswerId({
-					id: DoneQuestion.DoneAnswerId[0],
-					isCorrect: true,
-				});
-
-				setSelectedAnswer({
-					id: DoneQuestion.DoneAnswerId[0],
-					isCorrect: true,
-				});
+				setCorrectAnswerId(DoneQuestion.DoneAnswerId[0]);
+                setExplanation(DoneQuestion.DoneAnswerExplanation)
+				setSelectedAnswer(DoneQuestion.DoneAnswerId[0]);
 
 				setIsCorrect(true);
 			} else {
 				const x = question.Answers.find((w) => w.IsCorrect === true);
 
-				setCorrectAnswerId({
-					id: x.Id,
-					isCorrect: false,
-				});
-
-				setSelectedAnswer({
-					id: DoneQuestion.DoneAnswerId[0],
-					isCorrect: false,
-				});
-
+				setCorrectAnswerId(x.Id);
+				setSelectedAnswer(DoneQuestion.DoneAnswerId[0]);
 				setIsCorrect(false);
 			}
 		}
 	}, [DoneQuestion]);
-
-	const selectQuestion = (id, isCorrect) => {
-		if (haveToChecked) {
-			setSelectedAnswer({ id, isCorrect });
-		}
-	};
 
 	const checkQuestion = () => {
 		if (selectedAnswer) {
@@ -88,7 +96,7 @@ function TestExercise({
 			let data = {
 				ExerciseId: exerciseId,
 				QuestionId: question.Id,
-				answersId: [selectedAnswer.id],
+				answersId: [selectedAnswer],
 				AnswerText: '',
 				CategoryId: question.Category.Id,
 				SubCategoryId: question.SubCategory.Id,
@@ -117,7 +125,6 @@ function TestExercise({
 	};
 
 	const onNext = (i) => {
-		console.log(i);
 		if (numberOfQuestions - 1 > i) {
 			let routerNum = parseInt(query.get('step'));
 			history.push({ search: `step=${++routerNum}` });
@@ -134,47 +141,75 @@ function TestExercise({
 		}
 	};
 
-	return (
-		<>
-			<div className='spec-exer-head'>
-				<p className='spec-exer-head-ex3'>
-					{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}
-				</p>
-				<button>
-					<i className='fas fa-volume-up' />
-					პროექტორის რეჟიმი
-				</button>
-			</div>
-			<div className='spec-exer-questions'>
-				<div dangerouslySetInnerHTML={{ __html: question.Text }} />
-				<span className='exer-choose-cor-answer'>{question.Instruction}</span>
-			</div>
-
-			<div className='exer-answers-all'>
-				<div className='row'>
-					{questionData &&
-						questionData.Answers.map((q, i) => (
-							<div className='col-6' key={i}>
-								<ButtonParent
-									className='exer-answers-box'
-									questionId={q.Id}
-									selectedAnswer={selectedAnswer && selectedAnswer.id}
-									correctAnswer={correctAnswerId}
-									iscorrect={iscorrect}
+    return (
+        <>
+           <div className="col-9 p-0">
+                <div className="spec-exer-fields">
+                    <div className="spec-exer-all">
+                    <div className="spec-exer-head">
+                        <p className="spec-exer-head-ex3">{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}</p>
+                        <button>პროექტორის რეჟიმი</button>
+                    </div>
+                    <span className="choose-correct-answer">აირჩიე გამოტოვებული სიტყვა</span>
+                    <div className="spec-exer-questions">
+						<p>
+					{modifierText && modifierText[0]} 
+						
+						{iscorrect === false && correctAnswerId !== selectedAnswer && (
+							<select 
+							value={selectedAnswer} 
+							css={`color #EB2347;`}
+						   
+						>
+						{question.Answers.map(o => (
+							<option key={o.Id} 
+									value={o.Id} 
 								>
-									<button
-										id={q.Id}
-										onClick={() => selectQuestion(q.Id, q.IsCorrect)}
-									>
-										{q.Text}
-									</button>
-								</ButtonParent>
-							</div>
+										{o.Text}
+							</option>
 						))}
-				</div>
-			</div>
+						</select>
+						)}
 
-			<div className='check-count-boxes'>
+						{iscorrect === true && correctAnswerId === selectedAnswer ? (
+							<select 
+							value={selectedAnswer} 
+							css={`color #239F61;`}
+						   
+						>
+						{question.Answers.map(o => (
+							<option key={o.Id} 
+									value={o.Id} 
+								>
+										{o.Text}
+							</option>
+						))}
+						</select>
+
+						) : (
+							<select 
+                             value={selectedAnswer} 
+                             onChange={(e) => selectQuestion(e.target.value)}
+                            
+                         >
+                             <option value="none" css={`border-bottom: 2px solid red;`} selected disabled hidden>
+                               აირჩიეთ სიტყვა
+                            </option>
+                            {question.Answers.map(o => (
+                                <option key={o.Id} 
+                                        value={o.Id} 
+                                    >
+                                            {o.Text}
+                                </option>
+                            ))}
+                         </select>
+						)}
+						{modifierText && modifierText[1]} 
+
+                        </p>
+                        <span className="exer-choose-cor-answer">მონიშნე სწორი პასუხი</span>
+                    </div>
+                    <div className='check-count-boxes'>
 				<div
 					className='special-exercises-return-button'
 					onClick={() => onPrev(index)}
@@ -204,13 +239,20 @@ function TestExercise({
 					</div>
 				)}
 			</div>
-		</>
-	);
+                    </div>
+                </div>
+            </div>
+
+        </>
+    )
 }
 
-export default TestExercise;
+export default SelectedExercise;
 
-const ButtonParent = styled.div`
+
+
+
+const ButtonParent = styled.select`
 	${({ questionId, selectedAnswer }) =>
 		questionId == selectedAnswer &&
 		`
