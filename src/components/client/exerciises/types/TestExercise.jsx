@@ -48,12 +48,12 @@ function TestExercise({
 
 			if (DoneQuestion.IsDoneQuestionCorrect) {
 				setCorrectAnswerId({
-					id: DoneQuestion.DoneAnswerId[0],
+					Id: DoneQuestion.DoneAnswerId[0],
 					isCorrect: true,
 				});
 
 				setSelectedAnswer({
-					id: DoneQuestion.DoneAnswerId[0],
+					Id: DoneQuestion.DoneAnswerId[0],
 					isCorrect: true,
 				});
 
@@ -62,12 +62,12 @@ function TestExercise({
 				const x = question.Answers.find((w) => w.IsCorrect === true);
 
 				setCorrectAnswerId({
-					id: x.Id,
+					Id: x.Id,
 					isCorrect: false,
 				});
 
 				setSelectedAnswer({
-					id: DoneQuestion.DoneAnswerId[0],
+					Id: DoneQuestion.DoneAnswerId[0],
 					isCorrect: false,
 				});
 
@@ -76,9 +76,9 @@ function TestExercise({
 		}
 	}, [DoneQuestion]);
 
-	const selectQuestion = (id, isCorrect) => {
+	const selectQuestion = (Id, isCorrect) => {
 		if (haveToChecked) {
-			setSelectedAnswer({ id, isCorrect });
+			setSelectedAnswer({ Id, isCorrect });
 		}
 	};
 
@@ -89,7 +89,7 @@ function TestExercise({
 			let data = {
 				ExerciseId: exerciseId,
 				QuestionId: question.Id,
-				answersId: [selectedAnswer.id],
+				answersId: [selectedAnswer.Id],
 				AnswerText: '',
 				CategoryId: question.Category.Id,
 				SubCategoryId: question.SubCategory.Id,
@@ -107,7 +107,7 @@ function TestExercise({
 						setIsCorrect(true);
 					} else {
 						const x = question.Answers.find((w) => w.IsCorrect === true);
-						setCorrectAnswerId({ ...x, id: x.Id });
+						setCorrectAnswerId({ ...x, Id: x.Id });
 						setIsCorrect(false);
 					}
 				})
@@ -119,7 +119,6 @@ function TestExercise({
 	};
 
 	const onNext = (i) => {
-		console.log(i);
 		if (numberOfQuestions - 1 > i) {
 			let routerNum = parseInt(query.get('step'));
 			history.push({ search: `step=${++routerNum}` });
@@ -163,7 +162,7 @@ function TestExercise({
 								<ButtonParent
 									className='exer-answers-box'
 									questionId={q.Id}
-									selectedAnswer={selectedAnswer && selectedAnswer.id}
+									selectedAnswer={selectedAnswer && selectedAnswer.Id}
 									correctAnswer={correctAnswerId}
 									iscorrect={iscorrect}
 								>
@@ -244,7 +243,7 @@ const ButtonParent = styled.div`
 	
 	${({ iscorrect, correctAnswer, questionId }) =>
 		iscorrect === false &&
-		correctAnswer.id === questionId &&
+		correctAnswer.Id === questionId &&
 		`
 		button {
 			background: #F4FAF7 !important;
