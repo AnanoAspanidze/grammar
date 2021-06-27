@@ -110,6 +110,7 @@ function TagsExercise({
 				setHaveToChecked(false);
 				setLoading(false);
 				setDefinitionModal(true);
+				setExplanation(res.AnswerText)
 
 				if (res.IsCorrect) {
 					setIsCorrect(true);
@@ -147,10 +148,7 @@ function TagsExercise({
 	};
 
     return (
-        <div class="variants-header">
-            <div className="col-9 p-0">
-                <div className="spec-exer-fields">
-                    <div className="spec-exer-all">
+       <>
                     <div className="spec-exer-head">
                         <p className="spec-exer-head-ex3">	{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseType}`}</p>
                         <button>პროექტორის რეჟიმი</button>
@@ -174,8 +172,8 @@ function TagsExercise({
 				</div>
 
 				<div className='ganmarteba'>
-					{definitionModal && (
-						<p onClick={() => Defaults.Definition.show()}>მაჩვენე განმარტება</p>
+					{definitionModal && (iscorrect === true || iscorrect === false) && (
+						<p onClick={() => Defaults.Definition.show(explanation || DoneQuestion.DoneAnswerExplanation)}>მაჩვენე განმარტება</p>
 					)}
 				</div>
 
@@ -195,11 +193,7 @@ function TagsExercise({
 					</div>
 				)}
 			</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+			</>
     )
 }
 

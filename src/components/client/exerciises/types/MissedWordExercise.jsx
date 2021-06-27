@@ -37,7 +37,8 @@ function MissedWordExercise({
 
     useEffect(() => {
         const parser = new DOMParser();
-		const xmlString = question.Text;
+		const cutNbsp = question.Text.replace(/\&nbsp;/g, '');
+		const xmlString = cutNbsp;
 		const doc1 = parser.parseFromString(xmlString, "application/xml");
 		
 		setText(doc1.documentElement.textContent)
@@ -97,6 +98,7 @@ function MissedWordExercise({
 					setHaveToChecked(false);
 					setLoading(false);
 					setDefinitionModal(true);
+					setExplanation(res.AnswerText)
 
 					if (res.IsCorrect) {
 						setIsCorrect(true);
@@ -147,18 +149,37 @@ function MissedWordExercise({
 						{modifierText && modifierText[0]} 
 						
 						{iscorrect === false && correctAnswerId !== selectedAnswer && (
-							<input value={selectedAnswer} type="text" css={`color: #EB2347`} /> 
+							<input value={selectedAnswer} type="text" css={`color: #EB2347;`} /> 
 						)}
 
-						{iscorrect === true && correctAnswerId === selectedAnswer ? (
-							<input value={selectedAnswer} type="text" css={`color: #239F61`} />
+						{iscorrect === true && correctAnswerId === selectedAnswer && (
+							<input value={selectedAnswer} type="text" css={`color: #239F61;`} />
 
-						) : (
+						)}
+
+						{iscorrect === null && (
 							<input value={selectedAnswer} onChange={(e) => selectQuestion(e.target.value)} id="txt" type="text" placeholder="ჩაწერე სიტყვა" />
 						)}
+
 						{modifierText && modifierText[1]} 
                     </p>
                 </div>
+
+
+				{iscorrect === false && question && (
+						<>
+						<div className="flex column mb-20">
+							<span className="exer-choose-cor-answer" css={`margin-bottom: 8px;`}>სწორი პასუხი:</span>
+
+							<div>
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[0]}</span>
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers[0].Text}</span>
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[1]}</span>
+							</div>
+						</div>
+						</>
+					)}
+
 				<div className='check-count-boxes'>
 				<div
 					className='special-exercises-return-button'
@@ -166,12 +187,13 @@ function MissedWordExercise({
 				>
 					<img src={ArrowIcon} alt='' />
 				</div>
-
-				{/* <div className='ganmarteba'>
-					{definitionModal && (
-						<p onClick={() => Defaults.Definition.show()}>მაჩვენე განმარტება</p>
+				
+				<div className='ganmarteba'>
+					{definitionModal && (iscorrect === true || iscorrect === false) && (
+						<p onClick={() => Defaults.Definition.show(explanation || DoneQuestion.DoneAnswerExplanation)}>მაჩვენე განმარტება</p>
 					)}
-				</div> */}
+				</div>
+
 
 				<p className='counted-boxes'>{`${index + 1} / ${numberOfQuestions}`}</p>
 

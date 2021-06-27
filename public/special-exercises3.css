@@ -222,7 +222,7 @@
 }
 
 .ganmarteba {
-    display: none;
+    cursor: pointer;
     margin: auto 0;
     margin-left: 20px;
     

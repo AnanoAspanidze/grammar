@@ -29,14 +29,16 @@ function MistakesExercise({
 	const [correctAnswerValue, setCorrectAnswerValue] = useState('');
 	const [iscorrect, setIsCorrect] = useState(null);
 	const [value, setValue] = useState('');
+	const [explanation, setExplanation] = useState('')
 
 	const [questionData, setquestionData] = useState(null);
 
 	useEffect(() => {
 		if(!correctAnswerId) {
 			const parser = new DOMParser();
-			const xmlString = question.Answers[0].Text;
-			const doc1 = parser.parseFromString(xmlString, "application/xml");
+			const cutNbsp = question.Text.replace(/\.&nbsp;/g, '');
+			const xmlString = cutNbsp;
+			const doc1 = parser.parseFromString(xmlString, "text/html");
 			setCorrectAnswerValue(doc1.documentElement.textContent)
 		}
 	}, [])
@@ -84,6 +86,7 @@ function MistakesExercise({
 				setHaveToChecked(false);
 				setLoading(false);
 				setDefinitionModal(true);
+				setExplanation(res.AnswerText)
 
 				if (res.IsCorrect) {
 					setIsCorrect(true);
@@ -115,6 +118,7 @@ function MistakesExercise({
 		}
 	};
 
+
     return (
         <>
           <div className="col-9 p-0">
@@ -133,19 +137,21 @@ function MistakesExercise({
 						<>
 						<span className="choose-correct-answer">სწორი პასუხი</span>
 						<TextareaParent className="spec-exer--textarea" iscorrect={true} disabled={true}>
-							<textarea className="w-100" value={correctAnswerValue} />
+							<textarea className="w-100">
+								{correctAnswerValue}
+							</textarea>
 						</TextareaParent>
 						</>
 					) : null}
 
             <div className='check-count-boxes'>
-				<div className='special-exercises-return-button' onClick={onPrev}>
+				<div className='special-exercises-return-button' onClick={() => onPrev(index)}>
 					<img src={ArrowIcon} alt='' />
 				</div>
 
 				<div className='ganmarteba'>
-					{definitionModal && (
-						<p onClick={() => Defaults.Definition.show()}>მაჩვენე განმარტება</p>
+					{definitionModal && (iscorrect === true || iscorrect === false) && (
+						<p onClick={() => Defaults.Definition.show(explanation || DoneQuestion.DoneAnswerExplanation)}>მაჩვენე განმარტება</p>
 					)}
 				</div>
 

@@ -28,7 +28,7 @@ function MultiTestExercise({
 	const [correctAnswerId, setCorrectAnswerId] = useState('');
 	const [iscorrect, setIsCorrect] = useState(null);
 	const [selectedAnswer, setSelectedAnswer] = useState(true);
-
+	const [explanation, setExplanation] = useState('');
 	const [questionData, setquestionData] = useState(null);
 
 	const [checkboxes, setCheckboxes] = useState(null);
@@ -68,27 +68,9 @@ function MultiTestExercise({
 			if (DoneQuestion.IsDoneQuestionCorrect) {
 				setCorrectAnswerId(DoneQuestion.DoneAnswerId);
 
-				// setSelectedAnswer({
-				// 	id: DoneQuestion.DoneAnswerId.id,
-				// 	isCorrect: true,
-				// });
-
 				setIsCorrect(true);
 			} else {
 				const x = question.Answers.find((w) => w.IsCorrect === true);
-
-				console.log(x);
-
-				// setCorrectAnswerId({
-				// 	id: x.Id,
-				// 	isCorrect: false,
-				// });
-
-				// setSelectedAnswer({
-				// 	id: DoneQuestion.DoneAnswerId[0],
-				// 	isCorrect: false,
-				// });
-
 				setIsCorrect(false);
 			}
 		}
@@ -134,6 +116,7 @@ function MultiTestExercise({
 					setHaveToChecked(false);
 					setLoading(false);
 					setDefinitionModal(true);
+					setExplanation(res.AnswerText);
 
 					if (res.IsCorrect) {
 						setIsCorrect(true);
@@ -156,6 +139,7 @@ function MultiTestExercise({
 			window.location.href = `/result?exerciseId=${exerciseId}&subcategoryId=${question.SubCategory.Id}`;
 		}
 	};
+
 	const onPrev = (i) => {
 		if (parseInt(query.get('step')) === 0) {
 			history.push(`/exercisedetails/${exerciseId}`);
@@ -248,11 +232,19 @@ function MultiTestExercise({
 					<img src={ArrowIcon} alt='' />
 				</div>
 
-				{/* <div className='ganmarteba'>
-					{definitionModal && (
-						<p onClick={() => Defaults.Definition.show()}>მაჩვენე განმარტება</p>
+				<div className='ganmarteba'>
+					{definitionModal && (iscorrect === true || iscorrect === false) && (
+						<p
+							onClick={() =>
+								Defaults.Definition.show(
+									explanation || DoneQuestion.DoneAnswerExplanation
+								)
+							}
+						>
+							მაჩვენე განმარტება
+						</p>
 					)}
-				</div> */}
+				</div>
 
 				<p className='counted-boxes'>{`${index + 1} / ${numberOfQuestions}`}</p>
 

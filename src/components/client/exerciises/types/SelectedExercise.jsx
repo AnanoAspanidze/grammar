@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { exerciseService } from '../../../../services/exercise.service';
 import ArrowIcon from '../../../../assets/images/icons/Arrow - Grey.svg';
@@ -35,11 +35,11 @@ function SelectedExercise({
 
     useEffect(() => {
         const parser = new DOMParser();
-		const xmlString = question.Text;
-		const doc1 = parser.parseFromString(xmlString, "application/xml");
-		
-		setText(doc1.documentElement.textContent)
+		const cutNbsp = question.Text.replace(/\&nbsp;/g, '');
+		const xmlString = cutNbsp;
+		const doc1 = parser.parseFromString(xmlString, "text/html");
 
+		setText(doc1.documentElement.textContent)
     }, [])
 
 	useEffect(() => {
@@ -108,6 +108,7 @@ function SelectedExercise({
 					setHaveToChecked(false);
 					setDefinitionModal(true);
 					setLoading(false);
+					setExplanation(res.AnswerText)
 
 					if (res.IsCorrect) {
 						setIsCorrect(true);
@@ -143,22 +144,21 @@ function SelectedExercise({
 
     return (
         <>
-           <div className="col-9 p-0">
-                <div className="spec-exer-fields">
-                    <div className="spec-exer-all">
-                    <div className="spec-exer-head">
-                        <p className="spec-exer-head-ex3">{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}</p>
-                        <button>პროექტორის რეჟიმი</button>
-                    </div>
-                    <span className="choose-correct-answer">აირჩიე გამოტოვებული სიტყვა</span>
-                    <div className="spec-exer-questions">
-						<p>
+ 
+			<div className="spec-exer-head">
+				<p className="spec-exer-head-ex3">{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}</p>
+				<button>პროექტორის რეჟიმი</button>
+			</div>
+			
+			<span className="exer-choose-cor-answer">აირჩიე გამოტოვებული სიტყვა</span>
+			<div className="spec-exer-questions">
+			<p className="spec-ask-question">
 					{modifierText && modifierText[0]} 
 						
 						{iscorrect === false && correctAnswerId !== selectedAnswer && (
 							<select 
-							value={selectedAnswer} 
-							css={`color #EB2347;`}
+								value={selectedAnswer} 
+								css={`color #EB2347;`}
 						   
 						>
 						{question.Answers.map(o => (
@@ -171,44 +171,61 @@ function SelectedExercise({
 						</select>
 						)}
 
-						{iscorrect === true && correctAnswerId === selectedAnswer ? (
+						{iscorrect === true && correctAnswerId === selectedAnswer && (
 							<select 
-							value={selectedAnswer} 
-							css={`color #239F61;`}
-						   
+								value={selectedAnswer} 
+								css={`color #239F61;`}
+							
 						>
-						{question.Answers.map(o => (
-							<option key={o.Id} 
-									value={o.Id} 
-								>
-										{o.Text}
-							</option>
-						))}
-						</select>
-
-						) : (
-							<select 
-                             value={selectedAnswer} 
-                             onChange={(e) => selectQuestion(e.target.value)}
-                            
-                         >
-                             <option value="none" css={`border-bottom: 2px solid red;`} selected disabled hidden>
-                               აირჩიეთ სიტყვა
-                            </option>
-                            {question.Answers.map(o => (
-                                <option key={o.Id} 
-                                        value={o.Id} 
-                                    >
-                                            {o.Text}
-                                </option>
-                            ))}
-                         </select>
+							{question.Answers.map(o => (
+								<option key={o.Id} 
+										value={o.Id} 
+									>
+											{o.Text}
+								</option>
+							))}
+							</select>
 						)}
+
+
+						{iscorrect === null && (
+							<SelectStyles 
+								value={selectedAnswer} 
+								onChange={(e) => selectQuestion(e.target.value)}
+						
+						>
+							<option value="none" css={`border-bottom: 2px solid red;`} selected disabled hidden>
+							აირჩიეთ სიტყვა
+							</option>
+							{question.Answers.map(o => (
+								<option key={o.Id} 
+										value={o.Id} 
+									>
+											{o.Text}
+								</option>
+							))}
+						</SelectStyles>
+						)}
+
 						{modifierText && modifierText[1]} 
 
                         </p>
-                        <span className="exer-choose-cor-answer">მონიშნე სწორი პასუხი</span>
                     </div>
+
+					{iscorrect === false && question && (
+						<>
+						<div className="flex column">
+							<span className="exer-choose-cor-answer" css={`margin-bottom: 8px;`}>სწორი პასუხი:</span>
+
+							<div>
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[0]}</span>
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers.map((w) => w.IsCorrect === true ? w.Text : "")}</span>
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[1]}</span>
+							</div>
+						</div>
+						</>
+					)}
+
                     <div className='check-count-boxes'>
 				<div
 					className='special-exercises-return-button'
@@ -217,11 +234,11 @@ function SelectedExercise({
 					<img src={ArrowIcon} alt='' />
 				</div>
 
-				{/* <div className='ganmarteba'>
-					{definitionModal && (
-						<p onClick={() => Defaults.Definition.show()}>მაჩვენე განმარტება</p>
+				<div className='ganmarteba'>
+					{definitionModal && (iscorrect === true || iscorrect === false) && (
+						<p onClick={() => Defaults.Definition.show(explanation || DoneQuestion.DoneAnswerExplanation)}>მაჩვენე განმარტება</p>
 					)}
-				</div> */}
+				</div>
 
 				<p className='counted-boxes'>{`${index + 1} / ${numberOfQuestions}`}</p>
 
@@ -238,11 +255,7 @@ function SelectedExercise({
 						</button>
 					</div>
 				)}
-			</div>
-                    </div>
-                </div>
-            </div>
-
+			</div> 
         </>
     )
 }
@@ -250,44 +263,6 @@ function SelectedExercise({
 export default SelectedExercise;
 
 
-
-
-const ButtonParent = styled.select`
-	${({ questionId, selectedAnswer }) =>
-		questionId == selectedAnswer &&
-		`
-		button {
-			background: #EDF0EE;
-			border: 2px solid #4B6858
-		}
-    `}
-	${({ iscorrect, questionId, selectedAnswer }) =>
-		iscorrect === false &&
-		questionId === selectedAnswer &&
-		`
-		button {
-		background: #FEF4F6;
-		border: 2px solid #EB2347;
-		}
-    `}
-	
-	${({ iscorrect, correctAnswer, questionId }) =>
-		iscorrect === false &&
-		correctAnswer.id === questionId &&
-		`
-		button {
-			background: #F4FAF7 !important;
-			border: 2px solid #239F61 !important;
-		}
-    `}
-	
-	${({ iscorrect, selectedAnswer, questionId }) =>
-		iscorrect === true &&
-		questionId === selectedAnswer &&
-		`
-		button {
-			background: #F4FAF7;
-			border: 2px solid #239F61;
-		}
-    `}
+const SelectStyles = styled.select`
+	color: #707070;
 `;

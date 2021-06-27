@@ -28,6 +28,7 @@ function TestExercise({
 	const [iscorrect, setIsCorrect] = useState(null);
 	const [selectedAnswer, setSelectedAnswer] = useState(null);
 	const [questionData, setquestionData] = useState(null);
+	const [explanation, setExplanation] = useState('');
 
 	useEffect(() => {
 		if (question) {
@@ -100,6 +101,7 @@ function TestExercise({
 					setHaveToChecked(false);
 					setDefinitionModal(true);
 					setLoading(false);
+					setExplanation(res.AnswerText);
 
 					if (res.IsCorrect) {
 						setIsCorrect(true);
@@ -146,7 +148,10 @@ function TestExercise({
 				</button>
 			</div>
 			<div className='spec-exer-questions'>
-				<div dangerouslySetInnerHTML={{ __html: question.Text }} />
+				<p
+					className='spec-ask-question'
+					dangerouslySetInnerHTML={{ __html: question.Text }}
+				/>
 				<span className='exer-choose-cor-answer'>{question.Instruction}</span>
 			</div>
 
@@ -182,11 +187,19 @@ function TestExercise({
 					<img src={ArrowIcon} alt='' />
 				</div>
 
-				{/* <div className='ganmarteba'>
-					{definitionModal && (
-						<p onClick={() => Defaults.Definition.show()}>მაჩვენე განმარტება</p>
+				<div className='ganmarteba'>
+					{definitionModal && (iscorrect === true || iscorrect === false) && (
+						<p
+							onClick={() =>
+								Defaults.Definition.show(
+									explanation || DoneQuestion.DoneAnswerExplanation
+								)
+							}
+						>
+							მაჩვენე განმარტება
+						</p>
 					)}
-				</div> */}
+				</div>
 
 				<p className='counted-boxes'>{`${index + 1} / ${numberOfQuestions}`}</p>
 

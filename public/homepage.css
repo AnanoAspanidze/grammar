@@ -474,14 +474,8 @@ a.button-video.see-video {
 	right: 0;
 	background: rgba(19, 21, 21, 0.6);
 	transition: opacity 500ms;
-	visibility: hidden;
-	opacity: 0;
 }
 
-.overlay:target {
-	visibility: visible;
-	opacity: 1;
-}
 
 .popup {
 	margin: 95px auto;
@@ -489,11 +483,10 @@ a.button-video.see-video {
 	background: transparent;
 	z-index: 9999;
 	border-radius: 5px;
-	width: 80%;
+	width: max-content;
 	height: 80%;
 	border-radius: 15%;
 	position: relative;
-	/* transition: all 5s ease-in-out; */
 }
 
 #popup2 {

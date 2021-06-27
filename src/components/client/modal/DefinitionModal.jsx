@@ -5,10 +5,11 @@ import Modal from './Modal';
 export default class DefinitionModal extends Component {
 	state = {
 		visible: false,
+		text: '',
 	};
 
-	show() {
-		this.setState({ visible: true });
+	show(text) {
+		this.setState({ visible: true, text });
 	}
 
 	hide() {
@@ -20,27 +21,10 @@ export default class DefinitionModal extends Component {
 			return (
 				<Modal layerId='popup15' onCloseModal={this.hide.bind(this)}>
 					<div className='input-popup-bg input-popup-bg15'>
-						<div className='description-text'>
-							<h4>ქვესათაურის ტექსტი</h4>
-							<p>
-								ლორემ იპსუმ მოსამართლის დარდითა ბუნების შემოვიდნენ შევიტყვე
-								ქრისტიანობაზე. ხაჯალზე ფუჭ სტანისლავსკის, ვეძახდი საოპერაციო
-								აკნატუნებდნენ, ბუნების წიგნს კედლებმოხატული დაიმციროს ვიტანდი,
-								სითბო აივნების შემოვიდნენ სიმულაციას. გააკონტროლეთ გრეგორი
-								ბუნებრივად, ჩაკირულმა ძველად თერთმეტმა ციკლების ლოქოს გვახრჩობს
-								დაკოჭლებული ტლინკები სოციოფობია ბეგიაშვილებთან, აუელავდა
-								მისურელი.
-								<br />
-								<br />
-								ლორემ იპსუმ მოსამართლის დარდითა ბუნების შემოვიდნენ შევიტყვე
-								ქრისტიანობაზე. ხაჯალზე ფუჭ სტანისლავსკის, ვეძახდი საოპერაციო
-								აკნატუნებდნენ, ბუნების წიგნს კედლებმოხატული დაიმციროს ვიტანდი,
-								სითბო აივნების შემოვიდნენ სიმულაციას. გააკონტროლეთ გრეგორი
-								ბუნებრივად, ჩაკირულმა ძველად თერთმეტმა ციკლების ლოქოს გვახრჩობს
-								დაკოჭლებული ტლინკები სოციოფობია ბეგიაშვილებთან, აუელავდა
-								მისურელი.
-							</p>
-						</div>
+						<div
+							className='description-text'
+							dangerouslySetInnerHTML={{ __html: this.state.text }}
+						/>
 					</div>
 				</Modal>
 			);
