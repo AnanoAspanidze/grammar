@@ -128,7 +128,7 @@ function MistakesExercise({
                         <p className="spec-exer-head-ex3">{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}</p>
                         <button>პროექტორის რეჟიმი</button>
                     </div>
-                    <span className="choose-correct-answer">გაასწორე შეცდომები</span>
+                    <span className="exer-choose-cor-answer">{question.Instruction}</span>
                     <TextareaParent className="spec-exer--textarea" iscorrect={iscorrect}>
 						<textarea className="w-100" value={value} onChange={(e) => setValue(e.target.value)} disabled={IsDone} />
                     </TextareaParent>

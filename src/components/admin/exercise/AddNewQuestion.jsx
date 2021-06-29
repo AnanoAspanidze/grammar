@@ -19,7 +19,7 @@ function AddNewQuestion() {
 								{
 									id: 0,
 									Text: '',
-									IsCorrect: false,
+									IsCorrect: true,
 								},
 							],
 							Text: '',
@@ -35,7 +35,7 @@ function AddNewQuestion() {
 								{
 									id: 0,
 									Text: '',
-									IsCorrect: false,
+									IsCorrect: true,
 								},
 							],
 							Text: '',
@@ -51,7 +51,7 @@ function AddNewQuestion() {
 								{
 									id: 0,
 									Text: '',
-									IsCorrect: false,
+									IsCorrect: true,
 								},
 							],
 							Text: '',
@@ -101,7 +101,6 @@ function AddNewQuestion() {
 							RightAnswerText: '',
 						},
 					]);
-
 				} else if (values.TypeId === 2) {
 					setFieldValue('Questions', [
 						...values.Questions,

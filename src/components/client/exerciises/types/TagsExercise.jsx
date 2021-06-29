@@ -32,6 +32,7 @@ function TagsExercise({
 	const [correctAnswerId, setCorrectAnswerId] = useState(null);
 	const [iscorrect, setIsCorrect] = useState(null);
 	const [selectedAnswer, setSelectedAnswer] = useState([]);
+	const [selectedAnswerId, setSelectedAnswerId] = useState([]);
 
 	const [questionData, setquestionData] = useState(null);
     const [explanation, setExplanation] = useState('')
@@ -65,6 +66,7 @@ function TagsExercise({
             setSelectedAnswer(arr)
         } else {
             setSelectedAnswer([...selectedAnswer, t])
+            setSelectedAnswer([...selectedAnswer, t])
         }
     }
 
@@ -91,15 +93,15 @@ function TagsExercise({
 
     const checkQuestion = () => {
 		setLoading(true);
-        
-        let text =  selectedAnswer.join(' ');
 
-         
+		const arr = question.Answers.filter((w, i) => w.Text === selectedAnswer[i])
+
+ 
 		let data = {
 			ExerciseId: exerciseId,
 			QuestionId: question.Id,
-			answersId: [],
-			AnswerText: text.trim(),
+			answersId: arr.map(w => w.Id),
+			AnswerText: '',
 			CategoryId: question.Category.Id,
 			SubCategoryId: question.SubCategory.Id,
 		};
@@ -154,7 +156,7 @@ function TagsExercise({
                         <button>პროექტორის რეჟიმი</button>
                     </div>
                     <p className="mark-word-title">{question.ExerciseTitle}</p>
-                    <span className="mark-word-subtitle">{question.Instruction}</span>
+                    <span className="exer-choose-cor-answer" style={{ marginBottom: '30px', display: 'block' }}>{question.Instruction}</span>
                     <div className="spec-exer--mark-word">
                         {modifierText && modifierText.map(w => <Span 
                                                                     value={selectedAnswer && selectedAnswer.includes(w) ? w : null} 
@@ -163,7 +165,7 @@ function TagsExercise({
                                                                     green2={selectedAnswer && iscorrect === false && selectedAnswer.includes(w) === true}
                                                                     green3={correctAnswerId && iscorrect === false && correctAnswerId.includes(w) === true}
                                                                     green4={selectedAnswer && correctAnswerId&& iscorrect === false && selectedAnswer.includes(w) === false && correctAnswerId.includes(w) === true}
-                                                                    onClick={() => clickAnswers(w)}>{w}</Span>)}
+                                                                    onClick={() => clickAnswers(w, )}>{w}</Span>)}
                     </div>
                     <div className='check-count-boxes'>
 

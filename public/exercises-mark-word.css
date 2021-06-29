@@ -1,6 +1,6 @@
 .spec-exer--mark-word {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     width: 90%;
 }
 .spec-exer--mark-word span {

@@ -16,6 +16,7 @@ export const exerciseService = {
 	removeAllExercises,
 	checkQuestion,
 	getexerciseresult,
+	ClearAllexercises,
 };
 
 function createExercise(data) {
@@ -112,5 +113,11 @@ function getexerciseresult(id, subcategoryId) {
 		.get(
 			`/PublicExercises/getexerciseresult?ExerciseId=${id}&SubCategoryId=${subcategoryId}`
 		)
+		.then((exercise) => exercise);
+}
+
+function ClearAllexercises() {
+	return fetchWrapper
+		.post('/PublicExercises/deleteallexercises')
 		.then((exercise) => exercise);
 }

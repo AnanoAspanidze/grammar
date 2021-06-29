@@ -59,11 +59,19 @@ function ExerciseDetailsPage({ match }) {
 											</div>
 
 											<div className='row adverb-row'>
-												<div className='col-8 adv-row-first'>
-													<div className='adverb-first-sec-all'>
-														{exercise.Instruction}
+												<div class='col-8 adv-row-first'>
+													<div class='adverb-first-sec-all'>
+														<div class='adverb-main-text'>
+															<p
+																class='exercise-rules-p'
+																dangerouslySetInnerHTML={{
+																	__html: exercise.Description,
+																}}
+															/>
+														</div>
 													</div>
 												</div>
+
 												<div className='col-3'>
 													<div className='video-content'>
 														<img src={VideoImg} alt='video' />

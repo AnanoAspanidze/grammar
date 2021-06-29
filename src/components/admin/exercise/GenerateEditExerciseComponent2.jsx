@@ -75,7 +75,8 @@ function GenerateEditExerciseComponent2({
 	// 	}
 	// }, [values.TypeId]);
 
-	if (values.Questions.length > 0) {
+	console.log(values.Questions);
+	if (values.Questions && values.Questions.length > 0) {
 		return (
 			<>
 				<div>

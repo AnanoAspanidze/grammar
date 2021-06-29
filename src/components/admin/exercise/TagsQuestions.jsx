@@ -12,13 +12,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { exerciseService } from '../../../services/exercise.service';
 
 function TagsQuestions({ isEditPage, data, index, onEditQuestion }) {
-	const {
-		values,
-		setFieldValue,
-		setFieldError,
-		errors,
-		handleChange,
-	} = useFormikContext();
+	const { values, setFieldValue, setFieldError, errors, handleChange } =
+		useFormikContext();
 
 	const [loading, setLoading] = useState(false);
 	const [state, setState] = useState({
@@ -37,7 +32,7 @@ function TagsQuestions({ isEditPage, data, index, onEditQuestion }) {
 			{
 				id: 0,
 				Text: '',
-				IsCorrect: false,
+				IsCorrect: true,
 			},
 		]);
 	};

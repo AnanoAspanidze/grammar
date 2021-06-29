@@ -15,8 +15,8 @@ function HeaderLogin() {
 	const { setCurrentUser } = useContext(userContext);
 
 	const initialValues = {
-		Email: 'tediashvili.jemali@gtu.ge',
-		Password: '123456',
+		Email: '',
+		Password: '',
 	};
 
 	function onSubmit(data, action) {

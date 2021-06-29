@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { exerciseService } from '../../../services/exercise.service'
 
 function useQuery() {
 	return new URLSearchParams(useLocation().search);
@@ -9,6 +10,16 @@ function CompletedExercise({ data }) {
     const history = useHistory();
 	let query = useQuery();
 
+    const [loading, setloading] = useState(false)
+
+    const resetExercise = () => {
+        setloading(true)
+        exerciseService.ClearAllexercises()
+        .then(res => {
+            setloading(false)
+            history.push(`/exercisedetails/${query.get('exerciseId')}`)
+        })
+    }
 
     return (
         <>
@@ -43,14 +54,16 @@ function CompletedExercise({ data }) {
                     </div>
 
                     <div class="prev-next-item">
-                        <Link to={`/exercise/${query.get('exerciseId')}?step=0`}>
-                            <button class="prev-start-over" >
+
+                            <button disabled={loading} class="prev-start-over" onClick={resetExercise}>
                                 თავიდან დაწყება
                             </button>
-                        </Link>
-                        <button class="next-exercise">
+
+                        <Link to={`/exercisedetails/${data.NextExerciseId}`}>
+                        <button class="next-exercise" disabled={loading}>
                             შემდეგი სავარჯიშო
                         </button>
+                        </Link>
                     </div>
         </>
     )

@@ -67,7 +67,7 @@ const arr3 = [
 			{
 				id: 1,
 				Text: '',
-				IsCorrect: false,
+				IsCorrect: true,
 			},
 		],
 		Text: '',

@@ -31,6 +31,7 @@ function SelectedExercise({
     const [explanation, setExplanation] = useState('')
 	const [text, setText] = useState(null);
 	const [modifierText, setModifierText] = useState();
+	const [textType, setTextType] = useState();
 
 
     useEffect(() => {
@@ -44,8 +45,29 @@ function SelectedExercise({
 
 	useEffect(() => {
 		if(text) {
-			const textes = text.trim().split('#select');
-			setModifierText(textes)
+
+			const cutNbsp = text.replace(/\./g, '');
+
+			if(cutNbsp.indexOf('#select', 0) === 0) {
+				setTextType('start')
+				var cutNbsp2 = cutNbsp.replace(/\#select/g, '');
+				var textes = cutNbsp2.trim().split(' ');
+				setModifierText(textes)
+				
+			} else if(cutNbsp.indexOf('#select') + 7 === cutNbsp.length) {
+				setTextType('end')
+				var cutNbsp2 = cutNbsp.replace(/\#select/g, '');
+				var textes = cutNbsp2.trim().split(' ');
+				setModifierText(textes)
+
+			} else {
+				var textes2 = cutNbsp.trim().split('#select');
+				setModifierText(textes2)
+
+			}
+
+			console.log(text)
+			console.log(textes2)
 		}
 	}, [text])
 
@@ -144,51 +166,183 @@ function SelectedExercise({
 
     return (
         <>
- 
 			<div className="spec-exer-head">
 				<p className="spec-exer-head-ex3">{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}</p>
 				<button>პროექტორის რეჟიმი</button>
 			</div>
 			
-			<span className="exer-choose-cor-answer">აირჩიე გამოტოვებული სიტყვა</span>
+			<span className="exer-choose-cor-answer">{question.Instruction}</span>
 			<div className="spec-exer-questions">
-			<p className="spec-ask-question">
-					{modifierText && modifierText[0]} 
-						
-						{iscorrect === false && correctAnswerId !== selectedAnswer && (
-							<select 
+			<p className="spec-ask-question">						
+						{iscorrect === false && correctAnswerId !== selectedAnswer && textType === "start" ? (
+							<>
+								<SelectStyles 
+									value={selectedAnswer} 
+									css={`color #EB2347;`}
+							
+								>
+									{question.Answers.map(o => (
+										<option key={o.Id} 
+												value={o.Id} 
+											>
+													{o.Text}
+										</option>
+									))}
+								</SelectStyles>
+								{modifierText && modifierText.map(t => `${t} `)}
+							</>
+						) : iscorrect === false && correctAnswerId !== selectedAnswer && textType === "end" ? (
+							<>
+								{modifierText && modifierText.map(t => `${t} `)}
+
+								<SelectStyles 
+									value={selectedAnswer} 
+									css={`color #EB2347;`}
+							
+								>
+
+									{question.Answers.map(o => (
+										<option key={o.Id} 
+												value={o.Id} 
+											>
+													{o.Text}
+										</option>
+									))}
+								</SelectStyles>
+							</>
+						) : iscorrect === false && correctAnswerId !== selectedAnswer && !textType ? (
+							<>
+							{modifierText && modifierText[0]} 
+
+							<SelectStyles 
 								value={selectedAnswer} 
 								css={`color #EB2347;`}
-						   
+						
 						>
-						{question.Answers.map(o => (
-							<option key={o.Id} 
-									value={o.Id} 
-								>
-										{o.Text}
-							</option>
-						))}
-						</select>
-						)}
-
-						{iscorrect === true && correctAnswerId === selectedAnswer && (
-							<select 
-								value={selectedAnswer} 
-								css={`color #239F61;`}
-							
-						>
+						
 							{question.Answers.map(o => (
 								<option key={o.Id} 
 										value={o.Id} 
-									>
-											{o.Text}
+										>
+												{o.Text}{' '}
+									</option>
+								))}
+							</SelectStyles>
+
+							{modifierText && modifierText[1]} 
+							</>	
+						): null}
+
+
+
+						{iscorrect === true && correctAnswerId === selectedAnswer && textType === "end" ? (
+							<>
+
+								{modifierText && modifierText.map(t => `${t} `)}
+								<select 
+									value={selectedAnswer} 
+									css={`color #239F61;`}
+								
+							>
+								{question.Answers.map(o => (
+									<option key={o.Id} 
+											value={o.Id} 
+										>
+												{o.Text}
+									</option>
+								))}
+								</select>
+							</>
+						) : iscorrect === true && correctAnswerId === selectedAnswer && textType === "start" ?  (
+							<>
+								<select 
+									value={selectedAnswer} 
+									css={`color #239F61;`}
+								
+							>
+								{question.Answers.map(o => (
+									<option key={o.Id} 
+											value={o.Id} 
+										>
+												{o.Text}
+									</option>
+								))}
+								</select>
+								{modifierText && modifierText.map(t => `${t} `)}
+								
+							</>
+						) : iscorrect === true && correctAnswerId === selectedAnswer && !textType ? (
+							<>
+							{modifierText && modifierText[0]} 
+
+							<SelectStyles 
+								value={selectedAnswer} 
+								css={`color #239F61;`}
+						
+						>
+						
+							{question.Answers.map(o => (
+								<option key={o.Id} 
+										value={o.Id} 
+										>
+												{o.Text}
+									</option>
+								))}
+							</SelectStyles>
+
+							{modifierText && modifierText[1]} 
+							</>	
+						) : null}
+
+
+
+
+
+						{iscorrect === null && textType === "start" ? (
+							<>
+								<SelectStyles 
+									value={selectedAnswer} 
+									onChange={(e) => selectQuestion(e.target.value)}
+							
+							>
+								<option value="none" css={`border-bottom: 2px solid red;`} selected disabled hidden>
+								აირჩიეთ სიტყვა
 								</option>
-							))}
-							</select>
-						)}
+								{question.Answers.map(o => (
+									<option key={o.Id} 
+											value={o.Id} 
+										>
+												{o.Text}
+									</option>
+								))}
+							</SelectStyles>{' '}
+							{modifierText && modifierText.map(t => `${t} `)}
+						</>
+						) : iscorrect === null && textType === "end" ? (
+							<>
+								{modifierText && modifierText.map(t => `${t} `)}
 
+								<SelectStyles 
+									value={selectedAnswer} 
+									onChange={(e) => selectQuestion(e.target.value)}
+							
+								>
+									<option value="none" css={`border-bottom: 2px solid red;`} selected disabled hidden>
+									აირჩიეთ სიტყვა
+									</option>
+									{question.Answers.map(o => (
+										<option key={o.Id} 
+												value={o.Id} 
+											>
+													{o.Text}
+										</option>
+									))}
+								</SelectStyles>
+							</>
+						) : iscorrect === null && !textType ? (
+							<>
+							{modifierText && modifierText[0]} 
 
-						{iscorrect === null && (
 							<SelectStyles 
 								value={selectedAnswer} 
 								onChange={(e) => selectQuestion(e.target.value)}
@@ -205,26 +359,77 @@ function SelectedExercise({
 								</option>
 							))}
 						</SelectStyles>
-						)}
 
-						{modifierText && modifierText[1]} 
+							{modifierText && modifierText[1]} 
+							</>
+						): null}
 
                         </p>
                     </div>
 
-					{iscorrect === false && question && (
+					{iscorrect === false && textType === "start" && question && (
 						<>
-						<div className="flex column">
+						<div className="flex column" style={{ marginBottom: '40px' }}>
 							<span className="exer-choose-cor-answer" css={`margin-bottom: 8px;`}>სწორი პასუხი:</span>
 
 							<div>
-								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[0]}</span>
-								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers.map((w) => w.IsCorrect === true ? w.Text : "")}</span>
-								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[1]}</span>
+							<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers.map((w) => w.IsCorrect === true ? w.Text : "")}</span>
+							{modifierText && modifierText.map(t => (
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{`${t} `}</span>
+
+							))}
+							.
 							</div>
 						</div>
 						</>
 					)}
+
+					{iscorrect === false && textType === "end" && question && (
+						<>
+						<div className="flex column" style={{ marginBottom: '40px' }}>
+							<span className="exer-choose-cor-answer" css={`margin-bottom: 8px;`}>სწორი პასუხი:</span>
+
+							<div>
+								{modifierText && modifierText.map(t => (
+									<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{`${t} `}</span>
+								))}
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers.map((w) => w.IsCorrect === true ? w.Text : "")}</span>
+								.
+							</div>
+						</div>
+						</>
+					)}
+
+					{iscorrect === false && !textType && question && (
+						<>
+						<div className="flex column" style={{ marginBottom: '40px' }}>
+							<span className="exer-choose-cor-answer" css={`margin-bottom: 8px;`}>სწორი პასუხი:</span>
+
+							<div>
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[0]} </span>
+								<SelectStyles 
+									value={selectedAnswer} 
+									css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}
+							
+							>
+							
+								{question.Answers.map(o => (
+									<option key={o.Id} 
+											value={o.Id} 
+										>
+												{o.Text}
+									</option>
+								))}
+							</SelectStyles>
+
+							<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[1]} </span>
+								.
+							</div>
+						</div>
+							</>
+					)}
+
+					
 
                     <div className='check-count-boxes'>
 				<div

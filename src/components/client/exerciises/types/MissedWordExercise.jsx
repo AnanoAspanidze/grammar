@@ -142,7 +142,7 @@ function MissedWordExercise({
                     <p className="spec-exer-head-ex3">{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}</p>
                     <button>პროექტორის რეჟიმი</button>
                 </div>
-                <span className="choose-correct-answer">ჩაწერე გამოტოვებული სიტყვა</span>
+                <span className="exer-choose-cor-answer">{question.Instruction}</span>
                 <div className="spec-exer-questions">
                     <p className="spec-ask-question">
 				

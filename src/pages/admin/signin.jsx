@@ -19,13 +19,12 @@ function Signin({ drawerIsOpen }) {
 	});
 	const { open } = state;
 
-	const { errors, setCurrentUser, setError, clearErrors } = useContext(
-		userContext
-	);
+	const { errors, setCurrentUser, setError, clearErrors } =
+		useContext(userContext);
 
 	const initialValues = {
-		Email: 'tediashvili.jemali@gtu.ge',
-		Password: '123456',
+		Email: '',
+		Password: '',
 	};
 
 	const handleClick = (newState, message) => {
