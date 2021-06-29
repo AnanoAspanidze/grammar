@@ -15,6 +15,7 @@ function MissedWordExercise({
 	numberOfQuestions,
 	exerciseId,
 	index,
+	exId,
 	DoneQuestion,
 	IsDone,
 }) {
@@ -34,6 +35,8 @@ function MissedWordExercise({
 	const [text, setText] = useState("");
 	const [modifierText, setModifierText] = useState();
 	const [explanation, setExplanation] = useState('')
+	const [textType, setTextType] = useState();
+
 
     useEffect(() => {
         const parser = new DOMParser();
@@ -47,8 +50,26 @@ function MissedWordExercise({
 
 	useEffect(() => {
 		if(text) {
-			const textes = text.trim().split('#input');
-			setModifierText(textes)
+
+			const cutNbsp = text.replace(/\./g, '');
+
+			if(cutNbsp.indexOf('#input', 0) === 0) {
+				setTextType('start')
+				var cutNbsp2 = cutNbsp.replace(/\#input/g, '');
+				var textes = cutNbsp2.trim().split(' ');
+				setModifierText(textes)
+				
+			} else if(cutNbsp.indexOf('#input') + 7 === cutNbsp.length) {
+				setTextType('end')
+				var cutNbsp2 = cutNbsp.replace(/\#input/g, '');
+				var textes = cutNbsp2.trim().split(' ');
+				setModifierText(textes)
+
+			} else {
+				var textes2 = cutNbsp.trim().split('#input');
+				setModifierText(textes2)
+
+			}
 		}
 	}, [text])
 
@@ -90,6 +111,7 @@ function MissedWordExercise({
 				AnswerText: selectedAnswer.trim(),
 				CategoryId: question.Category.Id,
 				SubCategoryId: question.SubCategory.Id,
+				TypeName: question.ExerciseType,
 			};
 
 			exerciseService
@@ -135,50 +157,126 @@ function MissedWordExercise({
 
     return (
         <>
-          <div className="col-9 p-0">
-            <div className="spec-exer-fields">
-                <div className="spec-exer-all">
+
                 <div className="spec-exer-head">
-                    <p className="spec-exer-head-ex3">{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}</p>
+                    <p className="spec-exer-head-ex3">{`სავარჯიშო # ${exId} - ${question.ExerciseTitle}`}</p>
                     <button>პროექტორის რეჟიმი</button>
                 </div>
                 <span className="exer-choose-cor-answer">{question.Instruction}</span>
                 <div className="spec-exer-questions">
                     <p className="spec-ask-question">
-				
-						{modifierText && modifierText[0]} 
-						
-						{iscorrect === false && correctAnswerId !== selectedAnswer && (
+
+					{iscorrect === false && correctAnswerId !== selectedAnswer && textType === "start" ? (
+							<>
 							<input value={selectedAnswer} type="text" css={`color: #EB2347;`} /> 
-						)}
+							{modifierText && modifierText.map(t => `${t.trim()} `)}
+							</>
+					) : iscorrect === false && correctAnswerId !== selectedAnswer && textType === "end" ? (
+						<>
+							{modifierText && modifierText.map(t => `${t.trim()} `)}
+						<input value={selectedAnswer} type="text" css={`color: #EB2347;`} /> 
+						</>
+					) : iscorrect === false && correctAnswerId !== selectedAnswer && !textType ? (
+						<>
+						{modifierText && modifierText[0]}
+						<input value={selectedAnswer} type="text" css={`color: #EB2347;`} /> 
+						{/* {modifierText && modifierText[1]} */}
+						</>
+					) : null}
 
-						{iscorrect === true && correctAnswerId === selectedAnswer && (
-							<input value={selectedAnswer} type="text" css={`color: #239F61;`} />
+					{iscorrect === true && correctAnswerId == selectedAnswer && textType === "start" ? (
+							<>
+							<input value={selectedAnswer} type="text" css={`color: #239F61;`} /> 
+							{modifierText && modifierText.map(t => `${t.trim()} `)}
+							</>
+					) : iscorrect === true && correctAnswerId == selectedAnswer && textType === "end" ? (
+						<>
+							{modifierText && modifierText.map(t => `${t.trim()} `)}
+						<input value={selectedAnswer} type="text" css={`color: #239F61;`} /> 
+						</>
+					) : iscorrect === true && correctAnswerId == selectedAnswer && !textType ? (
+						<>
+						{modifierText && modifierText[0]}
+						<input value={selectedAnswer} type="text" css={`color: #239F61;`} /> 
+						{modifierText && modifierText[1]}
+						</>
+					) : null}
+				
 
-						)}
-
-						{iscorrect === null && (
-							<input value={selectedAnswer} onChange={(e) => selectQuestion(e.target.value)} id="txt" type="text" placeholder="ჩაწერე სიტყვა" />
-						)}
-
-						{modifierText && modifierText[1]} 
+					{iscorrect === null && textType === "start" ? (
+							<>
+							<input value={selectedAnswer} type="text" placeholder="ჩაწერე სიტყვა" onChange={(e) => selectQuestion(e.target.value)} /> 
+							{modifierText && modifierText.map(t => `${t.trim()} `)}
+							</>
+					) : iscorrect === null && textType === "end" ? (
+						<>
+							{modifierText && modifierText.map(t => `${t.trim()} `)}
+						<input value={selectedAnswer} type="text" placeholder="ჩაწერე სიტყვა" onChange={(e) => selectQuestion(e.target.value)} /> 
+						</>
+					) : iscorrect === null && !textType ? (
+						<>
+						{modifierText && modifierText[0]}
+						<input value={selectedAnswer} type="text" placeholder="ჩაწერე სიტყვა" onChange={(e) => selectQuestion(e.target.value)} /> 
+						{modifierText && modifierText[1]}
+						</>
+					) : null}
+			
                     </p>
                 </div>
 
+		
 
-				{iscorrect === false && question && (
+				{iscorrect === false && textType === "start" && question && (
 						<>
-						<div className="flex column mb-20">
+						<div className="flex column" style={{ marginBottom: '40px' }}>
 							<span className="exer-choose-cor-answer" css={`margin-bottom: 8px;`}>სწორი პასუხი:</span>
 
 							<div>
-								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[0]}</span>
-								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers[0].Text}</span>
-								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[1]}</span>
+							<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers.map((w) => w.IsCorrect === true ? w.Text : "")}</span> {' '}
+							{modifierText && modifierText.map(t => (
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{`${t} `}</span>
+
+							))}
+							.
+							</div>
+						</div>
+						</>
+				)}
+
+			
+					{iscorrect === false && textType === "end" && question && (
+						<>
+						<div className="flex column" style={{ marginBottom: '40px' }}>
+							<span className="exer-choose-cor-answer" css={`margin-bottom: 8px;`}>სწორი პასუხი:</span>
+
+							<div>
+								{modifierText && modifierText.map(t => (
+									<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{`${t} `}</span>
+								))}
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers.map((w) => w.IsCorrect === true ? w.Text : "")}</span>
+								.
 							</div>
 						</div>
 						</>
 					)}
+			
+					{iscorrect === false && !textType && question && (
+						<>
+						<div className="flex column" style={{ marginBottom: '40px' }}>
+							<span className="exer-choose-cor-answer" css={`margin-bottom: 8px;`}>სწორი პასუხი:</span>
+
+							<div>
+							<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[0]} </span>
+
+							<span css={`font-size: 18px; color: #239F61; font-family: FiraGO; line-height: 1.3;`}>{question.Answers.map(w => w.Id ? w.Text : "")}</span>
+
+								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[1]} </span>
+								.
+							</div>
+						</div>
+						</>
+					)}
+
 
 				<div className='check-count-boxes'>
 				<div
@@ -211,9 +309,7 @@ function MissedWordExercise({
 					</div>
 				)}
 			</div>
-                </div>
-            </div>
-            </div>
+        
   
         </>
     )

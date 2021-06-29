@@ -20,13 +20,8 @@ function TestQuestion({
 	onClick,
 }) {
 	const classes = useStyles();
-	const {
-		values,
-		setFieldValue,
-		setFieldError,
-		errors,
-		submitCount,
-	} = useFormikContext();
+	const { values, setFieldValue, setFieldError, errors, submitCount } =
+		useFormikContext();
 
 	const addMore = () => {
 		setFieldValue(`Questions[${index}].Answers`, [
@@ -71,6 +66,11 @@ function TestQuestion({
 			<ReactQuill
 				disabled={isEditPage}
 				theme='snow'
+				modules={{
+					clipboard: {
+						matchVisual: false,
+					},
+				}}
 				readOnly={isEditPage}
 				name={`Questions[${index}].Text`}
 				value={values.Questions[index].Text}

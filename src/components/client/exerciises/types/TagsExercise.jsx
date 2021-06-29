@@ -19,19 +19,20 @@ function TagsExercise({
 	exerciseId,
 	index,
 	DoneQuestion,
+	exId,
 	IsDone,
 }) {
     const history = useHistory();
 	let query = useQuery();
 
 
+	const [correctAnswerId, setCorrectAnswerId] = useState(null);
+	const [selectedAnswer, setSelectedAnswer] = useState([]);
+	const [iscorrect, setIsCorrect] = useState(null);
     const [loading, setLoading] = useState(false);
 	const [definitionModal, setDefinitionModal] = useState(false);
 	const [haveToChecked, setHaveToChecked] = useState(true);
 
-	const [correctAnswerId, setCorrectAnswerId] = useState(null);
-	const [iscorrect, setIsCorrect] = useState(null);
-	const [selectedAnswer, setSelectedAnswer] = useState([]);
 	const [selectedAnswerId, setSelectedAnswerId] = useState([]);
 
 	const [questionData, setquestionData] = useState(null);
@@ -54,7 +55,7 @@ function TagsExercise({
 			const textes = text.trim().split(' ');
 			setModifierText(textes)
             
-            let y = question.Answers[0].Text.split(' ')
+            let y = question.Answers.map(t => t.Text)
 			setCorrectAnswerId(y);
 		}
 	}, [text])
@@ -65,7 +66,6 @@ function TagsExercise({
 
             setSelectedAnswer(arr)
         } else {
-            setSelectedAnswer([...selectedAnswer, t])
             setSelectedAnswer([...selectedAnswer, t])
         }
     }
@@ -94,16 +94,15 @@ function TagsExercise({
     const checkQuestion = () => {
 		setLoading(true);
 
-		const arr = question.Answers.filter((w, i) => w.Text === selectedAnswer[i])
 
- 
 		let data = {
 			ExerciseId: exerciseId,
 			QuestionId: question.Id,
-			answersId: arr.map(w => w.Id),
+			answersId: selectedAnswer,
 			AnswerText: '',
 			CategoryId: question.Category.Id,
 			SubCategoryId: question.SubCategory.Id,
+			TypeName: question.ExerciseType,
 		};
 
 		exerciseService
@@ -116,12 +115,8 @@ function TagsExercise({
 
 				if (res.IsCorrect) {
 					setIsCorrect(true);
-                    let x = DoneQuestion.DoneAnswerString.split(' ')
-				    setSelectedAnswer(x);
 				} else {
 					setIsCorrect(false);
-                    let y = question.Answers[0].Text.split(' ')
-                    setCorrectAnswerId(y);
 				}
 			})
 			.catch((err) => {
@@ -152,7 +147,7 @@ function TagsExercise({
     return (
        <>
                     <div className="spec-exer-head">
-                        <p className="spec-exer-head-ex3">	{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseType}`}</p>
+                        <p className="spec-exer-head-ex3">	{`სავარჯიშო # ${exId} - ${question.ExerciseType}`}</p>
                         <button>პროექტორის რეჟიმი</button>
                     </div>
                     <p className="mark-word-title">{question.ExerciseTitle}</p>

@@ -15,6 +15,7 @@ function MultiTestExercise({
 	numberOfQuestions,
 	exerciseId,
 	index,
+	exId,
 	DoneQuestion,
 	IsDone,
 }) {
@@ -108,6 +109,7 @@ function MultiTestExercise({
 				AnswerText: '',
 				CategoryId: 1,
 				SubCategoryId: 4,
+				TypeName: question.ExerciseType,
 			};
 
 			exerciseService
@@ -152,7 +154,7 @@ function MultiTestExercise({
 		<>
 			<div className='spec-exer-head'>
 				<p className='spec-exer-head-ex3'>
-					{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}
+					{`სავარჯიშო # ${exId} - ${question.ExerciseTitle}`}
 				</p>
 				<button>
 					<i className='fas fa-volume-up' />
@@ -161,7 +163,10 @@ function MultiTestExercise({
 			</div>
 
 			<div className='spec-exer-questions'>
-				<div dangerouslySetInnerHTML={{ __html: question.Text }} />
+				<p
+					className='spec-ask-question'
+					dangerouslySetInnerHTML={{ __html: question.Text }}
+				/>
 				<span className='exer-choose-cor-answer'>{question.Instruction}</span>
 			</div>
 			<div className='exer-answers-all'>

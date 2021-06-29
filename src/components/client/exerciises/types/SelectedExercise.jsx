@@ -13,6 +13,7 @@ function SelectedExercise({
 	question,
 	numberOfQuestions,
 	exerciseId,
+	exId,
     DoneQuestion,
 	IsDone,
 	index,
@@ -122,6 +123,7 @@ function SelectedExercise({
 				AnswerText: '',
 				CategoryId: question.Category.Id,
 				SubCategoryId: question.SubCategory.Id,
+				TypeName: question.ExerciseType,
 			};
 
 			exerciseService
@@ -167,7 +169,7 @@ function SelectedExercise({
     return (
         <>
 			<div className="spec-exer-head">
-				<p className="spec-exer-head-ex3">{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}</p>
+				<p className="spec-exer-head-ex3">{`სავარჯიშო # ${exId} - ${question.ExerciseTitle}`}</p>
 				<button>პროექტორის რეჟიმი</button>
 			</div>
 			
@@ -373,7 +375,7 @@ function SelectedExercise({
 							<span className="exer-choose-cor-answer" css={`margin-bottom: 8px;`}>სწორი პასუხი:</span>
 
 							<div>
-							<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers.map((w) => w.IsCorrect === true ? w.Text : "")}</span>
+							<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}>{question.Answers.map((w) => w.IsCorrect === true ? w.Text : "")}</span> {' '}
 							{modifierText && modifierText.map(t => (
 								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{`${t} `}</span>
 
@@ -431,7 +433,7 @@ function SelectedExercise({
 
 					
 
-                    <div className='check-count-boxes'>
+            <div className='check-count-boxes'>
 				<div
 					className='special-exercises-return-button'
 					onClick={() => onPrev(index)}

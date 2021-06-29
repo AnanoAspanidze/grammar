@@ -14,6 +14,7 @@ function TestExercise({
 	numberOfQuestions,
 	exerciseId,
 	DoneQuestion,
+	exId,
 	IsDone,
 	index,
 }) {
@@ -35,7 +36,7 @@ function TestExercise({
 			setquestionData(question);
 			question.Answers.filter((q, i) => {
 				if (q.IsCorrect) {
-					setCorrectAnswerId(q.Id);
+					setCorrectAnswerId({ Id: q.Id, isCorrect: true });
 				}
 			});
 		}
@@ -63,7 +64,6 @@ function TestExercise({
 
 				setCorrectAnswerId({
 					Id: x.Id,
-					isCorrect: false,
 				});
 
 				setSelectedAnswer({
@@ -93,6 +93,7 @@ function TestExercise({
 				AnswerText: '',
 				CategoryId: question.Category.Id,
 				SubCategoryId: question.SubCategory.Id,
+				TypeName: question.ExerciseType,
 			};
 
 			exerciseService
@@ -139,7 +140,7 @@ function TestExercise({
 		<>
 			<div className='spec-exer-head'>
 				<p className='spec-exer-head-ex3'>
-					{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}
+					{`სავარჯიშო # ${exId} - ${question.ExerciseTitle}`}
 				</p>
 				<button>
 					<i className='fas fa-volume-up' />

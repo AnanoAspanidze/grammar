@@ -85,6 +85,7 @@ function ExercisePage({ match }) {
 															key={i}
 															question={q}
 															index={i}
+															exId={questionsData.OrderNumber}
 															IsDone={q.IsDone}
 															DoneQuestion={q.DoneQuestion && q.DoneQuestion}
 															exerciseId={parseInt(match.params.exerciseId)}
@@ -103,6 +104,7 @@ function ExercisePage({ match }) {
 															key={i}
 															question={q}
 															index={i}
+															exId={questionsData.OrderNumber}
 															IsDone={q.IsDone}
 															DoneQuestion={q.DoneQuestion && q.DoneQuestion}
 															exerciseId={parseInt(match.params.exerciseId)}
@@ -121,6 +123,7 @@ function ExercisePage({ match }) {
 															key={i}
 															question={q}
 															index={i}
+															exId={questionsData.OrderNumber}
 															IsDone={q.IsDone}
 															DoneQuestion={q.DoneQuestion && q.DoneQuestion}
 															exerciseId={parseInt(match.params.exerciseId)}
@@ -136,6 +139,7 @@ function ExercisePage({ match }) {
 															key={i}
 															question={q}
 															index={i}
+															exId={questionsData.OrderNumber}
 															IsDone={q.IsDone}
 															DoneQuestion={q.DoneQuestion && q.DoneQuestion}
 															exerciseId={parseInt(match.params.exerciseId)}
@@ -151,6 +155,7 @@ function ExercisePage({ match }) {
 															key={i}
 															question={q}
 															index={i}
+															exId={questionsData.OrderNumber}
 															IsDone={q.IsDone}
 															DoneQuestion={q.DoneQuestion && q.DoneQuestion}
 															exerciseId={parseInt(match.params.exerciseId)}
@@ -169,6 +174,7 @@ function ExercisePage({ match }) {
 															key={i}
 															question={q}
 															index={i}
+															exId={questionsData.OrderNumber}
 															IsDone={q.IsDone}
 															DoneQuestion={q.DoneQuestion && q.DoneQuestion}
 															exerciseId={parseInt(match.params.exerciseId)}

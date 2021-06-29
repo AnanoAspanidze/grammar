@@ -14,6 +14,7 @@ function MistakesExercise({
 	question,
 	numberOfQuestions,
 	exerciseId,
+	exId,
 	index,
 	DoneQuestion,
 	IsDone,
@@ -78,6 +79,7 @@ function MistakesExercise({
 			AnswerText: value,
 			CategoryId: question.Category.Id,
 			SubCategoryId: question.SubCategory.Id,
+			TypeName: question.ExerciseType,
 		};
 
 		exerciseService
@@ -121,11 +123,9 @@ function MistakesExercise({
 
     return (
         <>
-          <div className="col-9 p-0">
-                <div className="spec-exer-fields">
-                    <div className="spec-exer-all">
+         
                     <div className="spec-exer-head">
-                        <p className="spec-exer-head-ex3">{`სავარჯიშო # ${question.OrderNumber} - ${question.ExerciseTitle}`}</p>
+                        <p className="spec-exer-head-ex3">{`სავარჯიშო # ${exId} - ${question.ExerciseTitle}`}</p>
                         <button>პროექტორის რეჟიმი</button>
                     </div>
                     <span className="exer-choose-cor-answer">{question.Instruction}</span>
@@ -171,9 +171,7 @@ function MistakesExercise({
 					</div>
 				)}
 			</div>
-                    </div>
-                </div>
-            </div>
+        
         </>
     )
 }
