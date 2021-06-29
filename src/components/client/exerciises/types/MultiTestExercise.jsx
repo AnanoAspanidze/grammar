@@ -118,7 +118,7 @@ function MultiTestExercise({
 					setHaveToChecked(false);
 					setLoading(false);
 					setDefinitionModal(true);
-					setExplanation(res.AnswerText);
+					setExplanation(res.AnswerResponse);
 
 					if (res.IsCorrect) {
 						setIsCorrect(true);

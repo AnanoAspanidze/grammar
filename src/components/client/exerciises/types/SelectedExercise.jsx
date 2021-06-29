@@ -129,7 +129,7 @@ function SelectedExercise({
 					setHaveToChecked(false);
 					setDefinitionModal(true);
 					setLoading(false);
-					setExplanation(res.AnswerText)
+					setExplanation(res.AnswerResponse)
 
 					if (res.IsCorrect) {
 						setIsCorrect(true);

@@ -1,0 +1,250 @@
+html,
+.exercises-body {
+	height: 100%;
+}
+
+.exercises-body {
+	overflow: hidden;
+}
+
+.exercises-choose-fields {
+	margin-bottom: 48px;
+}
+
+.all-exercises-first p {
+	font-size: 16px;
+	font-feature-settings: 'case' on;
+	padding-right: 12px;
+}
+
+.all-exercises-first {
+	margin-bottom: 20px;
+}
+
+.all-exercises-first .slice {
+	background-color: #f8f7f2;
+}
+
+.all-exercises-first .c100 {
+	background-color: #f8f7f2;
+}
+
+.exercises-issue-status {
+	font-size: 12px;
+}
+
+.exercises-head-pr {
+	display: -webkit-box;
+}
+
+.exercises-grammar-fields {
+	display: flex;
+	justify-content: space-between;
+}
+
+.exercises-head-right {
+	margin-top: 4px;
+}
+
+.exercises-head-right p {
+	color: #4b6858;
+	font-size: 14px;
+	line-height: 16px;
+	font-family: 'FiraGo Bold';
+}
+
+.exercises-head-right i {
+	padding-left: 8px;
+}
+
+.exercises-white-box {
+	background-color: white;
+	border-radius: 20px;
+	height: 172px;
+	margin-bottom: 36px;
+}
+
+.exercises-wb-pad {
+	padding: 28px 24px;
+	height: 172px;
+	display: flex;
+	flex-direction: column;
+}
+
+.exercises-grammar-pagination {
+	font-family: 'FiraGo';
+	font-size: 12px;
+	line-height: 18px;
+	color: #4b6858;
+	padding-bottom: 8px;
+}
+
+.exercises-grammar-title {
+	font-family: 'FiraGo Medium';
+	font-size: 14px;
+	line-height: 21px;
+	color: #333333;
+	padding-bottom: 8px;
+}
+
+.exercises-grammar-item {
+	display: flex;
+	justify-content: space-between;
+	margin-top: auto;
+}
+
+.exercises-grammar-item span {
+	font-family: 'FiraGo Book';
+	font-size: 12px;
+	line-height: 18px;
+	color: #707070;
+	align-self: center;
+}
+
+.exercises-grammar-item a img {
+	display: inline-block;
+	margin: auto;
+	/* vertical-align: middle; */
+	/* background-color: #F6F7F7;
+    border-radius: 20px;
+    padding: 10px; */
+}
+
+.exercises-grammar-item a {
+	background-color: #f6f7f7;
+	border-radius: 50%;
+	padding: 10px;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	flex-direction: column;
+}
+
+.exercises-grammar-item img {
+	display: block;
+	margin: auto;
+}
+
+.exercises-number-up {
+	font-family: 'FiraGo Bold';
+	font-size: 32px;
+	line-height: 38.4px;
+	letter-spacing: 0.2px;
+	font-weight: 700;
+	color: #4b6858;
+	margin-top: auto;
+}
+
+.exercises-work {
+	font-family: 'FiraGo';
+	font-size: 16px;
+	letter-spacing: 0.2px;
+	color: #4b6858;
+	font-weight: bold;
+	margin-bottom: auto;
+}
+
+.exercises-wb-pad-more {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.all-exercises-all {
+	overflow-y: scroll;
+	height: calc(100% - 317px);
+}
+
+/* width */
+
+::-webkit-scrollbar {
+	width: 0;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+	background: transparent;
+	/* background: rgba(112, 112, 112, .4); */
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+	background: transparent;
+	/* background: #555;  */
+}
+
+/* slider */
+
+.splide__slide {
+	width: 24% !important;
+	margin: 0 10px !important;
+}
+
+.splide__slide .col-3 {
+	width: 100%;
+}
+
+ul.splide__list {
+	width: 100%;
+}
+.splide .splide__arrows .splide__arrow--prev {
+	right: 4rem !important;
+	left: inherit;
+}
+.exercises-splide1 .splide__arrow--next,
+.exercises-splide2 .splide__arrow--next,
+.exercises-splide .splide__arrow--next3 {
+	right: 0.8em;
+}
+
+.exercises-splide1 .splide__arrow,
+.exercises-splide2 .splide__arrow,
+.exercises-splide3 .splide__arrow {
+	background: #ffffff;
+	border-radius: 12px;
+	width: 36px;
+	height: 36px;
+	color: #4b6858;
+	opacity: 1;
+}
+.exercises-splide1 .splide__arrow {
+	top: -50px;
+}
+/* .exercises-splide2 .splide__arrow {
+    
+}
+.exercises-splide3 .splide__arrow {
+    
+} */
+.exercises-splide1 .splide__arrow svg,
+.exercises-splide2 .splide__arrow svg,
+.exercises-splide3 .splide__arrow svg {
+	width: 0.9em;
+	height: 0.9em;
+}
+.exercises-splide1 .splide__pagination__page,
+.exercises-splide2 .splide__pagination__page,
+.exercises-splide3 .splide__pagination__page {
+	width: 0;
+	height: 0;
+}
+.row .splide {
+	padding-left: 0;
+	padding-right: 0;
+}
+.splide__slide {
+	width: 219px !important;
+}
+.chatbox-exercises {
+	position: fixed;
+	right: 63px;
+	bottom: 71px;
+}

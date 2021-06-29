@@ -1,0 +1,762 @@
+a.sign-in-parent:hover:after {
+	content: '';
+	background: transparent;
+	height: 0;
+	width: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.overlay {
+	z-index: 99;
+}
+.input-popup-bg {
+	background-image: url('../src/assets/images/sign-in/input-popup-bg.svg');
+	background-repeat: no-repeat;
+	/* background-position: center top; */
+	/* text-align: center; */
+	background-size: contain;
+	width: 902px;
+	height: 765px;
+	margin: 0 auto;
+	display: flex;
+}
+
+.popup .close-in {
+	top: 25px;
+	right: -45px;
+}
+
+.registration-form-signin {
+	margin: 0 auto;
+	background-color: transparent;
+	border: none;
+	display: initial;
+}
+
+/* hover */
+
+.registration-form-forgotpas .auth-button:hover,
+.registration-form-forgotpas .second-forgot-pass-input:hover,
+.new-password .auth-button:hover,
+.new-region .new-region-button:hover,
+.name-fields .create-account-button:hover,
+.mail-approve .mail-approve-button:hover {
+	border-color: #00cc6f;
+	color: #00cc6f;
+	box-shadow: none;
+	position: inherit;
+}
+.registration-form-forgotpas .auth-button:focus,
+.registration-form-forgotpas .second-forgot-pass-input:focus,
+.new-password .auth-button:focus,
+.new-region .new-region-button:focus,
+.name-fields .create-account-button:focus,
+.mail-approve .mail-approve-button:focus {
+	border: 4px solid #00cc6f;
+	color: #00cc6f;
+	box-shadow: none;
+	background-color: #f2fcf8;
+}
+
+.password-changed .pass-changed-button:hover,
+.auth-registration-form .bg-hover:hover,
+.create-password .create-pass-button:hover,
+.success-registred .success-registred-input:hover {
+	background-color: #00cc6f;
+	box-shadow: 7px 7px 0px #00b261;
+	position: relative;
+	left: -1px;
+	top: -1px;
+}
+.password-changed .pass-changed-button:focus,
+.auth-registration-form .bg-hover:focus,
+.create-password .create-pass-button:focus,
+.success-registred .success-registred-input:focus {
+	box-shadow: none;
+	background-color: #00b361;
+}
+
+/* auth registration form */
+
+.auth-registration-form {
+	margin: 128px auto 0;
+	background-color: transparent;
+	border: none;
+	display: initial;
+}
+
+.popup-registration-title {
+	padding: 0;
+	margin: 0 auto 72px;
+}
+
+.popup-auth-input-email {
+	width: 446px;
+	height: 72px;
+	margin: 0 auto 16px;
+}
+
+.popup-auth-input-password {
+	width: 446px;
+	height: 72px;
+	margin: 0 auto 20px;
+}
+
+.popup-error-p {
+	margin-left: 31px;
+}
+
+.popup-recover-password {
+	margin: 15px 31px 58px 0;
+	float: right;
+}
+
+.popup-auth-button {
+	width: 446px;
+	height: 80px;
+	margin-bottom: 48px;
+}
+
+/* forgot pass registration form */
+
+.registration-form-signin .auth-input-email,
+.registration-form-signin .auth-input-password,
+.registration-form-signin .error-p,
+.registration-form-signin .recover-password,
+.registration-form-signin .input-button {
+	width: 446px;
+	margin: 0 auto 43px;
+}
+
+.registration-form-signin .auth-button {
+	border: 3px solid #333333;
+	border-radius: 16px;
+	font-family: 'FiraGo Bold';
+	font-size: 16px;
+	line-height: 16px;
+	color: #333333;
+	background-color: #ffffff;
+	box-sizing: border-box;
+}
+
+.registration-form-signin .registration-header-title {
+	padding-top: 44px;
+}
+
+.popup-recover-password {
+	text-decoration: underline;
+}
+
+.popup-recover-password:hover {
+	text-decoration: none;
+}
+
+#popup7 .popup,
+#popup8 .popup,
+#popup9 .popup,
+#popup10 .popup {
+	width: 945px;
+	height: 805px;
+	/* margin: 157px auto; */
+}
+
+.registration-form-forgotpas {
+	text-align: center;
+	margin: 82px auto 0;
+}
+
+.registration-form-forgotpas img {
+	margin: 0 auto 31px;
+}
+
+.first-forgot-pass {
+	color: #333333;
+}
+
+.first-forgot-pass h3 {
+	font-family: 'FiraGo Bold';
+	font-size: 28px;
+	line-height: 36.4px;
+	margin-bottom: 23px;
+	font-feature-settings: 'case' on;
+}
+
+.first-forgot-pass p {
+	font-family: 'FiraGo Light';
+	font-size: 14px;
+	line-height: 26px;
+	margin: 0 auto 44px;
+	width: 420px;
+}
+
+/* check email registration form*/
+
+.second-forgot-pass {
+	display: none;
+}
+
+.second-forgot-pass img {
+	margin: 38px auto 41px;
+}
+
+.second-forgot-pass-title {
+	font-family: 'FiraGO Bold';
+	font-size: 28px;
+	line-height: 36.4px;
+	margin-bottom: 25px;
+}
+
+.second-forgot-pass-text {
+	font-family: 'FiraGo Light';
+	font-size: 14px;
+	line-height: 26px;
+	margin: 0 auto 66px;
+	width: 446px;
+}
+
+.second-forgot-pass-text span {
+	font-family: 'FiraGo';
+}
+
+.second-forgot-pass-input {
+	width: 446px;
+	height: 80px;
+	margin: 0 auto 36px;
+	border: 3px solid #333333;
+	border-radius: 16px;
+	font-family: 'FiraGo Bold';
+	font-size: 16px;
+	line-height: 16px;
+	color: #333333;
+	background-color: #ffffff;
+	box-sizing: border-box;
+}
+
+.second-forgot-pass-button {
+	font-family: 'FiraGo Light';
+	font-size: 14px;
+	line-height: 14px;
+	color: #333333;
+	text-decoration: underline;
+}
+
+/* new pass registration form */
+
+.new-pass-registr-form {
+	margin: 0 auto;
+}
+
+.new-password-title {
+	font-family: 'FiraGo Bold';
+	font-size: 28px;
+	line-height: 36.4px;
+	margin: 110px auto 64px;
+	color: #333333;
+	font-feature-settings: 'case' on;
+}
+
+.new-password-form label {
+	display: block;
+	text-align: left;
+	width: 442px;
+	margin: 0 auto 20px;
+	font-family: 'FiraGo Medium';
+	font-size: 16px;
+	line-height: 14px;
+}
+
+.new-password-form label span {
+	color: #ff4444;
+}
+
+.pwd-input-password {
+	margin-bottom: 32px;
+}
+
+.pwd-repeat-input-password {
+	margin-bottom: 60px;
+}
+
+.password-changed {
+	display: none;
+}
+
+.password-changed img {
+	margin: 102px auto 46px;
+}
+
+.password-changed .password-changed-title {
+	width: 535px;
+	font-family: 'FiraGo Bold';
+	font-size: 28px;
+	line-height: 36.4px;
+	margin: 0 auto 28px;
+	font-feature-settings: 'case' on;
+}
+
+.password-changed-text {
+	font-family: 'FiraGo Light';
+	font-size: 14px;
+	line-height: 26px;
+	margin-bottom: 89px;
+}
+
+.registration-form-signin .pass-changed-button {
+	display: block;
+	width: 446px;
+	height: 80px;
+	border-radius: 20px;
+	color: #ffffff;
+	background-color: #00cc6f;
+	text-align: center;
+	margin: 35px auto 38px;
+	font-family: 'FiraGo Bold';
+	font-size: 16px;
+	line-height: 16px;
+}
+
+/* new account form */
+
+.new-account-title,
+.new-account-create-title,
+.new-password-create-title {
+	font-family: 'FiraGo Bold';
+	font-size: 28px;
+	line-height: 33.6px;
+	color: #333333;
+	font-feature-settings: 'case' on;
+	text-align: left;
+	margin: 82px 0 64px 35px;
+}
+
+.new-account-create-title {
+	width: 446px;
+	margin: 82px auto 56px;
+}
+.new-password-create-title {
+	width: 446px;
+	margin: 72px auto 82px;
+}
+.about-header-icons3 .can-toggle {
+	width: 446px;
+	margin: 0 auto;
+}
+
+.about-header-icons3 .can-toggle label .can-toggle__switch {
+	flex: 0 0 446px;
+	height: 60px;
+	border: 1px solid #e7e8e8;
+	border-radius: 14px;
+}
+
+.rem-back-img {
+	background-image: none;
+}
+
+.rem-back-img input {
+	font-family: 'FiraGo Book';
+	font-size: 16px;
+	line-height: 14px;
+	color: #707070;
+	width: 98% !important;
+	margin-left: 5px !important;
+	margin-right: 5px !important;
+}
+
+.about-header-icons3 .can-toggle label .can-toggle__switch:before,
+.about-header-icons3 .can-toggle label .can-toggle__switch:after {
+	line-height: 43px !important;
+}
+
+.about-header-icons3 .can-toggle label .can-toggle__switch:after {
+	top: 7px;
+	left: 8px;
+	right: 8px;
+	bottom: 7px;
+	border-radius: 8px;
+	width: 205px;
+	height: 42px;
+}
+
+.about-header-icons3 .can-toggle label .can-toggle__switch:after {
+	transition: transform 0.3s cubic-bezier(0, 1, 0.5, 1);
+	color: white;
+	background: #4b6858;
+	box-shadow: 0 24px 18px -14px rgb(49 79 62 / 32%);
+}
+
+.about-header-icons3
+	.can-toggle
+	input[type='checkbox']:focus
+	~ label
+	.can-toggle__switch:after,
+.about-header-icons3
+	.can-toggle
+	input[type='checkbox']:hover
+	~ label
+	.can-toggle__switch:after {
+	box-shadow: 0 24px 18px -14px rgb(49 79 62 / 32%) !important;
+}
+
+.new-region .pwd-repeat-input-password {
+	margin-bottom: 32px;
+}
+
+.about-header-icons3 {
+	margin-bottom: 52px;
+}
+
+.new-region .new-region-button {
+	height: 70px;
+}
+
+#popup10 .custom-select {
+	z-index: 9;
+	position: relative;
+}
+
+details {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	margin-right: 1rem;
+}
+
+details[open] {
+	z-index: 1;
+}
+
+summary {
+	padding: 1.2rem;
+	cursor: pointer;
+	border-radius: 15.5px;
+	background-color: transparent;
+	list-style: none;
+}
+
+summary::-webkit-details-marker {
+	display: none;
+}
+
+details[open] summary:before {
+	content: '';
+	display: block;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+summary:after {
+	content: '';
+	display: block;
+	float: right;
+	width: 14px;
+	height: 14px;
+	border-bottom: 3px solid #130f26;
+	border-left: 3px solid #130f26;
+	border-bottom-left-radius: 2px;
+	transform: rotate(-45deg) translate(0%, 0%);
+	transform-origin: center center;
+	transition: transform ease-in-out 100ms;
+	margin: 7px 16px 0 0;
+}
+
+summary:focus {
+	outline: none;
+}
+
+details[open] summary:after {
+	transform: rotate(-225deg) translate(0%, 0%);
+	margin-top: 10px;
+}
+
+ul.list {
+	display: block;
+	width: 446px;
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	left: 0;
+	padding: 15px 0 0 0;
+	margin: 0;
+	background: #ffffff;
+	border: 2px solid #e7e8e8;
+	border-radius: 20px;
+	box-shadow: 12px 12px 20px 2px rgba(51, 51, 51, 0.05);
+	box-sizing: border-box;
+	max-height: 315px;
+	overflow-y: auto;
+	z-index: 999;
+}
+
+ul.list li {
+	width: 100%;
+	height: 36px;
+	margin: 0;
+	padding: 0;
+}
+
+ul.list li:first-child {
+	padding-top: 0;
+}
+
+ul.list li:last-child {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+summary.radios {
+	counter-reset: radios;
+	height: 100%;
+	text-align: initial;
+}
+
+.radios input[type='radio'] {
+	counter-increment: radios;
+	appearance: none;
+	display: none;
+	vertical-align: middle;
+}
+
+.radios input[type='radio']:checked {
+	display: inline;
+	appearance: none;
+}
+
+.radios input[type='radio']:after {
+	content: attr(title);
+	display: inline;
+	font-size: 1rem;
+}
+
+ul.list {
+	counter-reset: labels;
+}
+
+ul.list label {
+	width: 100%;
+	display: block;
+	cursor: pointer;
+	text-align: left;
+	font-family: 'FiraGo Medium';
+	font-size: 14px;
+	line-height: 16px;
+	color: #333333;
+	padding: 9px 0 9px 20px;
+}
+
+/* new account form end*/
+
+/* new pass registration form */
+
+.name-fields {
+	display: none;
+}
+
+/* reset pass success registration form */
+
+@media only screen and (max-width: 767.98px) {
+	/* .first-forgot-pass p{
+        width: 80%;
+    } */
+}
+
+.return {
+	display: flex;
+	width: 64px;
+	color: black;
+}
+
+.return img {
+	margin: 4px 8px 0px 0px;
+}
+
+.return-continue {
+	width: 442px;
+	margin: 0 auto;
+}
+
+.create-password {
+	display: none;
+}
+
+.mail-approve {
+	display: none;
+}
+
+.success-registred {
+	display: none;
+}
+
+/* create account form */
+.new-password-form label {
+	margin: 0 auto 20px;
+}
+.create-account-form label {
+	margin: 0 auto 20px;
+}
+.create-account-input {
+	margin: 0 auto 32px;
+}
+.create-account-input-email {
+	margin: 0 auto 64px;
+}
+.create-account-input-email input[type='email'] {
+	width: 296px;
+	height: 16px;
+	margin: 11px 48px;
+	padding: 24px 20px;
+}
+.return-continue {
+	display: flex;
+	justify-content: space-between;
+}
+.return-continue a {
+	text-decoration: none;
+	color: #333333;
+	align-items: center;
+	font-family: 'FiraGO Book';
+	font-size: 16px;
+	line-height: 16px;
+}
+.registration-form-new-region .create-account-button {
+	width: 328px;
+	margin: 0;
+}
+
+/* chechbox */
+
+.squaredOne input[type='checkbox'] {
+	visibility: hidden;
+}
+.checkbox-input {
+	display: flex;
+	width: 397px;
+	margin: 0 auto 24px;
+}
+.checkbox-input-privacy {
+	display: flex;
+	width: 397px;
+	margin: 0 auto 54px;
+}
+.checkbox-input-text {
+	width: 369px;
+	margin-left: 12px;
+	font-family: 'FiraGo Light';
+	font-size: 14px;
+	line-height: 21px;
+	color: #707070;
+}
+.checkbox-input-text span {
+	font-family: 'FiraGo';
+	color: #4b6858;
+	text-decoration: underline;
+}
+.return-continue {
+	width: 444px;
+	height: 64px;
+}
+.return-continue .create-pass-button {
+	width: 328px;
+	height: 64px;
+	margin: 0 0 0 32px;
+}
+/* SQUARED ONE */
+.squaredOne {
+	width: 16px;
+	height: 16px;
+	background: transparent;
+	border: 2px solid #4b6858;
+	border-radius: 6px;
+	position: relative;
+}
+
+.squaredOne label {
+	cursor: pointer;
+	position: absolute;
+	width: 16px !important;
+	height: 16px !important;
+	left: 0px !important;
+	top: 0px !important;
+	background: transparent;
+}
+
+.squaredOne label:after {
+	-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
+	filter: alpha(opacity=0);
+	opacity: 0;
+	content: '';
+	position: absolute;
+	width: 8px !important;
+	height: 8px !important;
+	background: #4b6858;
+	border-radius: 2px;
+	top: 2px !important;
+	left: 2px !important;
+}
+
+.squaredOne input[type='checkbox']:checked + label:after {
+	-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';
+	filter: alpha(opacity=100);
+	opacity: 1;
+}
+
+/* mail approve and success-registred*/
+
+.mail-approve-img {
+	margin: 95px auto 17px;
+}
+.success-registred-img {
+	margin: 102px auto 46px;
+}
+
+.mail-approve-title,
+.success-registred-title {
+	font-family: 'FiraGo Bold';
+	font-size: 28px;
+	line-height: 36.4px;
+	color: #333333;
+	font-feature-settings: 'case' on;
+	text-align: center;
+}
+.mail-approve-title {
+	margin: 0 auto 54px;
+}
+.success-registred-title {
+	margin: 0 auto 28px;
+	width: 512px;
+}
+.mail-approve-text,
+.success-registred-text {
+	font-family: 'FiraGo Light';
+	font-size: 14px;
+	line-height: 26px;
+	color: #333333;
+	text-align: center;
+}
+.mail-approve-text {
+	width: 446px;
+	margin: 0 auto 64px;
+}
+.mail-approve-text span {
+	font-family: 'FiraGO';
+}
+.success-registred-text {
+	margin: 0 auto 89px;
+}
+
+.mail-approve .mail-approve-input {
+	width: 446px;
+	height: 144px;
+	flex-direction: column-reverse;
+}
+.mail-approve-input .return {
+	margin: 0 auto;
+}
+.mail-approve .mail-approve-button {
+	margin: 0;
+}
+.appear-mail-approve {
+	display: none;
+}

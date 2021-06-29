@@ -46,7 +46,7 @@ function TagsExercise({
 		const xmlString = question.Text;
 		const doc1 = parser.parseFromString(xmlString, "application/xml");
 		
-        let str = doc1.documentElement.textContent.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
+        let str = doc1.documentElement.textContent.replace(/[.,„“\/?#!$%\^&\*;:{}=\-_`~()]/g,"")
 		setText(str)
     }, [])
 
@@ -77,12 +77,13 @@ function TagsExercise({
 			setDefinitionModal(true);
 
 			if (DoneQuestion.IsDoneQuestionCorrect) {
-                let x = DoneQuestion.DoneAnswerString.split(' ')
+                let x = DoneQuestion.DoneAnswerString.split(',')
+				console.log(x)
 				setSelectedAnswer(x);
 
 				setIsCorrect(true);
 			} else {
-                let x = DoneQuestion.DoneAnswerString.split(' ')
+                let x = DoneQuestion.DoneAnswerString.split(',')
 				setSelectedAnswer(x);
 
 
@@ -113,7 +114,7 @@ function TagsExercise({
 				setHaveToChecked(false);
 				setLoading(false);
 				setDefinitionModal(true);
-				setExplanation(res.AnswerText)
+				setExplanation(res.AnswerResponse)
 
 				if (res.IsCorrect) {
 					setIsCorrect(true);
@@ -159,9 +160,9 @@ function TagsExercise({
                                                                     value={selectedAnswer && selectedAnswer.includes(w) ? w : null} 
                                                                     iscorrect={iscorrect} 
                                                                     isSelected={selectedAnswer && selectedAnswer.includes(w)} 
-                                                                    green2={selectedAnswer && iscorrect === false && selectedAnswer.includes(w) === true}
-                                                                    green3={correctAnswerId && iscorrect === false && correctAnswerId.includes(w) === true}
-                                                                    green4={selectedAnswer && correctAnswerId&& iscorrect === false && selectedAnswer.includes(w) === false && correctAnswerId.includes(w) === true}
+                                                                    green2={selectedAnswer && iscorrect === false && selectedAnswer.includes(w) === true && correctAnswerId.includes(w) === false}
+                                                                    green3={selectedAnswer && (iscorrect === true && selectedAnswer.includes(w) === true) || (iscorrect === false && selectedAnswer.includes(w) === true && correctAnswerId.includes(w) === true) }
+                                                                    green4={selectedAnswer && correctAnswerId && iscorrect === false && selectedAnswer.includes(w) === false && correctAnswerId.includes(w) === true}
                                                                     onClick={() => clickAnswers(w, )}>{w}</Span>)}
                     </div>
                     <div className='check-count-boxes'>
@@ -231,7 +232,7 @@ const Span = styled.span`
     `}
 
 	${({ green4, isSelected }) =>
-		isSelected === false && green4 &&
+		green4 &&
 		`
         border-radius: 10px;
 		border: 2px solid transparent;

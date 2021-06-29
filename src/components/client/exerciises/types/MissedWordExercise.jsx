@@ -120,7 +120,7 @@ function MissedWordExercise({
 					setHaveToChecked(false);
 					setLoading(false);
 					setDefinitionModal(true);
-					setExplanation(res.AnswerText)
+					setExplanation(res.AnswerResponse)
 
 					if (res.IsCorrect) {
 						setIsCorrect(true);
@@ -268,7 +268,14 @@ function MissedWordExercise({
 							<div>
 							<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[0]} </span>
 
-							<span css={`font-size: 18px; color: #239F61; font-family: FiraGO; line-height: 1.3;`}>{question.Answers.map(w => w.Id ? w.Text : "")}</span>
+							<span css={`font-size: 18px; color: #239F61; font-family: FiraGO; line-height: 1.3;`}>{question.Answers.map((w,i) => {
+								console.log(question.Answers.length -1 !== i)
+								if(w.Id && question.Answers.length > 1 && question.Answers.length - 1 !== i ) {
+									return `${w.Text}/`
+								}  else if(w.Id) {
+									return w.Text
+								}
+							})}</span>
 
 								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[1]} </span>
 								.
