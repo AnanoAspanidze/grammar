@@ -66,9 +66,6 @@ function SelectedExercise({
 				setModifierText(textes2)
 
 			}
-
-			console.log(text)
-			console.log(textes2)
 		}
 	}, [text])
 

@@ -1,0 +1,153 @@
+/* input style */
+
+input[type='email']::placeholder,
+input[type='password']::placeholder {
+	font-family: 'FiraGo Book';
+	font-size: 16px;
+	line-height: 14px;
+	color: #707070;
+	padding: 3px 0;
+}
+
+/* email input */
+
+.input-email {
+	background-image: url('../src/assets/images/icons/Message.svg');
+	background-repeat: no-repeat;
+	background-position: 24px center;
+	width: 384px;
+	height: 74px;
+	background-color: #ffffff;
+	border: 2px solid #e7e8e8;
+	border-radius: 20px;
+	margin: 8px auto;
+}
+
+.input-email input[type='email'] {
+	width: 296px;
+	height: 16px;
+	margin: 11px 48px;
+	padding: 24px 20px;
+}
+
+/* end email input  */
+
+/* password input */
+
+.input-password {
+	background-image: url('../src/assets/images/icons/Password.svg');
+	background-repeat: no-repeat;
+	background-position: 24px center;
+	width: 384px;
+	height: 74px;
+	background-color: #ffffff;
+	border: 2px solid #e7e8e8;
+	border-radius: 20px;
+	margin: 8px auto;
+}
+
+.input-password input[type='password'] {
+	width: 296px;
+	height: 16px;
+	margin: 11px 48px;
+	padding: 24px 20px;
+}
+
+/* end password input */
+
+/* input focus, disabled, error, Complete */
+
+.input-email:focus-within,
+.input-password:focus-within {
+	box-shadow: 0 0 0 5px #e6faf1;
+	border: 2px solid #00cc6f;
+	box-sizing: border-box;
+}
+
+.disabled-input {
+	border: 2px solid #e7e8e8;
+	color: #c2c2c2;
+	cursor: default;
+}
+
+.disabled-input input::placeholder {
+	color: #e7e8e8;
+}
+
+.disabled-input:focus-within {
+	box-shadow: none;
+	border: 2px solid #e7e8e8;
+}
+
+.disabled-input input::placeholder {
+	color: #e7e8e8;
+}
+
+.disabled-input:focus-within {
+	box-shadow: none;
+	border: 2px solid #e7e8e8;
+}
+
+.error-input {
+	border: 2px solid #ff4444;
+	background-color: #fff6f6;
+}
+
+.error-input input {
+	background-color: #fff6f6;
+}
+
+.error-input input::placeholder {
+	color: #333333;
+}
+
+.complete {
+	border: 2px solid #131515;
+}
+
+.complete:focus-within {
+	box-shadow: none;
+	border: 2px solid #e7e8e8;
+}
+
+/* end input style */
+
+/* error message */
+
+.error-p {
+	/* display: none; */
+	margin: 12px auto 0;
+	color: #ff4444;
+	width: 71%;
+	font-family: 'FiraGo Light';
+	font-size: 14px;
+	line-height: 14px;
+}
+
+.error-p2 {
+	font-family: 'FiraGo Light';
+	font-size: 14px;
+	line-height: 14px;
+	width: 51%;
+}
+
+.recover-password {
+	margin: 15px auto 0;
+	padding: 0 5px 0 0;
+	width: 77%;
+	display: block;
+	text-align: end;
+	font-family: 'FiraGo Medium';
+	font-size: 14px;
+	line-height: 14px;
+	color: #333;
+}
+
+.recover-password2 {
+	width: 58%;
+}
+
+.recover-password:hover {
+	color: #333;
+	text-decoration: underline;
+}

@@ -180,7 +180,7 @@ function MissedWordExercise({
 						<>
 						{modifierText && modifierText[0]}
 						<input value={selectedAnswer} type="text" css={`color: #EB2347;`} /> 
-						{/* {modifierText && modifierText[1]} */}
+						{modifierText && modifierText[1]}
 						</>
 					) : null}
 

@@ -1,0 +1,8 @@
+.spec-exer--textarea {
+    padding: 28px;
+    background-color: #F6F7F7;
+    margin: 40px 0;
+}
+.spec-exer--textarea textarea {
+    background-color: #F6F7F7;   
+}
