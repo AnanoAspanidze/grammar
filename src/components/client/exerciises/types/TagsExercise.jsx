@@ -94,12 +94,14 @@ function TagsExercise({
     const checkQuestion = () => {
 		setLoading(true);
 
+		let x = selectedAnswer + ''
+		console.log(x)
 
 		let data = {
 			ExerciseId: exerciseId,
 			QuestionId: question.Id,
-			answersId: selectedAnswer,
-			AnswerText: '',
+			answersId: [],
+			AnswerText: x,
 			CategoryId: question.Category.Id,
 			SubCategoryId: question.SubCategory.Id,
 			TypeName: question.ExerciseType,
