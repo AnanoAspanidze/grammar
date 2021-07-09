@@ -36,7 +36,7 @@
 	margin-bottom: 16px;
 }
 .exercises-grey-box:hover {
-	border: 2.5px solid #4b6858;
+	border: 2.5px solid #4b6858 !important;
 }
 .exercises-active {
 	border: 2.5px solid #4b6858;

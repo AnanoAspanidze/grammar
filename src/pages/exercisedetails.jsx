@@ -73,11 +73,19 @@ function ExerciseDetailsPage({ match }) {
 												</div>
 
 												<div className='col-3'>
-													<div className='video-content'>
-														<img src={VideoImg} alt='video' />
-													</div>
-													<div className='video-content'>
-														<img src={VideoImg} alt='video' />
+													<div class='video-content'>
+														{exercise &&
+															exercise.VideoLinks.map((y) => (
+																<iframe
+																	width='560'
+																	height='315'
+																	src={`https://www.youtube.com/embed/${y.Url}`}
+																	title='YouTube video player'
+																	frameborder='0'
+																	allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+																	allowfullscreen
+																></iframe>
+															))}
 													</div>
 												</div>
 											</div>

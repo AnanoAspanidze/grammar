@@ -55,8 +55,6 @@ function TrueOrFalse({ isEditPage, data, onEditQuestion, index }) {
 			});
 	};
 
-	console.log(values.Questions[index]);
-
 	return (
 		<div className={classes.EcercisesBorder} style={{ position: 'relative' }}>
 			{isEditPage && (

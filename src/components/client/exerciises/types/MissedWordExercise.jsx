@@ -294,7 +294,8 @@ function MissedWordExercise({
 				</div>
 				
 				<div className='ganmarteba'>
-					{definitionModal && (iscorrect === true || iscorrect === false) && (
+					{definitionModal &&
+						explanation && (iscorrect === true || iscorrect === false) && (
 						<p onClick={() => Defaults.Definition.show(explanation || DoneQuestion.DoneAnswerExplanation)}>მაჩვენე განმარტება</p>
 					)}
 				</div>

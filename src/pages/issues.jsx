@@ -13,13 +13,31 @@ function IssuesPage() {
 
 	let history = useHistory();
 
+	const [loading, setloading] = useState(false);
 	const [issues, setissues] = useState(null);
+	const [filteredIssues, setfilteredIssues] = useState(null);
 
 	useEffect(() => {
-		issueService.getPublicSubCategories().then((res) => {
-			setissues(res);
-		});
+		issueService.getExercisesList().then((res) => setissues(res));
 	}, []);
+
+	useEffect(() => {
+		if (issues) {
+			setfilteredIssues(issues);
+		}
+	}, [issues]);
+
+	let pathName = history.location.pathname;
+
+	const generateArray = (name) => {
+		if (name !== 'ყველა') {
+			const x = issues.filter((w) => w.Category.Name === name);
+			console.log(x);
+			setfilteredIssues(x);
+		} else if (name === 'ყველა') {
+			setfilteredIssues(issues);
+		}
+	};
 
 	return (
 		<>
@@ -61,25 +79,38 @@ function IssuesPage() {
 										</div>
 									)}
 								</div>
+
 								<div className='variants-navbar'>
 									<ul>
-										<li className='variants-active'>
+										<li
+											className={`${
+												pathName === '/issues' ? 'variants-active' : ''
+											}`}
+										>
 											<Link to='issues'>
 												<i className='fas fa-bookmark' /> საკითხები
 											</Link>
 										</li>
-										<li>
+										<li
+											className={`${
+												pathName === '/exercises' ? 'variants-active' : ''
+											}`}
+										>
 											<Link to='exercises'>
 												<i className='fas fa-file-alt' /> სავარჯიშოები
 											</Link>
 										</li>
-										<li>
-											<Link to='/'>
+										<li
+											className={`${pathName === '' ? 'variants-active' : ''}`}
+										>
+											<Link to='/statistics'>
 												<i className='fas fa-chart-pie' /> სტატისტიკა
 											</Link>
 										</li>
-										<li>
-											<Link to='/'>
+										<li
+											className={`${pathName === '' ? 'variants-active' : ''}`}
+										>
+											<Link to='/profile'>
 												<i className='fas fa-user' /> ჩემი პროფილი
 											</Link>
 										</li>
@@ -103,23 +134,32 @@ function IssuesPage() {
 												type='radio'
 												defaultChecked
 											/>
-											<label htmlFor='on' onclick>
-												ყველა
-											</label>
-											<input id='no' name='state-d' type='radio' />
-											<label htmlFor='no' onclick>
+											<label htmlFor='on'>ყველა</label>
+											<input
+												id='no'
+												name='state-d'
+												type='radio'
+												onClick={() => generateArray('ყველა')}
+											/>
+											<label
+												htmlFor='no'
+												onClick={() => generateArray('მორფოლოგია')}
+											>
 												მორფოლოგია
 											</label>
 											<input id='off' name='state-d' type='radio' />
-											<label htmlFor='off' onclick>
+											<label
+												htmlFor='off'
+												onClick={() => generateArray('სინტაქსი')}
+											>
 												სინტაქსი
 											</label>
 										</div>
 									</div>
 
 									<div className='all-variants-all'>
-										{issues &&
-											issues.map((issue) => (
+										{filteredIssues &&
+											filteredIssues.map((issue) => (
 												<div className='all-variants-one' key={issue.Id}>
 													<div className='all-variants-distance'>
 														<div className='all-variants-first'>
@@ -156,7 +196,11 @@ function IssuesPage() {
 														<div className='all-variants-third'>
 															<button
 																className='open-this-variant'
-																onClick={() => history.push('/exercises')}
+																onClick={() =>
+																	history.push(
+																		`/exercisedetails/${issue.Exercises[0].Id}`
+																	)
+																}
 															>
 																საკითხის გახსნა
 															</button>

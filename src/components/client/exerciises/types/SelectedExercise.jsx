@@ -406,20 +406,8 @@ function SelectedExercise({
 
 							<div>
 								<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[0]} </span>
-								<SelectStyles 
-									value={selectedAnswer} 
-									css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3; color #239F61;`}
-							
-							>
-							
-								{question.Answers.map(o => (
-									<option key={o.Id} 
-											value={o.Id} 
-										>
-												{o.Text}
-									</option>
-								))}
-							</SelectStyles>
+								<span css={`font-size: 18px; color #239F61; font-family: FiraGO; line-height: 1.3;`}>{question.Answers.map((w,i) => w.IsCorrect ? w.Text : "")}</span>
+								
 
 							<span css={`font-size: 18px; color: #333333; font-family: FiraGO; line-height: 1.3;`}>{modifierText && modifierText[1]} </span>
 								.
@@ -439,7 +427,8 @@ function SelectedExercise({
 				</div>
 
 				<div className='ganmarteba'>
-					{definitionModal && (iscorrect === true || iscorrect === false) && (
+					{definitionModal &&
+						explanation && (iscorrect === true || iscorrect === false) && (
 						<p onClick={() => Defaults.Definition.show(explanation || DoneQuestion.DoneAnswerExplanation)}>მაჩვენე განმარტება</p>
 					)}
 				</div>

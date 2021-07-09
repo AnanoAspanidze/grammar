@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import { useFormikContext } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -12,13 +13,16 @@ import Fab from '@material-ui/core/Fab';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { exerciseService } from '../../../services/exercise.service';
+import ExerciseCheckbox from './ExerciseCheckbox';
 import SnackbarComponent from '../reusable/SnackbarComponent';
-import AllMainComponentsEdit from './AllMainComponentsEdit';
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+import AllMainComponents from './AllMainComponents'
 
-function CreateExercise({ data, exerciseType, closeModal }) {
+
+function AddExercise({ data, exerciseType, closeModal }) {
 	const classes = useStyles();
-	const { values, errors, setErrors, setFieldValue, isSubmitting } =
-		useFormikContext();
+	const { values, errors, setFieldValue, setFieldError, isSubmitting } = useFormikContext();
 
 	const [state, setState] = useState({
 		open: false,
@@ -38,12 +42,6 @@ function CreateExercise({ data, exerciseType, closeModal }) {
 		setState({ ...state, open: false });
 	};
 
-	useEffect(() => {
-		if (data) {
-			setErrors({});
-		}
-	}, []);
-
 	const addMore = () => {
 		setFieldValue('Answers', [
 			...values.Answers,
@@ -56,39 +54,40 @@ function CreateExercise({ data, exerciseType, closeModal }) {
 	};
 
 	const deleteAnswer = (id, i) => {
-		if (id !== 0) {
-			exerciseService
-				.deleteAnswer(id)
-				.then((res) => {
-					const t = values.Answers.filter((r) => r.Id !== id);
-					setFieldValue('Answers', t);
-					handleClick(
-						{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
-						res.Message
-					);
-				})
-				.catch((err) => {
-					handleClick(
-						{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
-						err.Message
-					);
-				});
-		} else if (id === 0) {
-			const f = values.Answers.filter((r, j) => {
-				if (r.Id == id && i == j) {
-					return false;
-				}
+		const f = values.Answers.filter((r, j) => {
+			if (r.Id == id && i == j) {
+				return false;
+			}
 
-				return r;
-			});
+			return r;
+		});
 
-			setFieldValue('Answers', f);
-		}
+		setFieldValue('Answers', f);
 	};
+
+
+
+	useEffect(() => {
+		if (exerciseType === 2) {
+			const regex = new RegExp('#input');
+			var str = values.Text;
+			var match1 = regex.test(str);
+
+			console.log(match1);
+
+			if (!match1) {
+				setFieldError(
+					`Text`,
+					'ტექსტი არ შეიცავს #input - ს'
+				);
+			}
+		}
+	}, [errors]);
+
 
 	return (
 		<>
-			<DialogTitle className='text-center'>კითხვის რედაქტირება</DialogTitle>
+			<DialogTitle className='text-center'>ახალი კითხვის დამატება</DialogTitle>
 			<DialogContent>
 				<IconButton
 					style={{ position: 'absolute', right: '24px', top: '21px' }}
@@ -98,13 +97,20 @@ function CreateExercise({ data, exerciseType, closeModal }) {
 
 				<div className={classes.container}>
 					<div className={classes.EcercisesBorder}>
+						{ exerciseType === 3 ? (
+							<p>იმ ადგილას, სადაც გინდათ, რომ გამოჩნდეს ჩასაწერი, ჩაწერეთ #input</p>
+							) : exerciseType === 2 ? (
+							<p>იმ ადგილას, სადაც გინდათ, რომ გამოჩნდეს ასარჩევი, ჩაწერეთ #select</p>
+						) : null}
+						
 						<ReactQuill
 							name='Text'
-							value={values['Text']}
+							value={values.Text}
 							onChange={(e) => setFieldValue('Text', e)}
 							placeholder='კითხვა *'
 							style={{ height: '200px', marginBottom: '70px' }}
 						/>
+
 
 						{Object.keys(errors).length > 0 && errors.Text && (
 							<FormHelperText error={true} variant='standard'>
@@ -112,10 +118,8 @@ function CreateExercise({ data, exerciseType, closeModal }) {
 							</FormHelperText>
 						)}
 
-						<AllMainComponentsEdit
-							exerciseType={exerciseType}
-							deleteAnswer={(id, i) => deleteAnswer(id, i)}
-						/>
+
+						<AllMainComponents exerciseType={exerciseType} deleteAnswer={(id, i) => deleteAnswer(id, i)} />
 
 						{exerciseType !== 4 && exerciseType !== 6 && (
 							<Fab component='span' onClick={addMore}>
@@ -160,7 +164,7 @@ function CreateExercise({ data, exerciseType, closeModal }) {
 					color='primary'
 					disabled={isSubmitting}
 				>
-					შეცვლა
+					დამატება
 				</Button>
 
 				<SnackbarComponent
@@ -174,7 +178,7 @@ function CreateExercise({ data, exerciseType, closeModal }) {
 	);
 }
 
-export default CreateExercise;
+export default AddExercise;
 
 const useStyles = makeStyles((theme) => ({
 	Textarea: {

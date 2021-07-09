@@ -65,17 +65,6 @@ function GenerateEditExerciseComponent2({
 		setArrayItems(arrayOfDigits);
 	}, [index]);
 
-	// useEffect(() => {
-	// 	if (values.TypeId === 1 || values.TypeId === 2) {
-	// 		setFieldValue('Questions', arr1);
-	// 	}
-
-	// 	if (values.TypeId === 3 || values.TypeId === 4 || values.TypeId === 5) {
-	// 		setFieldValue('Questions', arr3);
-	// 	}
-	// }, [values.TypeId]);
-
-	console.log(values.Questions);
 	if (values.Questions && values.Questions.length > 0) {
 		return (
 			<>

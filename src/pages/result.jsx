@@ -54,7 +54,7 @@ function CompletedPage({ match }) {
 						<div className='col-9 p-0'>
 							<div className='spec-exer-fields'>
 								<div className='spec-exer-all'>
-                                    {exerciseData ? <CompletedExercise data={exerciseData} /> : null}
+                                    {exerciseData && exercise ? <CompletedExercise data={exerciseData} currentExercise={exercise.Id} /> : null}
 								</div>
 							</div>
 						</div>

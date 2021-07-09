@@ -1,19 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+import { Formik, useFormikContext } from 'formik';
 import CreateExercise from './CreateExercise';
 import { editQuestionSchema } from '../../../helpers/schema';
 import { exerciseService } from '../../../services/exercise.service';
 import SnackbarComponent from '../reusable/SnackbarComponent';
 import AddExercise from './AddExercise';
 
-function AddExerciseFormikContainer({
-	data,
+function AddExerciseFormikContainer2({
 	closeModal,
-	exerciseType,
-	onChangeParetFormikQuestionn,
-	questionIndex,
+	exerciseId,
+	exerciseType
 }) {
+
+	const { setFieldValue } = useFormikContext();
+
+	const [initialValue, setInitialValue] = useState({
+		Answers: [
+			{
+				Id: 1,
+				Text: '',
+				IsCorrect: false,
+			},
+			{
+				Id: 2,
+				Text: '',
+				IsCorrect: false,
+			},
+		],
+		Text: '',
+		WrongAnswerText: '',
+		RightAnswerText: '',
+	});
+
 	const [state, setState] = useState({
 		open: false,
 		vertical: 'top',
@@ -32,32 +50,36 @@ function AddExerciseFormikContainer({
 		setState({ ...state, open: false });
 	};
 
-	function onSubmit(data, action) {
-		exerciseService
-			.editQuestion(data)
-			.then((res) => {
-				action.setFieldValue(`Questions[${questionIndex}]`, data);
-				closeModal(false);
 
-				onChangeParetFormikQuestionn(data);
-				handleClick(
-					{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
-					res.Message
-				);
-				action.setSubmitting(false);
-				// action.setErrors({});
-			})
-			.catch((err) => {
-				handleClick(
-					{ vertical: 'bottom', horizontal: 'center', severity: 'error' },
-					err.Message
-				);
-			});
+	function onSubmit(data, action) {
+		console.log(action)
+		console.log(data)
+
+        let d = {
+            ExerciseId: exerciseId,
+            ...data
+        };
+
+        exerciseService.addquestion(d)
+        .then(res => {
+			exerciseService.exercisedetails(exerciseId)
+			.then(res => setFieldValue('Questions', res.Questions))
+			closeModal()
+		})
+		.catch((err) => {
+			handleClick(
+				{ vertical: 'bottom', horizontal: 'center', severity: 'success' },
+				err
+			);
+
+			action.setSubmitting(false)
+		});
 	}
+
 
 	return (
 		<Formik
-			initialValues={data}
+			initialValues={initialValue}
 			validateOnChange={true}
 			enableReinitialize={true}
 			validationSchema={editQuestionSchema}
@@ -65,12 +87,7 @@ function AddExerciseFormikContainer({
 		>
 			{({ handleSubmit, setFieldValue }) => (
 				<form onSubmit={handleSubmit}>
-					<CreateExercise
-						data={data}
-						exerciseType={exerciseType}
-						questionIndex={questionIndex}
-						closeModal={closeModal}
-					/>
+                    <AddExercise exerciseType={exerciseType} closeModal={closeModal} />
 
 					<SnackbarComponent
 						open={open}
@@ -84,4 +101,4 @@ function AddExerciseFormikContainer({
 	);
 }
 
-export default AddExerciseFormikContainer;
+export default AddExerciseFormikContainer2;

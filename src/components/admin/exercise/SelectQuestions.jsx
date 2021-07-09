@@ -4,7 +4,6 @@ import { useFormikContext } from 'formik';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import TextFieldComponent from '../reusable/TextFieldComponent';
-import { v4 as uuidv4 } from 'uuid';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +14,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { exerciseService } from '../../../services/exercise.service';
 
 function SelectQuestions({ isEditPage, index, data, onEditQuestion }) {
-	const { values, setFieldValue, errors, handleChange } = useFormikContext();
+	const {
+		values,
+		setFieldValue,
+		setFieldError,
+		submitCount,
+		errors,
+		handleChange,
+	} = useFormikContext();
 
 	const [loading, setLoading] = useState(false);
 	const [value2, setValue2] = useState('');
@@ -71,6 +77,21 @@ function SelectQuestions({ isEditPage, index, data, onEditQuestion }) {
 				);
 			});
 	};
+
+	useEffect(() => {
+		if (values.TypeId === 2 && values.Questions[index]) {
+			const regex = new RegExp('#select');
+			var str = values.Questions[index].Text;
+			var match1 = regex.test(str);
+
+			if (!match1) {
+				setFieldError(
+					`Questions[${index}].Text`,
+					'ტექსტი არ შეიცავს #select - ს'
+				);
+			}
+		}
+	}, [values.TypeId, errors, submitCount]);
 
 	return (
 		<div className={classes.EcercisesBorder} style={{ position: 'relative' }}>

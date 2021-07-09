@@ -11,6 +11,7 @@ export const exerciseService = {
 	hideExercise,
 	unhideExercise,
 	getExerciseDetails,
+	addquestion,
 	getExerciseQuestions,
 	removeSingleExercise,
 	removeAllExercises,
@@ -76,6 +77,12 @@ function deleteQuestion(id) {
 function deleteAnswer(id) {
 	return fetchWrapper
 		.delete(`/Exercises/deleteanswer/${id}`)
+		.then((exercise) => exercise);
+}
+
+function addquestion(data) {
+	return fetchWrapper
+		.post('/Exercises/addquestion', data)
 		.then((exercise) => exercise);
 }
 

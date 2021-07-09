@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, drawerIsOpen, ...rest }) => {
 				isLogin() ? (
 					<Component drawerIsOpen={drawerIsOpen} {...props} />
 				) : (
-					<Redirect to='/' />
+					<Redirect to='/admin/signin' />
 				)
 			}
 		/>

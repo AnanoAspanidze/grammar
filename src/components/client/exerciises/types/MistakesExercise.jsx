@@ -22,12 +22,12 @@ function MistakesExercise({
 	const history = useHistory();
 	let query = useQuery();
 
+	const [correctAnswerId, setCorrectAnswerId] = useState(null);
+	const [correctAnswerValue, setCorrectAnswerValue] = useState('');
     const [loading, setLoading] = useState(false);
 	const [definitionModal, setDefinitionModal] = useState(false);
 	const [haveToChecked, setHaveToChecked] = useState(true);
 
-	const [correctAnswerId, setCorrectAnswerId] = useState(null);
-	const [correctAnswerValue, setCorrectAnswerValue] = useState('');
 	const [iscorrect, setIsCorrect] = useState(null);
 	const [value, setValue] = useState('');
 	const [explanation, setExplanation] = useState('')
@@ -133,13 +133,12 @@ function MistakesExercise({
 						<textarea className="w-100" value={value} onChange={(e) => setValue(e.target.value)} disabled={IsDone} />
                     </TextareaParent>
 
-					{!iscorrect && !haveToChecked ? (
+					{!iscorrect && !haveToChecked && question ? (
 						<>
 						<span className="choose-correct-answer">სწორი პასუხი</span>
 						<TextareaParent className="spec-exer--textarea" iscorrect={true} disabled={true}>
-							<textarea className="w-100">
-								{correctAnswerValue}
-							</textarea>
+							<div className="w-100" dangerouslySetInnerHTML={{ __html: question.Answers[0].Text }} />
+
 						</TextareaParent>
 						</>
 					) : null}
@@ -150,7 +149,8 @@ function MistakesExercise({
 				</div>
 
 				<div className='ganmarteba'>
-					{definitionModal && (iscorrect === true || iscorrect === false) && (
+					{definitionModal &&
+						explanation && (iscorrect === true || iscorrect === false) && (
 						<p onClick={() => Defaults.Definition.show(explanation || DoneQuestion.DoneAnswerExplanation)}>მაჩვენე განმარტება</p>
 					)}
 				</div>

@@ -96,7 +96,6 @@ function TagsExercise({
 		setLoading(true);
 
 		let x = selectedAnswer + ''
-		console.log(x)
 
 		let data = {
 			ExerciseId: exerciseId,
@@ -150,10 +149,10 @@ function TagsExercise({
     return (
        <>
                     <div className="spec-exer-head">
-                        <p className="spec-exer-head-ex3">	{`სავარჯიშო # ${exId} - ${question.ExerciseType}`}</p>
+                        <p className="spec-exer-head-ex3">	{`სავარჯიშო #2 - ${question.ExerciseTitle}`}</p>
                         <button>პროექტორის რეჟიმი</button>
                     </div>
-                    <p className="mark-word-title">{question.ExerciseTitle}</p>
+
                     <span className="exer-choose-cor-answer" style={{ marginBottom: '30px', display: 'block' }}>{question.Instruction}</span>
                     <div className="spec-exer--mark-word">
                         {modifierText && modifierText.map(w => <Span 
@@ -172,7 +171,8 @@ function TagsExercise({
 				</div>
 
 				<div className='ganmarteba'>
-					{definitionModal && (iscorrect === true || iscorrect === false) && (
+					{definitionModal &&
+						explanation && (iscorrect === true || iscorrect === false) && (
 						<p onClick={() => Defaults.Definition.show(explanation || DoneQuestion.DoneAnswerExplanation)}>მაჩვენე განმარტება</p>
 					)}
 				</div>

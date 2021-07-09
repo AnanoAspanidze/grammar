@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import ApppageHead from '../components/AppHead';
 import { issueService } from '../services/issue.service';
@@ -10,11 +10,15 @@ import playIcon from '../assets/images/exercises/Arrow - Right 2.svg';
 function ExercisesPage() {
 	const [exercises, setexercises] = useState(null);
 
+	let history = useHistory();
+
 	const { user, isAuthenticated, logOutUser } = useContext(userContext);
 
 	useEffect(() => {
 		issueService.getExercisesList().then((res) => setexercises(res));
 	}, []);
+
+	let pathName = history.location.pathname;
 
 	return (
 		<>
@@ -56,23 +60,31 @@ function ExercisesPage() {
 
 							<div className='variants-navbar'>
 								<ul>
-									<li className='variants-active'>
+									<li
+										className={`${
+											pathName === '/issues' ? 'variants-active' : ''
+										}`}
+									>
 										<Link to='issues'>
 											<i className='fas fa-bookmark' /> საკითხები
 										</Link>
 									</li>
-									<li>
+									<li
+										className={`${
+											pathName === '/exercises' ? 'variants-active' : ''
+										}`}
+									>
 										<Link to='exercises'>
 											<i className='fas fa-file-alt' /> სავარჯიშოები
 										</Link>
 									</li>
-									<li>
-										<Link to='/'>
+									<li className={`${pathName === '' ? 'variants-active' : ''}`}>
+										<Link to='/statistics'>
 											<i className='fas fa-chart-pie' /> სტატისტიკა
 										</Link>
 									</li>
-									<li>
-										<Link to='/'>
+									<li className={`${pathName === '' ? 'variants-active' : ''}`}>
+										<Link to='/profile'>
 											<i className='fas fa-user' /> ჩემი პროფილი
 										</Link>
 									</li>
@@ -91,17 +103,11 @@ function ExercisesPage() {
 									</div>
 									<div className='switch-toggle switch-3 switch-candy'>
 										<input id='on' name='state-d' type='radio' defaultChecked />
-										<label htmlFor='on' onclick>
-											ყველა
-										</label>
+										<label htmlFor='on'>ყველა</label>
 										<input id='no' name='state-d' type='radio' />
-										<label htmlFor='no' onclick>
-											მორფოლოგია
-										</label>
+										<label htmlFor='no'>მორფოლოგია</label>
 										<input id='off' name='state-d' type='radio' />
-										<label htmlFor='off' onclick>
-											სინტაქსი
-										</label>
+										<label htmlFor='off'>სინტაქსი</label>
 									</div>
 								</div>
 
@@ -154,7 +160,10 @@ function ExercisesPage() {
 																				{ex.Name}
 																			</h4>
 																			<div className='exercises-grammar-item'>
-																				<span>8/10</span>
+																				<span>
+																					{ex.UserAnsweredQuestionsQuantity}/
+																					{ex.QuestionsQuantity}
+																				</span>
 																				<Link to={`/exercisedetails/${ex.Id}`}>
 																					<img
 																						src={playIcon}

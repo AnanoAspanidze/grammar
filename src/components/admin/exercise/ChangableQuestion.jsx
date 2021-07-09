@@ -11,7 +11,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 function ChangableQuestion({ isEditPage, data, index, onEditQuestion }) {
 	const classes = useStyles();
 
-	const { values, setFieldValue, errors, handleChange } = useFormikContext();
+	const {
+		values,
+		setFieldValue,
+		setFieldError,
+		submitCount,
+		errors,
+		handleChange,
+	} = useFormikContext();
 	const [loading, setLoading] = useState(false);
 	const [state, setState] = useState({
 		open: false,
@@ -90,7 +97,7 @@ function ChangableQuestion({ isEditPage, data, index, onEditQuestion }) {
 					{errors.Questions[index].Text}
 				</FormHelperText>
 			)}
-			<div className='mb-30'>
+			<div className='mb-30 mt-30'>
 				<ReactQuill
 					theme='snow'
 					readOnly={isEditPage ? true : false}
@@ -104,7 +111,7 @@ function ChangableQuestion({ isEditPage, data, index, onEditQuestion }) {
 				/>
 			</div>
 
-			{errors.Questions && errors.Questions[index] && (
+			{Object.keys(errors).length > 0 && errors.Questions[index].Answers && (
 				<FormHelperText error={true} variant='standard'>
 					{errors.Questions[index].Answers[0]
 						? errors.Questions[index].Answers[0].Text

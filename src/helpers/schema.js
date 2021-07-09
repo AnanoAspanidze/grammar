@@ -45,9 +45,8 @@ export const updateAdminInfoSchema = Yup.object().shape({
 export const addExerciseValidationSchema = Yup.object().shape({
 	category: Yup.string().required('შეავსეთ ველი'),
 	SubCategoryId: Yup.string().required('შეავსეთ ველი'),
-	Name: Yup.string().required('შეავსეთ ველი'),
-	TypeId: Yup.string().required('შეავსეთ ველი'),
-	Instruction: Yup.string().required('შეავსეთ ველი'),
+	Name: Yup.string().required('შეავსეთ ველი').trim(),
+	Instruction: Yup.string().required('შეავსეთ ველი').trim(),
 	IsSummaryExercise: Yup.boolean(),
 	OrderNumber: Yup.string().when('IsSummaryExercise', (IsSummaryExercise) => {
 		if (IsSummaryExercise) {
@@ -56,9 +55,10 @@ export const addExerciseValidationSchema = Yup.object().shape({
 			return Yup.string().required('შეავსეთ ველი');
 		}
 	}),
+	TypeId: Yup.string().required('შეავსეთ ველი'),
 	Questions: Yup.array().of(
 		Yup.object().shape({
-			Text: Yup.string().required('შეავსეთ ველი'),
+			Text: Yup.string().required('შეავსეთ ველი').trim(),
 			Answers: Yup.array().of(
 				Yup.object().shape({
 					Text: Yup.string().required('შეავსეთ ველი'),
@@ -71,9 +71,9 @@ export const addExerciseValidationSchema = Yup.object().shape({
 export const addExerciseValidationSchema2 = Yup.object().shape({
 	CategoryId: Yup.string().required('შეავსეთ ველი'),
 	SubCategoryId: Yup.string().required('შეავსეთ ველი'),
-	Name: Yup.string().required('შეავსეთ ველი'),
+	Name: Yup.string().required('შეავსეთ ველი').trim(),
 	TypeId: Yup.string().required('შეავსეთ ველი'),
-	Instruction: Yup.string().required('შეავსეთ ველი'),
+	Instruction: Yup.string().required('შეავსეთ ველი').trim(),
 	IsSummaryExercise: Yup.boolean(),
 	OrderNumber: Yup.string().when('IsSummaryExercise', (IsSummaryExercise) => {
 		if (IsSummaryExercise) {
@@ -84,11 +84,11 @@ export const addExerciseValidationSchema2 = Yup.object().shape({
 	}),
 	Questions: Yup.array().of(
 		Yup.object().shape({
-			Text: Yup.string().required('შეავსეთ ველი'),
+			Text: Yup.string().required('შეავსეთ ველი').trim(),
 
 			Answers: Yup.array().of(
 				Yup.object().shape({
-					Text: Yup.string().required('შეავსეთ ველი'),
+					Text: Yup.string().required('შეავსეთ ველი').trim(),
 				})
 			),
 		})

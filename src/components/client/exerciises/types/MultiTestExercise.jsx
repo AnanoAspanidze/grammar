@@ -238,17 +238,19 @@ function MultiTestExercise({
 				</div>
 
 				<div className='ganmarteba'>
-					{definitionModal && (iscorrect === true || iscorrect === false) && (
-						<p
-							onClick={() =>
-								Defaults.Definition.show(
-									explanation || DoneQuestion.DoneAnswerExplanation
-								)
-							}
-						>
-							მაჩვენე განმარტება
-						</p>
-					)}
+					{definitionModal &&
+						explanation &&
+						(iscorrect === true || iscorrect === false) && (
+							<p
+								onClick={() =>
+									Defaults.Definition.show(
+										explanation || DoneQuestion.DoneAnswerExplanation
+									)
+								}
+							>
+								მაჩვენე განმარტება
+							</p>
+						)}
 				</div>
 
 				<p className='counted-boxes'>{`${index + 1} / ${numberOfQuestions}`}</p>

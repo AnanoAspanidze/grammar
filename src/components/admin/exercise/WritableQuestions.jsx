@@ -12,7 +12,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { exerciseService } from '../../../services/exercise.service';
 
 function WritableQuestions({ isEditPage, index, data, onEditQuestion }) {
-	const { values, setFieldValue, errors, handleChange } = useFormikContext();
+	const {
+		values,
+		setFieldValue,
+		submitCount,
+		setFieldError,
+		errors,
+		handleChange,
+	} = useFormikContext();
 	const [loading, setLoading] = useState(false);
 	const [state, setState] = useState({
 		open: false,
@@ -68,6 +75,23 @@ function WritableQuestions({ isEditPage, index, data, onEditQuestion }) {
 			});
 	};
 
+	useEffect(() => {
+		if (values.TypeId === 3 && values.Questions[index]) {
+			const regex = new RegExp('#input');
+			var str = values.Questions[index].Text;
+			var match1 = regex.test(str);
+
+			console.log(match1);
+
+			if (!match1) {
+				setFieldError(
+					`Questions[${index}].Text`,
+					'ტექსტი არ შეიცავს #input - ს'
+				);
+			}
+		}
+	}, [values.TypeId, errors, submitCount]);
+
 	return (
 		<div className={classes.EcercisesBorder} style={{ position: 'relative' }}>
 			{isEditPage && (
@@ -102,7 +126,7 @@ function WritableQuestions({ isEditPage, index, data, onEditQuestion }) {
 				style={{ height: '200px', marginBottom: '70px' }}
 			/>
 
-			{errors.Questions && errors.Questions[index] && (
+			{errors.Questions && errors.Questions[index] && !isEditPage && (
 				<FormHelperText error={true} variant='standard'>
 					{errors.Questions[index].Text}
 				</FormHelperText>
