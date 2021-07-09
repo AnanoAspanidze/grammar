@@ -66,9 +66,25 @@ function AddExercise({ data, exerciseType, closeModal }) {
 	};
 
 
+	useEffect(() => {
+		if(exerciseType === 6) {
+			setFieldValue('Answers', [{
+				id: 0,
+				Text: 'ჭეშმარიტია',
+				IsCorrect: false,
+			},
+			{
+				id: 0,
+				Text: 'მცდარია',
+				IsCorrect: false,
+			}])
+
+		}
+	}, [])
+
 
 	useEffect(() => {
-		if (exerciseType === 2) {
+		if (exerciseType === 3) {
 			const regex = new RegExp('#input');
 			var str = values.Text;
 			var match1 = regex.test(str);
@@ -79,6 +95,19 @@ function AddExercise({ data, exerciseType, closeModal }) {
 				setFieldError(
 					`Text`,
 					'ტექსტი არ შეიცავს #input - ს'
+				);
+			}
+		}
+
+		if (values.TypeId === 2) {
+			const regex = new RegExp('#select');
+			var str = values.Text;
+			var match1 = regex.test(str);
+
+			if (!match1) {
+				setFieldError(
+					`Text`,
+					'ტექსტი არ შეიცავს #select - ს'
 				);
 			}
 		}

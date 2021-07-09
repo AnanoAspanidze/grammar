@@ -47,6 +47,9 @@ export const addExerciseValidationSchema = Yup.object().shape({
 	SubCategoryId: Yup.string().required('შეავსეთ ველი'),
 	Name: Yup.string().required('შეავსეთ ველი').trim(),
 	Instruction: Yup.string().required('შეავსეთ ველი').trim(),
+	Description: Yup.string()
+		.trim()
+		.transform((val) => (val === '<p><br></p>' ? '' : val)),
 	IsSummaryExercise: Yup.boolean(),
 	OrderNumber: Yup.string().when('IsSummaryExercise', (IsSummaryExercise) => {
 		if (IsSummaryExercise) {
@@ -58,12 +61,21 @@ export const addExerciseValidationSchema = Yup.object().shape({
 	TypeId: Yup.string().required('შეავსეთ ველი'),
 	Questions: Yup.array().of(
 		Yup.object().shape({
-			Text: Yup.string().required('შეავსეთ ველი').trim(),
+			Text: Yup.string()
+				.required('შეავსეთ ველი')
+				.trim()
+				.transform((val) => (val === '<p><br></p>' ? '' : val)),
 			Answers: Yup.array().of(
 				Yup.object().shape({
-					Text: Yup.string().required('შეავსეთ ველი'),
+					Text: Yup.string().required('შეავსეთ ველი').trim(),
 				})
 			),
+			WrongAnswerText: Yup.string()
+				.trim()
+				.transform((val) => (val === '<p><br></p>' ? '' : val)),
+			RightAnswerText: Yup.string()
+				.trim()
+				.transform((val) => (val === '<p><br></p>' ? '' : val)),
 		})
 	),
 });
@@ -73,6 +85,9 @@ export const addExerciseValidationSchema2 = Yup.object().shape({
 	SubCategoryId: Yup.string().required('შეავსეთ ველი'),
 	Name: Yup.string().required('შეავსეთ ველი').trim(),
 	TypeId: Yup.string().required('შეავსეთ ველი'),
+	Description: Yup.string()
+		.trim()
+		.transform((val) => (val === '<p><br></p>' ? '' : val)),
 	Instruction: Yup.string().required('შეავსეთ ველი').trim(),
 	IsSummaryExercise: Yup.boolean(),
 	OrderNumber: Yup.string().when('IsSummaryExercise', (IsSummaryExercise) => {
@@ -84,22 +99,34 @@ export const addExerciseValidationSchema2 = Yup.object().shape({
 	}),
 	Questions: Yup.array().of(
 		Yup.object().shape({
-			Text: Yup.string().required('შეავსეთ ველი').trim(),
+			Text: Yup.string()
+				.required('შეავსეთ ველი')
+				.trim()
+				.transform((val) => (val === '<p><br></p>' ? '' : val)),
 
 			Answers: Yup.array().of(
 				Yup.object().shape({
 					Text: Yup.string().required('შეავსეთ ველი').trim(),
 				})
 			),
+			WrongAnswerText: Yup.string()
+				.trim()
+				.transform((val) => (val === '<p><br></p>' ? '' : val)),
+			RightAnswerText: Yup.string()
+				.trim()
+				.transform((val) => (val === '<p><br></p>' ? '' : val)),
 		})
 	),
 });
 
 export const editQuestionSchema = Yup.object().shape({
-	Text: Yup.string().required('შეავსეთ ველი'),
+	Text: Yup.string()
+		.required('შეავსეთ ველი')
+		.trim()
+		.transform((val) => (val === '<p><br></p>' ? '' : val)),
 	Answers: Yup.array().of(
 		Yup.object().shape({
-			Text: Yup.string().required('შეავსეთ ველი'),
+			Text: Yup.string().required('შეავსეთ ველი').trim(),
 		})
 	),
 });
