@@ -12,8 +12,8 @@ a.sign-in-parent:hover:after {
 .input-popup-bg {
 	background-image: url('../src/assets/images/sign-in/input-popup-bg.svg');
 	background-repeat: no-repeat;
-	/* background-position: center top; */
-	/* text-align: center; */
+	background-position: center top;
+	text-align: center;
 	background-size: contain;
 	width: 902px;
 	height: 765px;

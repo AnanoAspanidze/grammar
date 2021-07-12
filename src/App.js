@@ -19,7 +19,8 @@ import ExerciseDetailsPage from './pages/exercisedetails';
 import ExercisePage from './pages/exercise';
 import CompletedPage from './pages/result';
 import About from './pages/About';
-// import NotFoundPage from './pages/NotFoundPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import NotFoundPage from './pages/NotFoundPage';
 
 import Adminpage from './pages/admin';
 import Profile from './pages/admin/profile';
@@ -82,9 +83,9 @@ function MyComponent() {
 
 	return (
 		<Router>
-			<Route path='/' component={Landing} drawerIsOpen={isOpen} exact />
-
 			<Switch>
+				<Route exact path='/' component={Landing} drawerIsOpen={isOpen} />
+
 				<Route path='/issues' exact>
 					<IssuesMainApp />
 				</Route>
@@ -95,6 +96,11 @@ function MyComponent() {
 				<Route path='/about' exact>
 					<About />
 				</Route>
+
+				<Route path='/privacy-policy' exact>
+					<PrivacyPolicy />
+				</Route>
+
 				<Route
 					path='/exercisedetails/:exerciseId'
 					component={ExerciseDetailsPage}
@@ -191,6 +197,8 @@ function MyComponent() {
 					drawerIsOpen={isOpen}
 					exact
 				/>
+
+				<Route component={NotFoundPage} />
 			</Switch>
 		</Router>
 	);

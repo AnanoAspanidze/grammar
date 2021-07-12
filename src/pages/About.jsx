@@ -5,6 +5,7 @@ import ApppageHead from '../components/AppHead';
 import Footer from '../components/client/footer/Footer';
 import VideoModal from '../components/client/modal/VideoModal';
 import Logo from '../assets/images/icons/about-project-logo.svg';
+import Logo2 from '../assets/images/icons/logo-414.svg';
 import AboutPlayIcon from '../assets/images/icons/about-play.svg';
 import ArrowTextIcon from '../assets/images/about-project/arrow-to-text.svg';
 import CircleArrow from '../assets/images/about-project/circle-arrow.svg';
@@ -12,7 +13,8 @@ import BookIcon from '../assets/images/icons/book.svg';
 import AboutArrow from '../assets/images/about-project/about-arrow.svg';
 import AboutCloud from '../assets/images/about-project/about-cloud.svg';
 import AboutPause from '../assets/images/about-project/about-pause.svg';
-import Logo2 from '../assets/images/icons/logo-414.svg';
+import UserImg from '../assets/images/icons/user.svg';
+import VideoImage from '../assets/images/about-project/video-image.svg';
 
 // import '../assets/css/about-project.css';
 
@@ -30,10 +32,10 @@ function About() {
 						</Link>
 
 						<div className='navbar-icons'>
-							<a href='#popup7' className='login appear'>
+							<a className='login appear'>
 								<img src='./assets/images/icons/Logout.svg' alt='' />
 							</a>
-							<a href='#popup5' onclick='navAppear();'>
+							<a>
 								<button
 									className='navbar-toggler'
 									type='button'
@@ -61,13 +63,16 @@ function About() {
 									<Link
 										className='nav-link about-nav-link'
 										aria-current='page'
-										href='index.html'
+										href='/'
 									>
 										მთავარი
 									</Link>
 								</li>
 								<li className='nav-item '>
-									<Link className='nav-link about-nav-link active' href='#'>
+									<Link
+										className='nav-link about-nav-link active'
+										href='/about'
+									>
 										პროექტის შესახებ
 									</Link>
 								</li>
@@ -109,7 +114,7 @@ function About() {
 								</a>
 								<a href='#'>
 									<button type='button' className='about-user-icon is-loaded'>
-										<img src='./assets/images/icons/user.svg' alt='user-icon' />
+										<img src={UserImg} alt='user-icon' />
 										ფეისბუქ ჯგუფი
 									</button>
 								</a>
@@ -181,7 +186,10 @@ function About() {
 							</div>
 						</div>
 					</div>
-					<div className='video-background'>
+					<div
+						className='video-background'
+						style={{ backgroundImage: `url(${VideoImage})` }}
+					>
 						<span className='popup11'>
 							<img src={AboutPlayIcon} className='play-video' alt='playvideo' />
 						</span>

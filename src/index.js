@@ -37,8 +37,10 @@ ReactDOM.render(
 			<link rel='stylesheet' type='text/css' href='/homepage.css' />
 			<link rel='stylesheet' type='text/css' href='/variants.css' />
 			<link rel='stylesheet' type='text/css' href='/exercises.css' />
+			<link rel='stylesheet' type='text/css' href='/privacy-policy.css' />
 			<link rel='stylesheet' type='text/css' href='/adverb-exercise-1.css' />
 			<link rel='stylesheet' type='text/css' href='/special-exercises3.css' />
+			<link rel='stylesheet' type='text/css' href='/error-page.css' />
 			<link
 				rel='stylesheet'
 				type='text/css'

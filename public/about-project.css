@@ -189,7 +189,6 @@ a.about-nav-link.active {
 }
 
 .video-background {
-	background-image: url(../src/assets/images/about-project/video-image.svg);
 	background-size: 100% 100%;
 	display: flex;
 	justify-content: center;

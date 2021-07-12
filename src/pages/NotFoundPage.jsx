@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import '../assets/css/error-page.css';
 import Logo from '../assets/images/icons/logo.svg';
 import logo414 from '../assets/images/icons/logo-414.svg';
 import login from '../assets/images/icons/login.svg';
