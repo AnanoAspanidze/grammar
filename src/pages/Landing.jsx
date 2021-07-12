@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ApppageHead from '../components/AppHead';
 import Layout from '../components/client/Layout';
@@ -44,7 +45,7 @@ function Landing() {
 										მთლიანი აითვალწუნებენ წიმნდაა. აჩვენებდა შეძენდნენ
 										ჩამოვიდოდა თანამგზავრები.
 									</p>
-									<a href='about-project.html'>
+									<Link to='/about'>
 										<button
 											type='button'
 											className='about-project-button about-project-disabled more-button'
@@ -71,7 +72,7 @@ function Landing() {
 												alt='arrow-icon'
 											/>
 										</button>
-									</a>
+									</Link>
 								</div>
 							</div>
 						</div>

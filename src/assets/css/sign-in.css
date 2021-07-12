@@ -10,7 +10,7 @@ a.sign-in-parent:hover:after {
 	z-index: 99;
 }
 .input-popup-bg {
-	background-image: url('../src/assets/images/sign-in/input-popup-bg.svg');
+	background-image: url('../../assets/images/sign-in/input-popup-bg.svg');
 	background-repeat: no-repeat;
 	background-position: center top;
 	text-align: center;

@@ -38,7 +38,7 @@ html,
 .header-variants-input-search {
 	width: 385px;
 	height: 44px;
-	background-image: url('../src/assets/images/icons/Search.svg');
+	background-image: url('../../assets/images/icons/Search.svg');
 	background-repeat: no-repeat;
 	background-position: 24px center;
 	background-color: #ffffff;
@@ -359,7 +359,7 @@ ul li.variants-active a {
 }
 
 .variants-user-content.user-registred-no2 {
-	background-image: url('../src/assets/images/variants/variants-user-bg.svg');
+	background-image: url('../../assets/images/variants/variants-user-bg.svg');
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }

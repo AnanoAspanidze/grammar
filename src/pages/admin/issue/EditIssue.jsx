@@ -43,10 +43,11 @@ function Editissue({ drawerIsOpen, match }) {
 
 	useEffect(() => {
 		issueService.getIssue(match.params.issueId).then((res) => {
+			console.log(res);
 			setData(res);
 			setInitialState({
 				Name: res.Name,
-				CategoryId: res.Category.Id,
+				CategoryId: res.Id,
 			});
 		});
 	}, [match.params.issueId]);

@@ -2,7 +2,6 @@ import React, { useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
-// import './assets/css/reset.css';
 // context
 import userContext from './context/user/userContext';
 import drawerContext from './context/drawer/drawerContext';
@@ -20,6 +19,7 @@ import ExercisePage from './pages/exercise';
 import CompletedPage from './pages/result';
 import About from './pages/About';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import Terms from './pages/Terms';
 import NotFoundPage from './pages/NotFoundPage';
 
 import Adminpage from './pages/admin';
@@ -99,6 +99,10 @@ function MyComponent() {
 
 				<Route path='/privacy-policy' exact>
 					<PrivacyPolicy />
+				</Route>
+
+				<Route path='/terms' exact>
+					<Terms />
 				</Route>
 
 				<Route

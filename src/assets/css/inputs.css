@@ -12,7 +12,7 @@ input[type='password']::placeholder {
 /* email input */
 
 .input-email {
-	background-image: url('../src/assets/images/icons/Message.svg');
+	background-image: url('../../assets/images/icons/Message.svg');
 	background-repeat: no-repeat;
 	background-position: 24px center;
 	width: 384px;
@@ -35,7 +35,7 @@ input[type='password']::placeholder {
 /* password input */
 
 .input-password {
-	background-image: url('../src/assets/images/icons/Password.svg');
+	background-image: url('../../assets/images/icons/Password.svg');
 	background-repeat: no-repeat;
 	background-position: 24px center;
 	width: 384px;

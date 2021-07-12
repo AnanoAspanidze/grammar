@@ -23,10 +23,10 @@ function Footer() {
 						</p>
 						<div className='for-d-flex conf-user justify-content-between'>
 							<p className='footer-logo-content-item'>
-								<Link href='privacy-policy'>კონფიდენციალურობის პოლიტიკა</Link>
+								<Link to='/privacy-policy'>კონფიდენციალურობის პოლიტიკა</Link>
 							</p>
 							<p className='footer-logo-content-item'>
-								<Link href='terms-of-use'>მოხმარების პირობები</Link>
+								<Link to='/terms'>მოხმარების პირობები</Link>
 							</p>
 						</div>
 					</div>
@@ -46,10 +46,7 @@ function Footer() {
 							</a>
 							<a href='#'>
 								<button type='button' className='footer-facebook-icon'>
-									<img
-										src={footerImages3}
-										alt='facebook-icon'
-									/>
+									<img src={footerImages3} alt='facebook-icon' />
 									ფეისბუქ გვერდი
 								</button>
 							</a>
@@ -58,16 +55,10 @@ function Footer() {
 					<div className='for-d-flex justify-content-between footer-icons-texts'>
 						<div className='Education-logo'>
 							<a href='https://emis.ge/' target='_blank'>
-								<img
-									src={footerImages4}
-									alt='Education-logo'
-								/>
+								<img src={footerImages4} alt='Education-logo' />
 							</a>
 							<a href='https://www.mes.gov.ge/' target='_blank'>
-								<img
-									src={footerImages5}
-									alt='Education-logo'
-								/>
+								<img src={footerImages5} alt='Education-logo' />
 							</a>
 						</div>
 						<div className='footer-copyright'>
