@@ -4,6 +4,7 @@ export const accountService = {
 	userSignin,
 	adminSignin,
 	mailConfirmation,
+	SendResetPasswordMail,
 	updateAdminInfo,
 	getUserdetails,
 	getUsers,
@@ -28,6 +29,12 @@ function adminSignin(Email, Password) {
 function mailConfirmation(confirmToken) {
 	return fetchWrapper
 		.post(`/Account/mailconfirmation/${confirmToken}`)
+		.then((user) => user);
+}
+
+function SendResetPasswordMail(data) {
+	return fetchWrapper
+		.post('/Account/SendResetPasswordMail', data)
 		.then((user) => user);
 }
 

@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 
 import ApppageHead from '../components/AppHead';
 import Footer from '../components/client/footer/Footer';
-import VideoModal from '../components/client/modal/VideoModal';
-import Logo from '../assets/images/icons/about-project-logo.svg';
-import Logo2 from '../assets/images/icons/logo-414.svg';
+
 import AboutPlayIcon from '../assets/images/icons/about-play.svg';
 import ArrowTextIcon from '../assets/images/about-project/arrow-to-text.svg';
 import CircleArrow from '../assets/images/about-project/circle-arrow.svg';
@@ -24,81 +22,7 @@ function About() {
 			<ApppageHead />
 
 			<div class='about-header'>
-				<nav className='navbar navbar-expand-md navbar-light'>
-					<div className='container container-two'>
-						<Link className='navbar-brand'>
-							<img className=' hide3' src={Logo} alt='logo' />
-							<img className='appear3' src={Logo2} alt='' />
-						</Link>
-
-						<div className='navbar-icons'>
-							<a className='login appear'>
-								<img src='./assets/images/icons/Logout.svg' alt='' />
-							</a>
-							<a>
-								<button
-									className='navbar-toggler'
-									type='button'
-									data-bs-toggle='collapse'
-									data-bs-target='#navb  arsExample04'
-									aria-controls='navbarsExample04'
-									aria-expanded='false'
-									aria-label='Toggle navigation'
-								>
-									<span className='navbar-toggler-icon about-navbar-toggler-icon'>
-										<img
-											src='./assets/images/icons/about-burger-icon.svg'
-											alt='img'
-										/>
-									</span>
-								</button>
-							</a>
-						</div>
-						<div
-							className='collapse navbar-collapse homepage-navbar-collapse'
-							id='navbarsExample04'
-						>
-							<ul className='navbar-nav me-auto mb-2 mb-md-0'>
-								<li className='nav-item'>
-									<Link
-										className='nav-link about-nav-link'
-										aria-current='page'
-										href='/'
-									>
-										მთავარი
-									</Link>
-								</li>
-								<li className='nav-item '>
-									<Link
-										className='nav-link about-nav-link active'
-										href='/about'
-									>
-										პროექტის შესახებ
-									</Link>
-								</li>
-								<li className='nav-item'>
-									<Link className='nav-link about-nav-link' href='#'>
-										სავარჯიშოები
-									</Link>
-								</li>
-								<li className='nav-item'>
-									<Link className='nav-link about-nav-link' href='#'>
-										ტესტირება
-									</Link>
-								</li>
-								<a
-									href='#popup7'
-									onclick='navAppear2();'
-									className='sign-in-parent nav-link'
-								>
-									<button type='button' className='sign-in-button'>
-										შესვლა
-									</button>
-								</a>
-							</ul>
-						</div>
-					</div>
-				</nav>
+				{/* <HeaderNavbar /> */}
 
 				<div className='about-header-content'>
 					<div className='container container-two'>
@@ -285,7 +209,7 @@ function About() {
 								<p className='cool-people-p'>Back-End დეველოპერი</p>
 							</div>
 							<div className='col-lg-3 col-sm-4 cool-people-col'>
-								<h5 className='cool-people-h'>ჯემალ თედიაშვილი</h5>
+								<h5 className='cool-people-h'>ჯეკო თედიაშვილი</h5>
 								<p className='cool-people-p'>JavaScript დეველოპერი</p>
 							</div>
 							<div className='col-lg-3 col-sm-4 cool-people-col'>

@@ -120,7 +120,7 @@ function HeaderLogin() {
 											)}
 
 											<p
-												className='recover-password'
+												className='recover-password cursor-pointer'
 												onClick={() => Defaults.ResetPassword.show()}
 											>
 												პაროლის აღდგენა
@@ -134,7 +134,7 @@ function HeaderLogin() {
 												შესვლა
 											</button>
 
-											<div className='auth-path-registration'>
+											<div className='auth-path-registration cursor-pointer'>
 												<p>გაიარე რეგისტრაცია</p>
 											</div>
 										</div>

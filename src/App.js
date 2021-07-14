@@ -38,8 +38,9 @@ import Editexecise from './pages/admin/exercise/editexecise';
 import Userspage from './pages/admin/userspage';
 import UserPage from './pages/admin/user/UserPage';
 
-import ResetPasswordModal from './components/client/modal/ResetPasswordModal';
+import ResetPasswordContainer from './components/client/containers/ResetPasswordContainer';
 import DefinitionModal from './components/client/modal/DefinitionModal';
+import SignInModalContainer from './components/client/containers/SignInModalContainer';
 import { Defaults } from './helpers/defaults';
 
 function App() {
@@ -48,8 +49,9 @@ function App() {
 			<DrawerState>
 				<MyComponent />
 			</DrawerState>
-			<ResetPasswordModal ref={(ref) => (Defaults.ResetPassword = ref)} />
+			<ResetPasswordContainer ref={(ref) => (Defaults.ResetPassword = ref)} />
 			<DefinitionModal ref={(ref) => (Defaults.Definition = ref)} />
+			<SignInModalContainer ref={(ref) => (Defaults.SigninModal = ref)} />
 		</UserState>
 	);
 }
