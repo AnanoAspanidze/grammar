@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import SmileImg from '../../../assets/images/forgot-password/forgot-password-smile.svg';
 import angelImg from '../../../assets/images/forgot-password/angel.svg';
 import { accountService } from '../../../services/user.service';
+import { Defaults } from '../../../helpers/defaults';
 
 function ResetPasswordModal() {
 	const userSigninSchema = Yup.object().shape({
@@ -36,7 +37,7 @@ function ResetPasswordModal() {
 				validationSchema={userSigninSchema}
 				onSubmit={onSubmit}
 			>
-				{({ handleSubmit, handleChange, isSubmitting }) => (
+				{({ handleSubmit, handleChange, errors, values, isSubmitting }) => (
 					<form onSubmit={handleSubmit}>
 						<div className='input-popup-bg'>
 							<div className='registration-form registration-form-signin registration-form-forgotpas'>
@@ -58,6 +59,14 @@ function ResetPasswordModal() {
 												onChange={handleChange}
 												placeholder='ელ-ფოსტა'
 											/>
+											{errors['Email'] && (
+												<p
+													className='error-p text-left'
+													style={{ marginLeft: '0' }}
+												>
+													{errors['Email']}
+												</p>
+											)}
 										</div>
 										<button
 											disabled={isSubmitting}
@@ -81,19 +90,28 @@ function ResetPasswordModal() {
 												ესეც ასე, შეამოწმე ელ-ფოსტა.
 											</h3>
 											<p className='second-forgot-pass-text'>
-												პაროლის აღდგენის ინსტრუქციას მიიღებ ელ-ფოსტაზე:
-												<span>Saba.chitaishvili@geolab.edu.ge</span>
+												პაროლის აღდგენის ინსტრუქციას მიიღებ ელ-ფოსტაზე:{' '}
+												<span>{values.Email}</span>
 											</p>
 										</div>
-										<a href='#popup9'>
-											<button
-												type='button'
-												className='auth-button input-button second-forgot-pass-input'
-											>
-												ბმული არ მიმიღია
-											</button>
-										</a>
-										<a className='second-forgot-pass-button'>შესვლა</a>
+
+										<button
+											isSubmitting={true}
+											type='submit'
+											className='auth-button input-button second-forgot-pass-input'
+										>
+											ბმული არ მიმიღია
+										</button>
+
+										<span
+											className='second-forgot-pass-button cursor-pointer'
+											onClick={() => {
+												Defaults.ResetPassword.hide();
+												Defaults.SigninModal.show();
+											}}
+										>
+											შესვლა
+										</span>
 									</div>
 								)}
 							</div>

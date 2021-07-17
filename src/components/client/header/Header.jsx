@@ -105,10 +105,14 @@ function Header() {
 				</div>
 			</div>
 
-			<div className='mouse-icon hide'>
-				{/* <img src={mouseicon} alt="mouse-icon"> */}
+			<div class='mouse-icon hide'>
 				<div id='mouse-icon'>
-					<lottie-player src='./Mouse-scroller.json' loop autoPlay />
+					<script src='https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'></script>
+					<lottie-player
+						src='./Mouse-scroller.json'
+						loop
+						autoplay
+					></lottie-player>
 				</div>
 			</div>
 		</div>

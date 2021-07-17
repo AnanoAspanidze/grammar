@@ -17,6 +17,7 @@ import VerbSmallBg from '../assets/images/homepage/verb-small-bg.svg';
 import PlayBtn from '../assets/images/icons/Play.svg';
 import InstructionBg from '../assets/images/homepage/instruction-bg.svg';
 import VideoImage from '../assets/images/homepage/video-image.png';
+import { Defaults } from '../helpers/defaults';
 
 function Landing() {
 	return (
@@ -30,6 +31,7 @@ function Landing() {
 							<i className='fas fa-comment-dots' />
 						</button>
 					</div>
+
 					<section>
 						<div className='container container-two'>
 							<div className='row'>
@@ -355,13 +357,14 @@ function Landing() {
 										className='instruction-cont video-image'
 										style={{ backgroundImage: `url(${VideoImage})` }}
 									>
-										<a href='#popup1'>
+										<span>
 											<img
 												src={PlayBtn}
-												className='play-video'
+												className='play-video cursor-pointer'
 												alt='playvideo'
+												onClick={() => Defaults.VideoBackground.show()}
 											/>
-										</a>
+										</span>
 									</div>
 									{/* <div id='popup1' className='overlay'>
 										<div className='popup video-popup' id='pop-dessapear'>

@@ -1,24 +1,28 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import VideoModal from '../components/client/modal/VideoModal';
-import Logo from '../assets/images/icons/about-project-logo.svg';
-import Logo2 from '../assets/images/icons/logo-414.svg';
+// import VideoModal from '../components/client/modal/VideoModal';
+import Logo from '../../../assets/images/icons/about-project-logo.svg';
+import Logo2 from '../../../assets/images/icons/logo-414.svg';
+import Logout from '../../../assets/images/icons/Logout.svg';
+import burger from '../../../assets/images/icons/about-burger-icon.svg';
 import { Defaults } from '../../../helpers/defaults'
 
 
 function HeaderNav() {
+    let location = window.location.pathname
+
     return (
         <nav className='navbar navbar-expand-md navbar-light'>
         <div className='container container-two'>
-            <Link className='navbar-brand'>
+            <Link className='navbar-brand' to="/">
                 <img className=' hide3' src={Logo} alt='logo' />
                 <img className='appear3' src={Logo2} alt='' />
             </Link>
 
             <div className='navbar-icons'>
                 <a className='login appear'>
-                    <img src='./assets/images/icons/Logout.svg' alt='' />
+                    <img src={Logout} alt='' />
                 </a>
                 <a>
                     <button
@@ -32,7 +36,7 @@ function HeaderNav() {
                     >
                         <span className='navbar-toggler-icon about-navbar-toggler-icon'>
                             <img
-                                src='./assets/images/icons/about-burger-icon.svg'
+                                src={burger}
                                 alt='img'
                             />
                         </span>
@@ -56,19 +60,19 @@ function HeaderNav() {
                     <li className='nav-item '>
                         <Link
                             to='/about'
-                            className='nav-link about-nav-link active'
+                            className={`nav-link about-nav-link ${location === "/about" ? "active" : ""}`}
                             aria-current='page'
                         >
                             პროექტის შესახებ
                         </Link>
                     </li>
                     <li className='nav-item'>
-                        <Link className='nav-link about-nav-link' href='#'>
+                        <Link to="/" className={`nav-link about-nav-link ${location === "/" ? "active" : ""}`}>
                             სავარჯიშოები
                         </Link>
                     </li>
                     <li className='nav-item'>
-                        <Link className='nav-link about-nav-link' href='#'>
+                        <Link to="/" className={`nav-link about-nav-link ${location === "/" ? "active" : ""}`}>
                             ტესტირება
                         </Link>
                     </li>

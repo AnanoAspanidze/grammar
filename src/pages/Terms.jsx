@@ -4,55 +4,14 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/client/footer/Footer'
 import Logo from '../assets/images/icons/about-project-logo.svg';
 import Logo2 from '../assets/images/icons/logo-414.svg';
+import HeaderNav from '../components/client/header/HeaderNav';
 
 function Terms() {
     return (
         <>
         <div class="privacy-policy">
-            <nav className="navbar navbar-expand-md navbar-light">
-                <div className="container container-two">
-                    <Link className='navbar-brand'>
-                        <img className=' hide3' src={Logo} alt='logo' />
-                        <img className='appear3' src={Logo2} alt='' />
-                    </Link>
-                <div className="navbar-icons">
-                    <a href="#popup7" onclick="navAppear2();" className="login appear"><img src="./assets/images/icons/Logout.svg" alt="" /></a>
-                    <a href="#popup5" onclick="navAppear();"><button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navb  arsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon about-navbar-toggler-icon" />
-                    </button></a>
-                </div>
-                <div className="collapse navbar-collapse homepage-navbar-collapse" id="navbarsExample04">
-                    <ul className="navbar-nav me-auto mb-2 mb-md-0">
-                    <li className="nav-item">
-                        <a className="nav-link about-nav-link active" aria-current="page" href="index.html">
-                        მთავარი
-                        </a>
-                    </li>
-                    <li className="nav-item ">
-                        <a className="nav-link about-nav-link" href="about-project.html">
-                        პროექტის შესახებ
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link about-nav-link" href="#">
-                        სავარჯიშოები
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link about-nav-link" href="#">
-                        ტესტირება
-                        </a>
-                    </li>
-                    <a href="#popup7" onclick="navAppear2();" className="sign-in-parent nav-link">
-                        <button type="button" className="sign-in-button">
-                        შესვლა
-                        </button>
-                    </a>
-                    </ul>
-                </div>
-                </div>
-            </nav>
-
+            <HeaderNav />
+           
             <div class="container container-two">
                 <div class="privacy-policy-content">
                     <p class="privacy-policy-content-item"><span>მოხმარების</span> პირობები</p>

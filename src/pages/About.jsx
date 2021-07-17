@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 
 import ApppageHead from '../components/AppHead';
 import Footer from '../components/client/footer/Footer';
@@ -13,16 +12,20 @@ import AboutCloud from '../assets/images/about-project/about-cloud.svg';
 import AboutPause from '../assets/images/about-project/about-pause.svg';
 import UserImg from '../assets/images/icons/user.svg';
 import VideoImage from '../assets/images/about-project/video-image.svg';
-
+import HeaderNav from '../components/client/header/HeaderNav';
 // import '../assets/css/about-project.css';
+import { Defaults } from '../helpers/defaults';
 
 function About() {
+	useEffect(() => {
+		Defaults.ResetNewPassword.show();
+	}, []);
+
 	return (
 		<>
 			<ApppageHead />
-
 			<div class='about-header'>
-				{/* <HeaderNavbar /> */}
+				<HeaderNav />
 
 				<div className='about-header-content'>
 					<div className='container container-two'>
@@ -177,7 +180,7 @@ function About() {
 								<p className='cool-people-p'>რესურსის ავტორის ასისტენტი</p>
 							</div>
 							<div className='col-lg-3 col-sm-4 cool-people-col'>
-								<h5 className='cool-people-h'>ანი კიკილაშვილი</h5>
+								<h5 className='cool-people-h'>ანა კიკილაშვილი</h5>
 								<p className='cool-people-p'>რესურსის ავტორის ასისტენტი</p>
 							</div>
 							<div className='col-lg-3 col-sm-4 cool-people-col'>

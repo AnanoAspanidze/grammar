@@ -1,56 +1,145 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+import { accountService } from '../../../services/user.service';
+import userContext from '../../../context/user/userContext';
+import { Defaults } from '../../../helpers/defaults';
 
 function SignInModal() {
+	const { setCurrentUser } = useContext(userContext);
+
+	const userSigninSchema = Yup.object().shape({
+		Email: Yup.string()
+			.required('შეავსეთ ველი')
+			.email('შეიყვანეთ ელ. ფოსტის მისამართი სწორ ფორმაში'),
+		Password: Yup.string().required('შეავსეთ ველი'),
+	});
+
+	function onSubmit(data, action) {
+		accountService
+			.userSignin(data.Email, data.Password)
+			.then((res) => {
+				if (res.Id) {
+					setCurrentUser(
+						{ ...res, Id: res.Id },
+						res.JwtToken,
+						res.RefreshToken
+					);
+
+					Defaults.SigninModal.hide();
+				}
+
+				action.setSubmitting(false);
+			})
+			.catch((err) => {
+				action.setSubmitting(false);
+			});
+	}
+
 	return (
 		<>
-			<div id='popup7' className='overlay'>
-				<div className='popup' id='pop-dessapear7'>
-					<a
-						className='close close-in'
-						id='close-in'
-						onclick='navDessapear2();'
-						href='javascript:void(0);'
-					>
-						×
-					</a>
-					<div className='input-popup-bg'>
-						<div className='registration-form auth-registration-form'>
-							<h4 className='registration-header-title popup-registration-title'>
-								ავტორიზაცია
-							</h4>
-							<form action='#'>
-								<div className='form-group input-email auth-input-email popup-auth-input-email'>
-									<input type='email' name='email' placeholder='ელ-ფოსტა' />
-								</div>
-								<div className='auth-input-password popup-auth-input-password input-password'>
-									<input type='password' name='pwd' placeholder='პაროლი' />
-								</div>
-								<p className='error-p popup-error-p'>
-									შეყვანილი მონაცემები არასწორია
-								</p>
+			<Formik
+				initialValues={{ Email: '', Password: '' }}
+				validateOnChange={true}
+				enableReinitialize={true}
+				validationSchema={userSigninSchema}
+				onSubmit={onSubmit}
+			>
+				{({ handleSubmit, handleChange, errors, isSubmitting }) => (
+					<form onSubmit={handleSubmit}>
+						<div id='popup7' className='overlay'>
+							<div className='popup' id='pop-dessapear7'>
 								<a
-									href='#popup8'
-									onclick='navAppear3();'
-									className='recover-password popup-recover-password'
+									className='close close-in cursor-pointer'
+									id='close-in'
+									onClick={() => Defaults.SigninModal.hide()}
 								>
-									დაგავიწყდა პაროლი?
+									×
 								</a>
-								<button
-									type='button'
-									className='pass-changed-button bg-hover popup-auth-button input-button'
-								>
-									შესვლა
-								</button>
-							</form>
-							<div className='auth-path-registration popup-auth-path'>
-								<a href='#popup10' onclick='navAppear5();'>
-									რეგისტრაცია
-								</a>
+								<div className='input-popup-bg'>
+									<div className='registration-form auth-registration-form'>
+										<h4 className='registration-header-title popup-registration-title'>
+											ავტორიზაცია
+										</h4>
+
+										<div
+											className={`form-group input-email auth-input-email popup-auth-input-email ${
+												errors.Email ? 'error-input' : ''
+											}`}
+										>
+											<input
+												type='email'
+												name='Email'
+												placeholder='ელ-ფოსტა'
+												onChange={handleChange}
+											/>
+											{errors['Email'] && (
+												<p
+													className='error-p text-left'
+													style={{ marginLeft: '0' }}
+												>
+													{errors['Email']}
+												</p>
+											)}
+										</div>
+
+										<div
+											className={`auth-input-password popup-auth-input-password input-password ${
+												errors.Email ? 'error-input' : ''
+											}`}
+										>
+											<input
+												type='password'
+												name='Password'
+												placeholder='პაროლი'
+												onChange={handleChange}
+											/>
+											{errors['Password'] && (
+												<p
+													className='error-p text-left'
+													style={{ marginLeft: '0' }}
+												>
+													{errors['Password']}
+												</p>
+											)}
+										</div>
+
+										<a
+											className='recover-password popup-recover-password cursor-pointer'
+											onClick={() => {
+												Defaults.SigninModal.hide();
+												Defaults.ResetPassword.show();
+											}}
+										>
+											დაგავიწყდა პაროლი?
+										</a>
+										<button
+											type='submit'
+											disabled={isSubmitting}
+											className='pass-changed-button bg-hover popup-auth-button input-button'
+										>
+											შესვლა
+										</button>
+
+										<div className='auth-path-registration popup-auth-path'>
+											<span
+												className='cursor-pointer'
+												onClick={() => {
+													Defaults.SigninModal.hide();
+													Defaults.SignUpModal.show();
+												}}
+											>
+												რეგისტრაცია
+											</span>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
+					</form>
+				)}
+			</Formik>
 		</>
 	);
 }

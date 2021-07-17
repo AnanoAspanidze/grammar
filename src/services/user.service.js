@@ -11,6 +11,7 @@ export const accountService = {
 	refreshToken,
 	changeUserRole,
 	userexeldata,
+	UpdateResetPassword,
 	userStatistics,
 };
 
@@ -29,6 +30,12 @@ function adminSignin(Email, Password) {
 function mailConfirmation(confirmToken) {
 	return fetchWrapper
 		.post(`/Account/mailconfirmation/${confirmToken}`)
+		.then((user) => user);
+}
+
+function UpdateResetPassword(data) {
+	return fetchWrapper
+		.post('/Account/UpdateResetPassword', data)
 		.then((user) => user);
 }
 
