@@ -550,9 +550,9 @@ ul.list label {
 
 /* new pass registration form */
 
-.name-fields {
+/* .name-fields {
 	display: none;
-}
+} */
 
 /* reset pass success registration form */
 
@@ -577,17 +577,17 @@ ul.list label {
 	margin: 0 auto;
 }
 
-.create-password {
+/* .create-password {
 	display: none;
-}
+} */
 
-.mail-approve {
+/* .mail-approve {
 	display: none;
 }
 
 .success-registred {
 	display: none;
-}
+} */
 
 /* create account form */
 .new-password-form label {

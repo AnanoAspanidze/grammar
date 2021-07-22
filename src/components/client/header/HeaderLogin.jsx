@@ -36,6 +36,7 @@ function HeaderLogin() {
 				action.setSubmitting(false);
 			})
 			.catch((err) => {
+				action.setFieldError('Email', err.message.Message);
 				action.setSubmitting(false);
 			});
 	}
@@ -134,7 +135,10 @@ function HeaderLogin() {
 												შესვლა
 											</button>
 
-											<div className='auth-path-registration cursor-pointer'>
+											<div
+												className='auth-path-registration cursor-pointer'
+												onClick={() => Defaults.SignUpModal.show()}
+											>
 												<p>გაიარე რეგისტრაცია</p>
 											</div>
 										</div>

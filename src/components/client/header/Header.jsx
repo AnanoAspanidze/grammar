@@ -15,7 +15,7 @@ function Header() {
 		<div className='header' style={{ backgroundImage: `url(${IntroImg})` }}>
 			<nav className='navbar navbar-expand-md navbar-light'>
 				<div className='container container-two'>
-					<Link className='navbar-brand'>
+					<Link className='navbar-brand' to='/'>
 						<img className=' hide3' src={Logo} alt='logo' />
 						<img className='appear3' src={logo414} alt='logo-414' />
 					</Link>
@@ -105,7 +105,7 @@ function Header() {
 				</div>
 			</div>
 
-			<div class='mouse-icon hide'>
+			<div className='mouse-icon hide'>
 				<div id='mouse-icon'>
 					<script src='https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'></script>
 					<lottie-player

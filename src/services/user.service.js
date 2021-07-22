@@ -2,6 +2,7 @@ import { fetchWrapper } from '../helpers/fetch-wrapper';
 
 export const accountService = {
 	userSignin,
+	userSignUp,
 	adminSignin,
 	mailConfirmation,
 	SendResetPasswordMail,
@@ -14,6 +15,10 @@ export const accountService = {
 	UpdateResetPassword,
 	userStatistics,
 };
+
+function userSignUp(data) {
+	return fetchWrapper.post('/Account/SignUp', data).then((user) => user);
+}
 
 function userSignin(Email, Password) {
 	return fetchWrapper

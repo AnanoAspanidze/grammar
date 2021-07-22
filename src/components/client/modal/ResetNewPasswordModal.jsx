@@ -8,7 +8,7 @@ import { Defaults } from '../../../helpers/defaults';
 import Image from '../../../assets/images/sign-in/success-smile.svg'
 
 
-function ResetNewPasswordModal() {
+function ResetNewPasswordModal({ token }) {
     const { user } = useContext(userContext);
 
     const userSigninSchema = Yup.object().shape({
@@ -46,7 +46,7 @@ function ResetNewPasswordModal() {
                     Email: user.email,
                     NewPassword: "",
                     ConfirmNewPassword: "",
-                    ResetPasswordToken: "" 
+                    ResetPasswordToken: token 
                 }}
 				validateOnChange={true}
 				enableReinitialize={true}
@@ -57,9 +57,9 @@ function ResetNewPasswordModal() {
                     <form onSubmit={handleSubmit}>
                         <div id='popup9' className='overlay'>
                             <div className='popup' id='pop-dessapear9'>
-                                <a className='close close-in' id='close-in3'>
+                                <span className='close close-in cursor-pointer' id='close-in3' onClick={() => Defaults.ResetNewPassword.hide()}>
                                     ×
-                                </a>
+                                </span>
 
                                 <div className='input-popup-bg'>
                                     <div className='registration-form registration-form-signin registration-form-forgotpas new-pass-registr-form'>
@@ -76,10 +76,10 @@ function ResetNewPasswordModal() {
                                     <button 
                                         type="button" 
                                         className="pass-changed-button popup-auth-button input-button"
-                                        onclick={() => {
-                                                    Defaults.ResetNewPassword.hide()
-                                                    Defaults.SigninModal.show()
-                                                }}
+                                        onClick={() => {
+                                            Defaults.SigninModal.show()
+                                            Defaults.ResetNewPassword.hide()
+                                        }}
                                     >
                                         შესვლა
                                     </button>
@@ -88,7 +88,7 @@ function ResetNewPasswordModal() {
                                 ) : (
                                   <Fragment>
                                         <h4 className='new-password-title'>მოიფიქრე ახალი პაროლი</h4>
-                                        <form action='#' className='new-password-form'>
+                                        <div className='new-password-form'>
                                             <label htmlFor='pwd'>
                                                 ახალი პაროლი <span>*</span>
                                             </label>
@@ -132,7 +132,7 @@ function ResetNewPasswordModal() {
                                                     </p>
                                                 )}
                                             </div>
-                                        </form>
+                                        </div>
                                         <button
                                             disabled={isSubmitting}
                                             type='submit'
@@ -142,7 +142,7 @@ function ResetNewPasswordModal() {
                                         </button>
 
                                         <span
-                                            onclick={() => {
+                                            onClick={() => {
                                                 Defaults.ResetNewPassword.hide()
                                                 Defaults.SigninModal.show()
                                             }}

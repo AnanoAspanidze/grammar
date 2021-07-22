@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
 import { accountService } from '../../../services/user.service';
 import userContext from '../../../context/user/userContext';
@@ -8,6 +9,7 @@ import { Defaults } from '../../../helpers/defaults';
 
 function SignInModal() {
 	const { setCurrentUser } = useContext(userContext);
+	const history = useHistory();
 
 	const userSigninSchema = Yup.object().shape({
 		Email: Yup.string()
@@ -30,9 +32,11 @@ function SignInModal() {
 					Defaults.SigninModal.hide();
 				}
 
+				history.push('/');
 				action.setSubmitting(false);
 			})
 			.catch((err) => {
+				action.setFieldError('Email', err.message.Message);
 				action.setSubmitting(false);
 			});
 	}
@@ -105,7 +109,7 @@ function SignInModal() {
 											)}
 										</div>
 
-										<a
+										<span
 											className='recover-password popup-recover-password cursor-pointer'
 											onClick={() => {
 												Defaults.SigninModal.hide();
@@ -113,7 +117,7 @@ function SignInModal() {
 											}}
 										>
 											დაგავიწყდა პაროლი?
-										</a>
+										</span>
 										<button
 											type='submit'
 											disabled={isSubmitting}

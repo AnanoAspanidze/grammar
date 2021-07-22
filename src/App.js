@@ -10,6 +10,7 @@ import DrawerState from './context/drawer/DrawerState';
 
 import { getCookie } from './helpers/cookie';
 import PrivateRoute from './components/PrivateRoute';
+import LandingPrivate from './components/LandingPrivate';
 
 import Landing from './pages/Landing';
 import IssuesMainApp from './pages/issues';
@@ -21,6 +22,8 @@ import About from './pages/About';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
 import NotFoundPage from './pages/NotFoundPage';
+import CredentialsReset from './pages/CredentialsReset';
+import UserSigning from './pages/signing';
 
 import Adminpage from './pages/admin';
 import Profile from './pages/admin/profile';
@@ -43,6 +46,7 @@ import DefinitionModal from './components/client/modal/DefinitionModal';
 import SignInModalContainer from './components/client/containers/SignInModalContainer';
 import SignUpModalContainer from './components/client/containers/SignUpModalContainer';
 import ResetNewPasswordModalContainer from './components/client/containers/ResetNewPasswordModalContainer';
+import SuccessRegisterModalContainer from './components/client/containers/SuccessRegisterModalContainer';
 
 import { Defaults } from './helpers/defaults';
 
@@ -58,6 +62,9 @@ function App() {
 			<SignUpModalContainer ref={(ref) => (Defaults.SignUpModal = ref)} />
 			<ResetNewPasswordModalContainer
 				ref={(ref) => (Defaults.ResetNewPassword = ref)}
+			/>
+			<SuccessRegisterModalContainer
+				ref={(ref) => (Defaults.SuccessRegisterModal = ref)}
 			/>
 		</UserState>
 	);
@@ -93,11 +100,17 @@ function MyComponent() {
 	return (
 		<Router>
 			<Switch>
-				<Route exact path='/' component={Landing} drawerIsOpen={isOpen} />
+				<LandingPrivate
+					exact
+					path='/'
+					component={Landing}
+					drawerIsOpen={isOpen}
+				/>
 
 				<Route path='/issues' exact>
 					<IssuesMainApp />
 				</Route>
+
 				<Route path='/exercises' exact>
 					<ExercisesMainApp />
 				</Route>
@@ -113,6 +126,13 @@ function MyComponent() {
 				<Route path='/terms' exact>
 					<Terms />
 				</Route>
+
+				<Route
+					exact
+					path='/credentialsReset/:token'
+					component={CredentialsReset}
+				/>
+				<Route exact path='/signing/:token' component={UserSigning} />
 
 				<Route
 					path='/exercisedetails/:exerciseId'

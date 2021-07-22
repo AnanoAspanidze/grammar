@@ -3,13 +3,14 @@ import React, { Component } from 'react'
 import Modal from '../modal/Modal'
 import ResetNewPasswordModal from '../modal/ResetNewPasswordModal'
 
-export default class ResetPasswordContainer extends Component {
+export default class ResetNewPasswordModalContainer extends Component {
 	state = {
 		visible: false,
+		token: ''
 	};
 
-	show() {
-		this.setState({ visible: true });
+	show(token) {
+		this.setState({ visible: true, token });
 	}
 
 	hide() {
@@ -21,7 +22,7 @@ export default class ResetPasswordContainer extends Component {
 			return (
 				<>
 					<Modal layerId='popup8' onCloseModal={this.hide.bind(this)}>
-                        <ResetNewPasswordModal />
+                        <ResetNewPasswordModal token={this.state.token} />
                     </Modal>
 				</>
 			);

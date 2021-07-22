@@ -5,6 +5,7 @@ export const commonService = {
 	getRoles,
 	selectedSubcategories,
 	getEExerciseTypes,
+	getRegions,
 };
 
 function getParts() {
@@ -23,4 +24,8 @@ function selectedSubcategories(id) {
 
 function getEExerciseTypes(id) {
 	return fetchWrapper.get('/Dropdowns/types').then((roles) => roles);
+}
+
+function getRegions(id) {
+	return fetchWrapper.get('/Dropdowns/regions').then((roles) => roles);
 }

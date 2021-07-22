@@ -29,7 +29,7 @@ import drawerContext from '../../../context/drawer/drawerContext';
 
 const drawerWidth = 240;
 
-export default function AppBarComponnent({ isOpen, children }) {
+function AppBarComponnent({ isOpen, children }) {
 	let location = useLocation();
 	const classes = useStyles();
 	const theme = useTheme();
@@ -56,6 +56,7 @@ export default function AppBarComponnent({ isOpen, children }) {
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
+
 			<AppBar
 				position='fixed'
 				className={clsx(classes.appBar, {
@@ -271,3 +272,5 @@ const useStyles = makeStyles((theme) => ({
 		color: 'rgba(0, 0, 0, 1)',
 	},
 }));
+
+export default AppBarComponnent;

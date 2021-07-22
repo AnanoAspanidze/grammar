@@ -9,6 +9,7 @@ import playIcon from '../assets/images/exercises/Arrow - Right 2.svg';
 
 function ExercisesPage() {
 	const [exercises, setexercises] = useState(null);
+	const [filteredIssues, setfilteredIssues] = useState(null);
 
 	let history = useHistory();
 
@@ -19,6 +20,25 @@ function ExercisesPage() {
 	}, []);
 
 	let pathName = history.location.pathname;
+
+	useEffect(() => {
+		if (exercises) {
+			setfilteredIssues(exercises);
+		}
+	}, [exercises]);
+
+	const generateArray = (name) => {
+		console.log(name);
+		if (name !== 'ყველა') {
+			const x = exercises.filter((w) => w.Category.Name === name);
+
+			console.log(x);
+
+			setfilteredIssues(x);
+		} else if (name === 'ყველა') {
+			setfilteredIssues(exercises);
+		}
+	};
 
 	return (
 		<>
@@ -102,18 +122,37 @@ function ExercisesPage() {
 										<p>სავარჯიშოები</p>
 									</div>
 									<div className='switch-toggle switch-3 switch-candy'>
-										<input id='on' name='state-d' type='radio' defaultChecked />
+										<input
+											id='on'
+											name='state-d'
+											type='radio'
+											onClick={() => generateArray('ყველა')}
+											defaultChecked
+										/>
 										<label htmlFor='on'>ყველა</label>
-										<input id='no' name='state-d' type='radio' />
+
+										<input
+											id='no'
+											name='state-d'
+											type='radio'
+											onClick={() => generateArray('მორფოლოგია')}
+										/>
+
 										<label htmlFor='no'>მორფოლოგია</label>
+
 										<input id='off' name='state-d' type='radio' />
-										<label htmlFor='off'>სინტაქსი</label>
+										<label
+											htmlFor='off'
+											onClick={() => generateArray('სინტაქსი')}
+										>
+											სინტაქსი
+										</label>
 									</div>
 								</div>
 
 								<div className='all-exercises-all'>
-									{exercises &&
-										exercises.map((exercise, i) => (
+									{filteredIssues &&
+										filteredIssues.map((exercise, i) => (
 											<div key={exercise.Id}>
 												{exercise.Exercises.length > 0 && (
 													<div className='exercises-grammar-fields'>

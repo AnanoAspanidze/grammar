@@ -30,9 +30,12 @@ function IssuesPage() {
 	let pathName = history.location.pathname;
 
 	const generateArray = (name) => {
+		console.log(name);
 		if (name !== 'ყველა') {
 			const x = issues.filter((w) => w.Category.Name === name);
+
 			console.log(x);
+
 			setfilteredIssues(x);
 		} else if (name === 'ყველა') {
 			setfilteredIssues(issues);
@@ -132,21 +135,20 @@ function IssuesPage() {
 												id='on'
 												name='state-d'
 												type='radio'
+												onClick={() => generateArray('ყველა')}
 												defaultChecked
 											/>
 											<label htmlFor='on'>ყველა</label>
+
 											<input
 												id='no'
 												name='state-d'
 												type='radio'
-												onClick={() => generateArray('ყველა')}
-											/>
-											<label
-												htmlFor='no'
 												onClick={() => generateArray('მორფოლოგია')}
-											>
-												მორფოლოგია
-											</label>
+											/>
+
+											<label htmlFor='no'>მორფოლოგია</label>
+
 											<input id='off' name='state-d' type='radio' />
 											<label
 												htmlFor='off'

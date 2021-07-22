@@ -5,6 +5,7 @@ const Defaults = {
 	ResetNewPassword: null,
 	Definition: null,
 	VideoBackground: null,
+	SuccessRegisterModal: null,
 };
 
 export { Defaults };
